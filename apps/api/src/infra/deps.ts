@@ -1,5 +1,6 @@
 import { type Db } from '@school/db/client';
 import { type TimeSource } from '@school/db/time';
+import { type Publisher } from '@school/queue/publisher';
 import { type Redis } from 'ioredis';
 import { type Env } from '../config/env';
 import { type Logger } from './logger';
@@ -12,6 +13,7 @@ export type Deps = {
   /** Business time. Authentication uses the wall clock instead. */
   readonly time: TimeSource;
   readonly logger: Logger;
+  readonly jobs: Publisher;
 };
 
 export const DEPS = Symbol('deps');

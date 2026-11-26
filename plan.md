@@ -215,6 +215,7 @@ Runner: `pnpm acceptance` runs A-1…A-17 in order against the compose stack and
 | DV-12 | CLAUDE.md asks for about 10–12 commits, and the Phase 0 prompt suggests 12 blocks. | The user asked for 8 commits with related blocks merged. | 8 commits (§8.1): shared rules merged into the scaffold, seed into the db block, payments into enrollments, worker into homework/certificates/realtime. Each commit is still a complete, green block. |
 | DV-13 | CLAUDE.md lists CI jobs in a sequence. | The user asked for CI to run everything that can run in parallel, including e2e. | Parallel job graph with sharding (§8.2). E2E, acceptance and perf depend only on the image build job, and a `ci-ok` aggregator is the single required check. |
 | DV-14 | CLAUDE.md and the Phase 0 prompt say "Never push". | The user later instructed: push right after every commit, watch CI, fix and re-push until green. | Push after each commit to `origin/main`. A red pipeline is fixed with follow-up commits, history is never force-pushed. Fix commits do not count against the 8 blocks. |
+| DV-15 | The plan's tree lists `packages/shared` and `packages/db`. | The signed payment protocol is used by api, worker and stub, and the job publisher by api and worker; neither belongs in the IO-free shared package. | Added `packages/gateway` (signatures, client, secret box) and `packages/queue` (BullMQ publisher). The transactional business rules live in `packages/db/src/repo`. |
 
 ---
 
@@ -288,6 +289,13 @@ Runner: `pnpm acceptance` runs A-1…A-17 in order against the compose stack and
 - AS-53 **Enrollment closes when the cohort starts.** The catalog lists cohorts whose first lesson is in the future. A lesson that has started cannot be moved, a lesson can only be moved to a future time, and a new cohort's first lesson must be in the future.
 - AS-54 **Staff changes.** A mentor with unfinished cohorts cannot be disabled or turned into a manager until the cohorts are reassigned. Administrators are not managed through the API.
 - AS-55 **Sessions.** A disabled account stops working at once (the account is read on every request). Logout revokes the refresh family; an already issued access token ends with its 15-minute lifetime, and the cookie is cleared.
+- AS-56 **Writers settle the cohort first.** Every transaction that changes a cohort locks its row, expires overdue holds and offers, and offers free seats to waiters before doing its own work. A payment that arrives at or after the expiry instant is therefore always «late», whether or not the worker has run.
+- AS-57 **Offer length near the start.** An offer lasts 24 hours, but never past the cohort start.
+- AS-58 **A hold with a rejected promo code stands** at full price, and the response says why the code was not applied. A code cannot be applied to a transfer surcharge.
+- AS-59 **One pending transfer per enrollment.** Asking again for the same target returns the pending surcharge hold. Cancelling the old enrollment cancels it. A surcharge paid after the old enrollment ended is returned.
+- AS-60 **Transfer options** need the same course and currency and a target that has not started.
+- AS-61 **Notification identity** is (school, event id); the first content wins. A payment is also unique by (school, provider payment id). A notification signed by one school cannot touch another school's enrollment.
+- AS-62 **The payment stub** accepts refunds by refund id (idempotency key) and order id; it signs every delivery at send time.
 
 ---
 
@@ -660,7 +668,7 @@ Rules that make this parallelism safe:
 - [x] C1 scaffold + CI + compose infra + shared domain rules
 - [x] C2 db schema, journal, ledger, constraints + seed
 - [x] C3 api core (auth, roles, staff, catalog, courses, cohorts, schedule, limiter)
-- [ ] C4 enrollments, waitlist, promo, transfers + paystub + payments/refunds
+- [x] C4 enrollments, waitlist, promo, transfers + paystub + payments/refunds
 - [ ] C5 homework, mentor, certificates, reports, realtime + worker
 - [ ] C6 web
 - [ ] C7 nginx + full compose + acceptance + e2e + perf

@@ -1,8 +1,10 @@
 import { writeFile } from 'node:fs/promises';
 import { createDb } from '@school/db/client';
+import { createPublisher } from '@school/queue/publisher';
 import { systemTime } from '@school/db/time';
 import { createApp } from './app.factory';
 import { loadEnv } from './config/env';
+import { queueSettings } from './infra/queue-settings';
 import { createLogger } from './infra/logger';
 import { createRedis } from './infra/redis';
 import { buildOpenApi } from './openapi';
@@ -15,9 +17,13 @@ const main = async (): Promise<void> => {
   const logger = createLogger('silent');
   const db = createDb(env.DATABASE_URL);
   const redis = createRedis(env.REDIS_URL, logger);
-  const app = await createApp({ env, db, redis, time: systemTime, logger });
+  const jobs = createPublisher(queueSettings(env), (error) => {
+    logger.warn({ error }, 'job publishing failed');
+  });
+  const app = await createApp({ env, db, redis, time: systemTime, logger, jobs });
   await writeFile(output, `${JSON.stringify(buildOpenApi(app), null, 2)}\n`);
   await app.close();
+  await jobs.close();
   redis.disconnect();
 };
 

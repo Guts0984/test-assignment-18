@@ -67,7 +67,7 @@
             }
           },
           "409": {
-            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
             "content": {
               "application/json": {
                 "schema": {
@@ -208,7 +208,7 @@
             }
           },
           "409": {
-            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
             "content": {
               "application/json": {
                 "schema": {
@@ -339,7 +339,7 @@
             }
           },
           "409": {
-            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
             "content": {
               "application/json": {
                 "schema": {
@@ -463,7 +463,7 @@
             }
           },
           "409": {
-            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
             "content": {
               "application/json": {
                 "schema": {
@@ -594,7 +594,7 @@
             }
           },
           "409": {
-            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
             "content": {
               "application/json": {
                 "schema": {
@@ -733,7 +733,7 @@
             }
           },
           "409": {
-            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
             "content": {
               "application/json": {
                 "schema": {
@@ -864,7 +864,7 @@
             }
           },
           "409": {
-            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
             "content": {
               "application/json": {
                 "schema": {
@@ -1003,7 +1003,7 @@
             }
           },
           "409": {
-            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
             "content": {
               "application/json": {
                 "schema": {
@@ -1155,7 +1155,7 @@
             }
           },
           "409": {
-            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
             "content": {
               "application/json": {
                 "schema": {
@@ -1382,7 +1382,7 @@
             }
           },
           "409": {
-            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
             "content": {
               "application/json": {
                 "schema": {
@@ -1513,7 +1513,7 @@
             }
           },
           "409": {
-            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
             "content": {
               "application/json": {
                 "schema": {
@@ -1655,7 +1655,7 @@
             }
           },
           "409": {
-            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
             "content": {
               "application/json": {
                 "schema": {
@@ -1819,7 +1819,7 @@
             }
           },
           "409": {
-            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
             "content": {
               "application/json": {
                 "schema": {
@@ -1958,7 +1958,7 @@
             }
           },
           "409": {
-            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
             "content": {
               "application/json": {
                 "schema": {
@@ -2110,7 +2110,7 @@
             }
           },
           "409": {
-            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
             "content": {
               "application/json": {
                 "schema": {
@@ -2241,7 +2241,7 @@
             }
           },
           "409": {
-            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
             "content": {
               "application/json": {
                 "schema": {
@@ -2415,7 +2415,7 @@
             }
           },
           "409": {
-            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
             "content": {
               "application/json": {
                 "schema": {
@@ -2554,7 +2554,7 @@
             }
           },
           "409": {
-            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
             "content": {
               "application/json": {
                 "schema": {
@@ -2696,7 +2696,7 @@
             }
           },
           "409": {
-            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
             "content": {
               "application/json": {
                 "schema": {
@@ -2846,7 +2846,7 @@
             }
           },
           "409": {
-            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
             "content": {
               "application/json": {
                 "schema": {
@@ -2998,7 +2998,7 @@
             }
           },
           "409": {
-            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
             "content": {
               "application/json": {
                 "schema": {
@@ -3073,6 +3073,3654 @@
         ]
       }
     },
+    "/api/enrollments": {
+      "get": {
+        "operationId": "enrollmentsList",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnrollmentListDto_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "VALIDATION_FAILED, MALFORMED_REQUEST",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED, INVALID_CREDENTIALS, TOKEN_REUSED, INVALID_SIGNATURE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN, CSRF_REJECTED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "PAYLOAD_TOO_LARGE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "UNSUPPORTED_MEDIA_TYPE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "RATE_LIMITED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "GATEWAY_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "SERVICE_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "enrollments"
+        ]
+      },
+      "post": {
+        "operationId": "enrollmentsHold",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HoldSeatDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HeldDto_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "VALIDATION_FAILED, MALFORMED_REQUEST",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED, INVALID_CREDENTIALS, TOKEN_REUSED, INVALID_SIGNATURE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN, CSRF_REJECTED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "PAYLOAD_TOO_LARGE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "UNSUPPORTED_MEDIA_TYPE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "RATE_LIMITED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "GATEWAY_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "SERVICE_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "enrollments"
+        ]
+      }
+    },
+    "/api/enrollments/{id}": {
+      "get": {
+        "operationId": "enrollmentsGet",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnrollmentDto_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "VALIDATION_FAILED, MALFORMED_REQUEST",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED, INVALID_CREDENTIALS, TOKEN_REUSED, INVALID_SIGNATURE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN, CSRF_REJECTED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "PAYLOAD_TOO_LARGE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "UNSUPPORTED_MEDIA_TYPE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "RATE_LIMITED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "GATEWAY_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "SERVICE_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "enrollments"
+        ]
+      }
+    },
+    "/api/enrollments/{id}/promo": {
+      "post": {
+        "operationId": "enrollmentsApplyPromo",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApplyPromoDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnrollmentDto_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "VALIDATION_FAILED, MALFORMED_REQUEST",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED, INVALID_CREDENTIALS, TOKEN_REUSED, INVALID_SIGNATURE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN, CSRF_REJECTED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "PAYLOAD_TOO_LARGE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "UNSUPPORTED_MEDIA_TYPE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "RATE_LIMITED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "GATEWAY_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "SERVICE_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "enrollments"
+        ]
+      }
+    },
+    "/api/enrollments/{id}/checkout": {
+      "post": {
+        "operationId": "enrollmentsCheckout",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CheckoutDto_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "VALIDATION_FAILED, MALFORMED_REQUEST",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED, INVALID_CREDENTIALS, TOKEN_REUSED, INVALID_SIGNATURE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN, CSRF_REJECTED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "PAYLOAD_TOO_LARGE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "UNSUPPORTED_MEDIA_TYPE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "RATE_LIMITED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "GATEWAY_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "SERVICE_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "enrollments"
+        ]
+      }
+    },
+    "/api/enrollments/{id}/refund-preview": {
+      "get": {
+        "operationId": "enrollmentsRefundPreview",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundPreviewDto_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "VALIDATION_FAILED, MALFORMED_REQUEST",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED, INVALID_CREDENTIALS, TOKEN_REUSED, INVALID_SIGNATURE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN, CSRF_REJECTED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "PAYLOAD_TOO_LARGE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "UNSUPPORTED_MEDIA_TYPE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "RATE_LIMITED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "GATEWAY_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "SERVICE_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "enrollments"
+        ]
+      }
+    },
+    "/api/enrollments/{id}/cancel": {
+      "post": {
+        "operationId": "enrollmentsCancel",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnrollmentDto_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "VALIDATION_FAILED, MALFORMED_REQUEST",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED, INVALID_CREDENTIALS, TOKEN_REUSED, INVALID_SIGNATURE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN, CSRF_REJECTED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "PAYLOAD_TOO_LARGE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "UNSUPPORTED_MEDIA_TYPE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "RATE_LIMITED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "GATEWAY_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "SERVICE_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "enrollments"
+        ]
+      }
+    },
+    "/api/enrollments/{id}/transfer-options": {
+      "get": {
+        "operationId": "enrollmentsTransferOptions",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransferOptionsDto_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "VALIDATION_FAILED, MALFORMED_REQUEST",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED, INVALID_CREDENTIALS, TOKEN_REUSED, INVALID_SIGNATURE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN, CSRF_REJECTED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "PAYLOAD_TOO_LARGE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "UNSUPPORTED_MEDIA_TYPE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "RATE_LIMITED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "GATEWAY_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "SERVICE_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "enrollments"
+        ]
+      }
+    },
+    "/api/enrollments/{id}/transfer": {
+      "post": {
+        "operationId": "enrollmentsTransfer",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransferDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnrollmentDto_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "VALIDATION_FAILED, MALFORMED_REQUEST",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED, INVALID_CREDENTIALS, TOKEN_REUSED, INVALID_SIGNATURE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN, CSRF_REJECTED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "PAYLOAD_TOO_LARGE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "UNSUPPORTED_MEDIA_TYPE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "RATE_LIMITED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "GATEWAY_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "SERVICE_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "enrollments"
+        ]
+      }
+    },
+    "/api/waitlist": {
+      "get": {
+        "operationId": "waitlistList",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WaitlistDto_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "VALIDATION_FAILED, MALFORMED_REQUEST",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED, INVALID_CREDENTIALS, TOKEN_REUSED, INVALID_SIGNATURE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN, CSRF_REJECTED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "PAYLOAD_TOO_LARGE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "UNSUPPORTED_MEDIA_TYPE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "RATE_LIMITED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "GATEWAY_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "SERVICE_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "waitlist"
+        ]
+      }
+    },
+    "/api/waitlist/{id}": {
+      "post": {
+        "operationId": "waitlistJoin",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WaitlistDto_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "VALIDATION_FAILED, MALFORMED_REQUEST",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED, INVALID_CREDENTIALS, TOKEN_REUSED, INVALID_SIGNATURE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN, CSRF_REJECTED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "PAYLOAD_TOO_LARGE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "UNSUPPORTED_MEDIA_TYPE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "RATE_LIMITED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "GATEWAY_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "SERVICE_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "waitlist"
+        ]
+      },
+      "delete": {
+        "operationId": "waitlistLeave",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WaitlistDto_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "VALIDATION_FAILED, MALFORMED_REQUEST",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED, INVALID_CREDENTIALS, TOKEN_REUSED, INVALID_SIGNATURE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN, CSRF_REJECTED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "PAYLOAD_TOO_LARGE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "UNSUPPORTED_MEDIA_TYPE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "RATE_LIMITED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "GATEWAY_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "SERVICE_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "waitlist"
+        ]
+      }
+    },
+    "/api/manager/students": {
+      "get": {
+        "operationId": "rosterSearch",
+        "parameters": [
+          {
+            "name": "q",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "minLength": 2,
+              "maxLength": 100,
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchPageDto_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "VALIDATION_FAILED, MALFORMED_REQUEST",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED, INVALID_CREDENTIALS, TOKEN_REUSED, INVALID_SIGNATURE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN, CSRF_REJECTED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "PAYLOAD_TOO_LARGE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "UNSUPPORTED_MEDIA_TYPE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "RATE_LIMITED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "GATEWAY_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "SERVICE_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "manager"
+        ]
+      }
+    },
+    "/api/manager/cohorts/{id}/students": {
+      "get": {
+        "operationId": "rosterStudents",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            }
+          },
+          {
+            "name": "q",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minLength": 0,
+              "maxLength": 100,
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentPageDto_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "VALIDATION_FAILED, MALFORMED_REQUEST",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED, INVALID_CREDENTIALS, TOKEN_REUSED, INVALID_SIGNATURE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN, CSRF_REJECTED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "PAYLOAD_TOO_LARGE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "UNSUPPORTED_MEDIA_TYPE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "RATE_LIMITED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "GATEWAY_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "SERVICE_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "manager"
+        ]
+      }
+    },
+    "/api/manager/cohorts/{id}/waitlist": {
+      "get": {
+        "operationId": "rosterWaitlist",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CohortWaitlistDto_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "VALIDATION_FAILED, MALFORMED_REQUEST",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED, INVALID_CREDENTIALS, TOKEN_REUSED, INVALID_SIGNATURE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN, CSRF_REJECTED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "PAYLOAD_TOO_LARGE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "UNSUPPORTED_MEDIA_TYPE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "RATE_LIMITED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "GATEWAY_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "SERVICE_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "manager"
+        ]
+      }
+    },
+    "/api/manager/cohorts/{id}/payments": {
+      "get": {
+        "operationId": "rosterPayments",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MoneyPageDto_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "VALIDATION_FAILED, MALFORMED_REQUEST",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED, INVALID_CREDENTIALS, TOKEN_REUSED, INVALID_SIGNATURE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN, CSRF_REJECTED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "PAYLOAD_TOO_LARGE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "UNSUPPORTED_MEDIA_TYPE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "RATE_LIMITED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "GATEWAY_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "SERVICE_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "manager"
+        ]
+      }
+    },
+    "/api/manager/cohorts/{id}/capacity": {
+      "patch": {
+        "operationId": "rosterCapacity",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CapacityDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "VALIDATION_FAILED, MALFORMED_REQUEST",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED, INVALID_CREDENTIALS, TOKEN_REUSED, INVALID_SIGNATURE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN, CSRF_REJECTED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "PAYLOAD_TOO_LARGE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "UNSUPPORTED_MEDIA_TYPE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "RATE_LIMITED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "GATEWAY_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "SERVICE_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "manager"
+        ]
+      }
+    },
+    "/api/manager/enrollments/{id}/transfer": {
+      "post": {
+        "operationId": "rosterTransfer",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransferDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransferResultDto_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "VALIDATION_FAILED, MALFORMED_REQUEST",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED, INVALID_CREDENTIALS, TOKEN_REUSED, INVALID_SIGNATURE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN, CSRF_REJECTED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "PAYLOAD_TOO_LARGE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "UNSUPPORTED_MEDIA_TYPE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "RATE_LIMITED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "GATEWAY_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "SERVICE_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "manager"
+        ]
+      }
+    },
+    "/api/manager/enrollments/{id}/exclude": {
+      "post": {
+        "operationId": "rosterExclude",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExcludeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": ""
+          },
+          "400": {
+            "description": "VALIDATION_FAILED, MALFORMED_REQUEST",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED, INVALID_CREDENTIALS, TOKEN_REUSED, INVALID_SIGNATURE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN, CSRF_REJECTED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "PAYLOAD_TOO_LARGE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "UNSUPPORTED_MEDIA_TYPE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "RATE_LIMITED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "GATEWAY_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "SERVICE_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "manager"
+        ]
+      }
+    },
+    "/api/manager/promos": {
+      "get": {
+        "operationId": "promosList",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PromoPageDto_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "VALIDATION_FAILED, MALFORMED_REQUEST",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED, INVALID_CREDENTIALS, TOKEN_REUSED, INVALID_SIGNATURE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN, CSRF_REJECTED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "PAYLOAD_TOO_LARGE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "UNSUPPORTED_MEDIA_TYPE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "RATE_LIMITED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "GATEWAY_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "SERVICE_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "manager"
+        ]
+      },
+      "post": {
+        "operationId": "promosCreate",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePromoDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PromoDto_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "VALIDATION_FAILED, MALFORMED_REQUEST",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED, INVALID_CREDENTIALS, TOKEN_REUSED, INVALID_SIGNATURE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN, CSRF_REJECTED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "PAYLOAD_TOO_LARGE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "UNSUPPORTED_MEDIA_TYPE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "RATE_LIMITED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "GATEWAY_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "SERVICE_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "manager"
+        ]
+      }
+    },
+    "/api/manager/promos/{id}": {
+      "patch": {
+        "operationId": "promosUpdate",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePromoDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PromoDto_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "VALIDATION_FAILED, MALFORMED_REQUEST",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED, INVALID_CREDENTIALS, TOKEN_REUSED, INVALID_SIGNATURE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN, CSRF_REJECTED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "PAYLOAD_TOO_LARGE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "UNSUPPORTED_MEDIA_TYPE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "RATE_LIMITED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "GATEWAY_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "SERVICE_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "manager"
+        ]
+      }
+    },
+    "/api/admin/gateway": {
+      "get": {
+        "operationId": "gatewayGet",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConfigDto_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "VALIDATION_FAILED, MALFORMED_REQUEST",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED, INVALID_CREDENTIALS, TOKEN_REUSED, INVALID_SIGNATURE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN, CSRF_REJECTED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "PAYLOAD_TOO_LARGE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "UNSUPPORTED_MEDIA_TYPE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "RATE_LIMITED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "GATEWAY_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "SERVICE_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "admin"
+        ]
+      },
+      "put": {
+        "operationId": "gatewaySet",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConfigInputDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConfigDto_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "VALIDATION_FAILED, MALFORMED_REQUEST",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED, INVALID_CREDENTIALS, TOKEN_REUSED, INVALID_SIGNATURE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN, CSRF_REJECTED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "PAYLOAD_TOO_LARGE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "UNSUPPORTED_MEDIA_TYPE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "RATE_LIMITED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "GATEWAY_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "SERVICE_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/payments/webhook": {
+      "post": {
+        "operationId": "webhookReceive",
+        "parameters": [
+          {
+            "name": "x-signature",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotificationDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AckDto_Output"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "VALIDATION_FAILED, MALFORMED_REQUEST",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED, INVALID_CREDENTIALS, TOKEN_REUSED, INVALID_SIGNATURE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN, CSRF_REJECTED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "PAYLOAD_TOO_LARGE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "UNSUPPORTED_MEDIA_TYPE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "RATE_LIMITED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "INTERNAL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "GATEWAY_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "SERVICE_UNAVAILABLE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "payments"
+        ]
+      }
+    },
     "/api/health": {
       "get": {
         "operationId": "healthCheck",
@@ -3129,7 +6777,7 @@
             }
           },
           "409": {
-            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
+            "description": "CONFLICT, EMAIL_TAKEN, NO_SEATS, ENROLLMENT_CLOSED, CAPACITY_BELOW_TAKEN, ALREADY_ENROLLED, SEATS_AVAILABLE, HOLD_EXPIRED, INVALID_TRANSITION, PROMO_NOT_FOUND, PROMO_NOT_STARTED, PROMO_EXPIRED, PROMO_EXHAUSTED, PROMO_NOT_APPLICABLE, PROMO_ALREADY_APPLIED, PROMO_CURRENCY_MISMATCH, TRANSFER_NOT_ALLOWED, TRANSFER_CURRENCY_MISMATCH, ALREADY_REFUNDED, REVIEW_LIMIT_REACHED, NOTHING_TO_REVIEW, SUBMISSION_LOCKED, CERTIFICATE_NOT_AVAILABLE, GATEWAY_NOT_CONFIGURED",
             "content": {
               "application/json": {
                 "schema": {
@@ -4273,6 +7921,1484 @@
         ],
         "additionalProperties": false
       },
+      "EnrollmentListDto_Output": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                },
+                "cohortId": {
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                },
+                "courseId": {
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                },
+                "courseTitle": {
+                  "type": "string"
+                },
+                "startDate": {
+                  "type": "string",
+                  "format": "date",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+                },
+                "startsAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                },
+                "timeZone": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "held",
+                    "offered",
+                    "paid",
+                    "transferred",
+                    "cancelled",
+                    "refunded",
+                    "expired",
+                    "completed"
+                  ]
+                },
+                "listPriceMinor": {
+                  "type": "integer",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                },
+                "priceMinor": {
+                  "type": "integer",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                },
+                "currency": {
+                  "type": "string",
+                  "enum": [
+                    "UAH",
+                    "EUR",
+                    "USD"
+                  ]
+                },
+                "paidMinor": {
+                  "type": "integer",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                },
+                "holdExpiresAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+                  "nullable": true
+                },
+                "serverNow": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                },
+                "promoCode": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "transferFromId": {
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                  "nullable": true
+                }
+              },
+              "required": [
+                "id",
+                "cohortId",
+                "courseId",
+                "courseTitle",
+                "startDate",
+                "startsAt",
+                "timeZone",
+                "status",
+                "listPriceMinor",
+                "priceMinor",
+                "currency",
+                "paidMinor",
+                "holdExpiresAt",
+                "serverNow",
+                "promoCode",
+                "transferFromId"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "items"
+        ],
+        "additionalProperties": false
+      },
+      "HoldSeatDto": {
+        "type": "object",
+        "properties": {
+          "cohortId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          },
+          "promoCode": {
+            "type": "string",
+            "pattern": "^[A-Z0-9-]{3,32}$"
+          }
+        },
+        "required": [
+          "cohortId"
+        ],
+        "additionalProperties": false
+      },
+      "HeldDto_Output": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          },
+          "cohortId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          },
+          "courseId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          },
+          "courseTitle": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+          },
+          "startsAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          "timeZone": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "held",
+              "offered",
+              "paid",
+              "transferred",
+              "cancelled",
+              "refunded",
+              "expired",
+              "completed"
+            ]
+          },
+          "listPriceMinor": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991
+          },
+          "priceMinor": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991
+          },
+          "currency": {
+            "type": "string",
+            "enum": [
+              "UAH",
+              "EUR",
+              "USD"
+            ]
+          },
+          "paidMinor": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991
+          },
+          "holdExpiresAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+            "nullable": true
+          },
+          "serverNow": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          "promoCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "transferFromId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+            "nullable": true
+          },
+          "promoError": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "enum": [
+                  "VALIDATION_FAILED",
+                  "MALFORMED_REQUEST",
+                  "UNAUTHENTICATED",
+                  "INVALID_CREDENTIALS",
+                  "TOKEN_REUSED",
+                  "INVALID_SIGNATURE",
+                  "FORBIDDEN",
+                  "CSRF_REJECTED",
+                  "NOT_FOUND",
+                  "CONFLICT",
+                  "EMAIL_TAKEN",
+                  "NO_SEATS",
+                  "ENROLLMENT_CLOSED",
+                  "CAPACITY_BELOW_TAKEN",
+                  "ALREADY_ENROLLED",
+                  "SEATS_AVAILABLE",
+                  "HOLD_EXPIRED",
+                  "INVALID_TRANSITION",
+                  "PROMO_NOT_FOUND",
+                  "PROMO_NOT_STARTED",
+                  "PROMO_EXPIRED",
+                  "PROMO_EXHAUSTED",
+                  "PROMO_NOT_APPLICABLE",
+                  "PROMO_ALREADY_APPLIED",
+                  "PROMO_CURRENCY_MISMATCH",
+                  "TRANSFER_NOT_ALLOWED",
+                  "TRANSFER_CURRENCY_MISMATCH",
+                  "ALREADY_REFUNDED",
+                  "REVIEW_LIMIT_REACHED",
+                  "NOTHING_TO_REVIEW",
+                  "SUBMISSION_LOCKED",
+                  "CERTIFICATE_NOT_AVAILABLE",
+                  "GATEWAY_NOT_CONFIGURED",
+                  "PAYLOAD_TOO_LARGE",
+                  "UNSUPPORTED_MEDIA_TYPE",
+                  "RATE_LIMITED",
+                  "INTERNAL",
+                  "GATEWAY_UNAVAILABLE",
+                  "SERVICE_UNAVAILABLE"
+                ]
+              },
+              "message": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ],
+            "additionalProperties": false,
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "cohortId",
+          "courseId",
+          "courseTitle",
+          "startDate",
+          "startsAt",
+          "timeZone",
+          "status",
+          "listPriceMinor",
+          "priceMinor",
+          "currency",
+          "paidMinor",
+          "holdExpiresAt",
+          "serverNow",
+          "promoCode",
+          "transferFromId",
+          "promoError"
+        ],
+        "additionalProperties": false
+      },
+      "EnrollmentDto_Output": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          },
+          "cohortId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          },
+          "courseId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          },
+          "courseTitle": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+          },
+          "startsAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          "timeZone": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "held",
+              "offered",
+              "paid",
+              "transferred",
+              "cancelled",
+              "refunded",
+              "expired",
+              "completed"
+            ]
+          },
+          "listPriceMinor": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991
+          },
+          "priceMinor": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991
+          },
+          "currency": {
+            "type": "string",
+            "enum": [
+              "UAH",
+              "EUR",
+              "USD"
+            ]
+          },
+          "paidMinor": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991
+          },
+          "holdExpiresAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+            "nullable": true
+          },
+          "serverNow": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          "promoCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "transferFromId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "cohortId",
+          "courseId",
+          "courseTitle",
+          "startDate",
+          "startsAt",
+          "timeZone",
+          "status",
+          "listPriceMinor",
+          "priceMinor",
+          "currency",
+          "paidMinor",
+          "holdExpiresAt",
+          "serverNow",
+          "promoCode",
+          "transferFromId"
+        ],
+        "additionalProperties": false
+      },
+      "ApplyPromoDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "pattern": "^[A-Z0-9-]{3,32}$"
+          }
+        },
+        "required": [
+          "code"
+        ],
+        "additionalProperties": false
+      },
+      "CheckoutDto_Output": {
+        "type": "object",
+        "properties": {
+          "payUrl": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "required": [
+          "payUrl"
+        ],
+        "additionalProperties": false
+      },
+      "RefundPreviewDto_Output": {
+        "type": "object",
+        "properties": {
+          "percent": {
+            "anyOf": [
+              {
+                "type": "number",
+                "enum": [
+                  100
+                ]
+              },
+              {
+                "type": "number",
+                "enum": [
+                  50
+                ]
+              },
+              {
+                "type": "number",
+                "enum": [
+                  0
+                ]
+              }
+            ]
+          },
+          "amountMinor": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991
+          },
+          "currency": {
+            "type": "string",
+            "enum": [
+              "UAH",
+              "EUR",
+              "USD"
+            ]
+          },
+          "paidMinor": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "percent",
+          "amountMinor",
+          "currency",
+          "paidMinor"
+        ],
+        "additionalProperties": false
+      },
+      "TransferOptionsDto_Output": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "cohortId": {
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                },
+                "startDate": {
+                  "type": "string",
+                  "format": "date",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+                },
+                "startsAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                },
+                "timeZone": {
+                  "type": "string"
+                },
+                "freeSeats": {
+                  "type": "integer",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                },
+                "priceMinor": {
+                  "type": "integer",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                },
+                "currency": {
+                  "type": "string",
+                  "enum": [
+                    "UAH",
+                    "EUR",
+                    "USD"
+                  ]
+                },
+                "differenceMinor": {
+                  "type": "integer",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": [
+                "cohortId",
+                "startDate",
+                "startsAt",
+                "timeZone",
+                "freeSeats",
+                "priceMinor",
+                "currency",
+                "differenceMinor"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "items"
+        ],
+        "additionalProperties": false
+      },
+      "TransferDto": {
+        "type": "object",
+        "properties": {
+          "targetCohortId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          }
+        },
+        "required": [
+          "targetCohortId"
+        ],
+        "additionalProperties": false
+      },
+      "WaitlistDto_Output": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "cohortId": {
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                },
+                "courseTitle": {
+                  "type": "string"
+                },
+                "startDate": {
+                  "type": "string",
+                  "format": "date",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "waiting",
+                    "offered"
+                  ]
+                },
+                "place": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991,
+                  "nullable": true
+                },
+                "enrollmentId": {
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                  "nullable": true
+                }
+              },
+              "required": [
+                "cohortId",
+                "courseTitle",
+                "startDate",
+                "status",
+                "place",
+                "enrollmentId"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "items"
+        ],
+        "additionalProperties": false
+      },
+      "SearchPageDto_Output": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "studentId": {
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                },
+                "fullName": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "enrollments": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "enrollmentId": {
+                        "type": "string",
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                      },
+                      "cohortId": {
+                        "type": "string",
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                      },
+                      "courseTitle": {
+                        "type": "string"
+                      },
+                      "startDate": {
+                        "type": "string",
+                        "format": "date",
+                        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+                      },
+                      "status": {
+                        "type": "string",
+                        "enum": [
+                          "held",
+                          "offered",
+                          "paid",
+                          "transferred",
+                          "cancelled",
+                          "refunded",
+                          "expired",
+                          "completed"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "enrollmentId",
+                      "cohortId",
+                      "courseTitle",
+                      "startDate",
+                      "status"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "studentId",
+                "fullName",
+                "email",
+                "enrollments"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "total": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "pageSize": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "page",
+          "pageSize"
+        ],
+        "additionalProperties": false
+      },
+      "StudentPageDto_Output": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "enrollmentId": {
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                },
+                "studentId": {
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                },
+                "fullName": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "held",
+                    "offered",
+                    "paid",
+                    "transferred",
+                    "cancelled",
+                    "refunded",
+                    "expired",
+                    "completed"
+                  ]
+                },
+                "priceMinor": {
+                  "type": "integer",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                },
+                "paidMinor": {
+                  "type": "integer",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                },
+                "currency": {
+                  "type": "string",
+                  "enum": [
+                    "UAH",
+                    "EUR",
+                    "USD"
+                  ]
+                }
+              },
+              "required": [
+                "enrollmentId",
+                "studentId",
+                "fullName",
+                "email",
+                "status",
+                "priceMinor",
+                "paidMinor",
+                "currency"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "total": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "pageSize": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "page",
+          "pageSize"
+        ],
+        "additionalProperties": false
+      },
+      "CohortWaitlistDto_Output": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "studentId": {
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                },
+                "fullName": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "waiting",
+                    "offered",
+                    "converted",
+                    "offer_expired",
+                    "left"
+                  ]
+                },
+                "joinedAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                },
+                "offeredAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+                  "nullable": true
+                }
+              },
+              "required": [
+                "studentId",
+                "fullName",
+                "email",
+                "status",
+                "joinedAt",
+                "offeredAt"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "items"
+        ],
+        "additionalProperties": false
+      },
+      "MoneyPageDto_Output": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                },
+                "enrollmentId": {
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                },
+                "studentName": {
+                  "type": "string"
+                },
+                "kind": {
+                  "type": "string",
+                  "enum": [
+                    "payment",
+                    "refund",
+                    "transfer_out",
+                    "transfer_in",
+                    "refund_pending"
+                  ]
+                },
+                "amountMinor": {
+                  "type": "integer",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                },
+                "currency": {
+                  "type": "string",
+                  "enum": [
+                    "UAH",
+                    "EUR",
+                    "USD"
+                  ]
+                },
+                "at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                }
+              },
+              "required": [
+                "id",
+                "enrollmentId",
+                "studentName",
+                "kind",
+                "amountMinor",
+                "currency",
+                "at"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "total": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "pageSize": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "page",
+          "pageSize"
+        ],
+        "additionalProperties": false
+      },
+      "CapacityDto": {
+        "type": "object",
+        "properties": {
+          "capacity": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10000
+          }
+        },
+        "required": [
+          "capacity"
+        ],
+        "additionalProperties": false
+      },
+      "TransferResultDto_Output": {
+        "type": "object",
+        "properties": {
+          "enrollmentId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          },
+          "surchargeMinor": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "enrollmentId",
+          "surchargeMinor"
+        ],
+        "additionalProperties": false
+      },
+      "ExcludeDto": {
+        "type": "object",
+        "properties": {
+          "refundPolicy": {
+            "type": "string",
+            "enum": [
+              "rule",
+              "full"
+            ]
+          }
+        },
+        "required": [
+          "refundPolicy"
+        ],
+        "additionalProperties": false
+      },
+      "PromoPageDto_Output": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                },
+                "code": {
+                  "type": "string"
+                },
+                "courseId": {
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                  "nullable": true
+                },
+                "discount": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "kind": {
+                          "type": "string",
+                          "enum": [
+                            "percent"
+                          ]
+                        },
+                        "percent": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 100
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "percent"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "kind": {
+                          "type": "string",
+                          "enum": [
+                            "fixed"
+                          ]
+                        },
+                        "amountMinor": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 1000000000
+                        },
+                        "currency": {
+                          "type": "string",
+                          "enum": [
+                            "UAH",
+                            "EUR",
+                            "USD"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "amountMinor",
+                        "currency"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "validFrom": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                },
+                "validUntil": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                },
+                "maxUses": {
+                  "type": "integer",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                },
+                "usedCount": {
+                  "type": "integer",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                },
+                "reservedCount": {
+                  "type": "integer",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": [
+                "id",
+                "code",
+                "courseId",
+                "discount",
+                "validFrom",
+                "validUntil",
+                "maxUses",
+                "usedCount",
+                "reservedCount"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "total": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "pageSize": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "page",
+          "pageSize"
+        ],
+        "additionalProperties": false
+      },
+      "CreatePromoDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "pattern": "^[A-Z0-9-]{3,32}$"
+          },
+          "courseId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+            "default": null,
+            "nullable": true
+          },
+          "discount": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "enum": [
+                      "percent"
+                    ]
+                  },
+                  "percent": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100
+                  }
+                },
+                "required": [
+                  "kind",
+                  "percent"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "enum": [
+                      "fixed"
+                    ]
+                  },
+                  "amountMinor": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 1000000000
+                  },
+                  "currency": {
+                    "type": "string",
+                    "enum": [
+                      "UAH",
+                      "EUR",
+                      "USD"
+                    ]
+                  }
+                },
+                "required": [
+                  "kind",
+                  "amountMinor",
+                  "currency"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "validFrom": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          "validUntil": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          "maxUses": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000000
+          }
+        },
+        "required": [
+          "code",
+          "discount",
+          "validFrom",
+          "validUntil",
+          "maxUses"
+        ],
+        "additionalProperties": false
+      },
+      "PromoDto_Output": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          },
+          "code": {
+            "type": "string"
+          },
+          "courseId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+            "nullable": true
+          },
+          "discount": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "enum": [
+                      "percent"
+                    ]
+                  },
+                  "percent": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100
+                  }
+                },
+                "required": [
+                  "kind",
+                  "percent"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "enum": [
+                      "fixed"
+                    ]
+                  },
+                  "amountMinor": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 1000000000
+                  },
+                  "currency": {
+                    "type": "string",
+                    "enum": [
+                      "UAH",
+                      "EUR",
+                      "USD"
+                    ]
+                  }
+                },
+                "required": [
+                  "kind",
+                  "amountMinor",
+                  "currency"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "validFrom": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          "validUntil": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          "maxUses": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991
+          },
+          "usedCount": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991
+          },
+          "reservedCount": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "id",
+          "code",
+          "courseId",
+          "discount",
+          "validFrom",
+          "validUntil",
+          "maxUses",
+          "usedCount",
+          "reservedCount"
+        ],
+        "additionalProperties": false
+      },
+      "UpdatePromoDto": {
+        "type": "object",
+        "properties": {
+          "maxUses": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000000
+          },
+          "validUntil": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ConfigDto_Output": {
+        "type": "object",
+        "properties": {
+          "configured": {
+            "type": "boolean"
+          },
+          "baseUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "keyLast4": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+            "nullable": true
+          }
+        },
+        "required": [
+          "configured",
+          "baseUrl",
+          "keyLast4",
+          "updatedAt"
+        ],
+        "additionalProperties": false
+      },
+      "ConfigInputDto": {
+        "type": "object",
+        "properties": {
+          "baseUrl": {
+            "type": "string",
+            "maxLength": 300,
+            "format": "uri"
+          },
+          "key": {
+            "type": "string",
+            "minLength": 16,
+            "maxLength": 200
+          }
+        },
+        "required": [
+          "baseUrl",
+          "key"
+        ],
+        "additionalProperties": false
+      },
+      "NotificationDto": {
+        "type": "object",
+        "properties": {
+          "eventId": {
+            "type": "string"
+          },
+          "schoolId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "eventId",
+          "schoolId",
+          "type"
+        ]
+      },
+      "AckDto_Output": {
+        "type": "object",
+        "properties": {
+          "received": {
+            "type": "boolean",
+            "enum": [
+              true
+            ]
+          }
+        },
+        "required": [
+          "received"
+        ],
+        "additionalProperties": false
+      },
       "HealthDto_Output": {
         "type": "object",
         "properties": {
@@ -4306,6 +9432,7 @@
               "CONFLICT",
               "EMAIL_TAKEN",
               "NO_SEATS",
+              "ENROLLMENT_CLOSED",
               "CAPACITY_BELOW_TAKEN",
               "ALREADY_ENROLLED",
               "SEATS_AVAILABLE",

@@ -58,7 +58,7 @@ export type TestDatabase = {
 /** A private, migrated database, so test files can run in parallel. */
 export const createTestDatabase = async (
   serverUrl: string,
-  connections = 20,
+  connections = 10,
 ): Promise<TestDatabase> => {
   const name = `t_${randomBytes(8).toString('hex')}`;
   await onServer(serverUrl, `CREATE DATABASE ${name} TEMPLATE ${TEMPLATE}`);

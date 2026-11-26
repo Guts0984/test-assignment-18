@@ -1,0 +1,19 @@
+{
+  "name": "@school/gateway",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "default": "./dist/*.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@school/shared": "workspace:*",
+    "zod": "4.6.7"
+  }
+}

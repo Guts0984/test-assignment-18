@@ -1,13 +1,17 @@
 import { randomBytes } from 'node:crypto';
-import { type AddressInfo } from 'node:net';
+import { createServer, type AddressInfo } from 'node:net';
+import { createDb } from '@school/db/client';
 import { createTestDatabase } from '@school/db/testing/database';
+import { createPublisher } from '@school/queue/publisher';
 import { fromClock } from '@school/db/time';
 import { createFixedClock } from '@school/shared/clock/clock';
+import { QUEUE_NAMES } from '@school/shared/jobs/registry';
 import { createApp } from '../../src/app.factory';
 import { type EnvSource, loadEnv } from '../../src/config/env';
 import { type Deps } from '../../src/infra/deps';
 import { createLogger } from '../../src/infra/logger';
 import { createRedis } from '../../src/infra/redis';
+import { queueSettings } from '../../src/infra/queue-settings';
 
 /** The business time every in-process test starts at. */
 export const NOW = new Date('2026-03-01T10:00:00.000Z');
@@ -20,10 +24,26 @@ const LOOSE_LIMITS: EnvSource = {
 
 export type ApiCopy = { readonly url: string; readonly deps: Deps };
 
-const listen = async (deps: Deps) => {
+/** A port that is free right now, so a copy can be told its own address before it starts. */
+const freePort = (): Promise<number> =>
+  new Promise((resolve) => {
+    const probe = createServer();
+    probe.listen(0, '127.0.0.1', () => {
+      const { port } = probe.address() as AddressInfo;
+      probe.close(() => {
+        resolve(port);
+      });
+    });
+  });
+
+/** Deletes the queue keys a test created in the shared Redis. */
+const removeQueues = async (deps: Deps): Promise<void> => {
+  await Promise.all(QUEUE_NAMES.map((name) => deps.jobs.queue(name).obliterate({ force: true })));
+};
+
+const listen = async (deps: Deps, port: number) => {
   const app = await createApp(deps);
-  await app.listen(0, '127.0.0.1');
-  const { port } = (app.getHttpServer() as { address: () => AddressInfo }).address();
+  await app.listen(port, '127.0.0.1');
   return { app, url: `http://127.0.0.1:${port}` };
 };
 
@@ -38,8 +58,9 @@ export const startApi = async (
   const clock = createFixedClock(NOW);
   const logger = createLogger('silent');
   const prefix = `test:${randomBytes(6).toString('hex')}:`;
+  const ports = await Promise.all(Array.from({ length: options.copies ?? 1 }, freePort));
   const instances = await Promise.all(
-    Array.from({ length: options.copies ?? 1 }, async (_, index) => {
+    ports.map(async (port, index) => {
       const env = loadEnv({
         ...process.env,
         ...LOOSE_LIMITS,
@@ -47,6 +68,7 @@ export const startApi = async (
         TEST_CLOCK_ENABLED: 'false',
         DATABASE_URL: database.url,
         INSTANCE_ID: `api-${index + 1}`,
+        WEBHOOK_CALLBACK_URL: `http://127.0.0.1:${ports[0]}/api/payments/webhook`,
         ...options.env,
       });
       const redis = createRedis(env.REDIS_URL, logger, prefix);
@@ -56,8 +78,12 @@ export const startApi = async (
           resolve();
         });
       });
-      const deps: Deps = { env, db: database.db, redis, time: fromClock(clock), logger };
-      return { ...(await listen(deps)), deps };
+      const jobs = createPublisher(queueSettings({ ...env, QUEUE_PREFIX: prefix }), () => {});
+      const time = fromClock(clock);
+      // Each copy has its own pool, as separate processes would.
+      const db = createDb(database.url);
+      const deps: Deps = { env, db, redis, time, logger, jobs };
+      return { ...(await listen(deps, port)), deps };
     }),
   );
   const [first] = instances;
@@ -68,11 +94,15 @@ export const startApi = async (
     app: first.app,
     deps: first.deps,
     db: database.db,
+    databaseUrl: database.url,
     clock,
     stop: async () => {
       for (const instance of instances) {
         await instance.app.close();
+        if (instance.deps.redis.status === 'ready') await removeQueues(instance.deps);
+        await instance.deps.jobs.close();
         instance.deps.redis.disconnect();
+        await instance.deps.db.$disconnect();
       }
       await database.drop();
     },

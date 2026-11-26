@@ -3,6 +3,8 @@ name: school
 services:
   postgres:
     image: postgres:16-alpine
+    # Room for two api copies, several workers and parallel test databases.
+    command: ['postgres', '-c', 'max_connections=300']
     environment:
       POSTGRES_USER: ${POSTGRES_USER:?set in .env}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set in .env}

@@ -2,6 +2,7 @@ import { type Db, type Tx } from '../src/client';
 import { hashPassword } from '../src/password';
 import { seedCatalog, seedLessonWork } from './catalog';
 import { seedEnrollments } from './enrollments';
+import { seedGateways } from './gateways';
 import { seedHomework } from './homework';
 import { seedPeople } from './people';
 import { seedPromos } from './promos';
@@ -26,6 +27,12 @@ const setBulkTriggers = async (tx: Tx, state: 'DISABLE' | 'ENABLE'): Promise<voi
 };
 
 export type SeedOptions = {
+  /** Connects every school to a payment system. */
+  readonly gateway?: {
+    readonly baseUrl: string;
+    readonly key: string;
+    readonly encryptionKey: string;
+  };
   readonly scale: number;
   readonly password: string;
   readonly now: Date;
@@ -56,6 +63,7 @@ export const seedDatabase = async (db: Db, options: SeedOptions): Promise<boolea
       await seedHomework(tx, sizes, now);
       await tx.$executeRawUnsafe(`ALTER TABLE certificates ENABLE TRIGGER USER`);
       await seedPromos(tx, now);
+      if (options.gateway) await seedGateways(tx, options.gateway, now);
       await tx.seedRun.create({ data: { id: MARKER, completedAt: now } });
       return true;
     },

@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@prisma/client": "6.19.3",
+    "@school/gateway": "workspace:*",
     "@school/shared": "workspace:*",
     "argon2": "0.45.2",
     "luxon": "3.7.2",

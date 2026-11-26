@@ -14,6 +14,8 @@
     "@nestjs/platform-express": "11.2.12",
     "@nestjs/swagger": "^11.4.8",
     "@school/db": "workspace:*",
+    "@school/gateway": "workspace:*",
+    "@school/queue": "workspace:*",
     "@school/shared": "workspace:*",
     "argon2": "0.45.2",
     "express": "^5.3.0",
@@ -27,6 +29,7 @@
     "zod": "4.6.7"
   },
   "devDependencies": {
+    "@school/paystub": "workspace:*",
     "@types/express": "^5.0.6"
   }
 }

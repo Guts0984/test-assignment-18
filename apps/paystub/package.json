@@ -1,0 +1,25 @@
+{
+  "name": "@school/paystub",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "default": "./dist/*.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json",
+    "start": "node dist/main.js"
+  },
+  "dependencies": {
+    "@school/gateway": "workspace:*",
+    "@school/shared": "workspace:*",
+    "pg": "^8.23.1",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.23.1"
+  }
+}

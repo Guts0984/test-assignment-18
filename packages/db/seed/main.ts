@@ -12,6 +12,11 @@ const main = async (): Promise<void> => {
       scale: env.SEED_SCALE,
       password: env.SEED_DEMO_PASSWORD,
       now: new Date(),
+      gateway: {
+        baseUrl: env.PAYSTUB_INTERNAL_URL,
+        key: env.PAYSTUB_MERCHANT_KEY,
+        encryptionKey: env.GATEWAY_ENCRYPTION_KEY,
+      },
     });
     const seconds = Math.round((Date.now() - started) / 1000);
     process.stdout.write(

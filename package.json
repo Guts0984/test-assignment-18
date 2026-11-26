@@ -6,7 +6,7 @@
     "node": ">=22"
   },
   "scripts": {
-    "build:libs": "pnpm --filter \"./packages/*\" run build",
+    "build:libs": "pnpm --filter \"./packages/*\" --filter @school/paystub run build",
     "build": "pnpm -r run build",
     "typecheck": "pnpm run build:libs && pnpm -r --parallel run typecheck",
     "lint": "pnpm run build:libs && eslint . && prettier --check .",

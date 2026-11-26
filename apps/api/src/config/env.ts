@@ -46,6 +46,17 @@ export const apiEnvSchema = z
     RATE_LIMIT_REGISTER_IP_MAX: positive.default(10),
     RATE_LIMIT_REGISTER_IP_WINDOW_SEC: positive.default(3600),
     RATE_LIMIT_FAIL_MODE: z.enum(['open', 'closed']).default('open'),
+    HOLD_TTL_SEC: positive.default(900),
+    OFFER_TTL_SEC: positive.default(86_400),
+    GATEWAY_ENCRYPTION_KEY: z.string().refine((v) => Buffer.from(v, 'base64').length === 32, {
+      error: 'Expected 32 bytes in base64',
+    }),
+    WEBHOOK_MAX_SKEW_SEC: positive.default(300),
+    WEBHOOK_CALLBACK_URL: z.url().default('http://nginx/api/payments/webhook'),
+    PAYSTUB_HTTP_TIMEOUT_MS: positive.default(5_000),
+    QUEUE_PREFIX: z.string().min(1).default('school'),
+    JOB_ATTEMPTS: positive.default(8),
+    JOB_BACKOFF_MS: positive.default(2_000),
     TEST_CLOCK_ENABLED: flag.default(false),
     TEST_CONTROL_TOKEN: z.string().default(''),
   })

@@ -11,6 +11,11 @@ import { AuthModule } from './modules/auth/auth.module';
 import { CatalogModule } from './modules/catalog/catalog.module';
 import { CohortsModule } from './modules/cohorts/cohorts.module';
 import { CoursesModule } from './modules/courses/courses.module';
+import { EnrollmentsModule } from './modules/enrollments/enrollments.module';
+import { RosterModule } from './modules/roster/roster.module';
+import { PromosModule } from './modules/promos/promos.module';
+import { GatewayModule } from './modules/gateway/gateway.module';
+import { PaymentsModule } from './modules/payments/payments.module';
 import { HealthModule } from './modules/health/health.module';
 import { StaffModule } from './modules/staff/staff.module';
 import { TestControlModule } from './modules/test-control/test-control.module';
@@ -27,6 +32,11 @@ export class AppModule {
         CatalogModule,
         CoursesModule,
         CohortsModule,
+        EnrollmentsModule,
+        RosterModule,
+        PromosModule,
+        GatewayModule,
+        PaymentsModule,
         HealthModule,
         ...(deps.env.TEST_CLOCK_ENABLED ? [TestControlModule] : []),
       ],
