@@ -12,10 +12,12 @@
     "lint": "pnpm run build:libs && eslint . && prettier --check .",
     "format": "prettier --write .",
     "test": "pnpm run build:libs && vitest run",
-    "test:unit": "pnpm run build:libs && vitest run --project unit"
+    "test:unit": "pnpm run build:libs && vitest run --project unit",
+    "test:integration": "pnpm run build:libs && vitest run --project integration"
   },
   "devDependencies": {
     "@eslint/js": "9.39.5",
+    "@school/db": "workspace:*",
     "@types/node": "22.20.7",
     "eslint": "9.39.5",
     "prettier": "3.10.1",

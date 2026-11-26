@@ -3,3 +3,7 @@ packages:
   - packages/*
 onlyBuiltDependencies:
   - esbuild
+  - argon2
+  - prisma
+  - '@prisma/client'
+  - '@prisma/engines'

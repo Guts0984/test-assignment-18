@@ -36,6 +36,22 @@ jobs:
       - uses: ./.github/actions/setup
       - run: pnpm run test:unit
 
+  integration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/setup
+      - run: cp .env.example .env
+      - run: docker compose up --detach --wait --wait-timeout 120 postgres redis mailpit
+      - run: pnpm run test:integration --shard=${{ matrix.shard }}/3
+      - if: failure()
+        run: docker compose logs --no-color
+
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -57,7 +73,7 @@ jobs:
 
   ci-ok:
     if: always()
-    needs: [typecheck, lint, unit, build, infra]
+    needs: [typecheck, lint, unit, integration, build, infra]
     runs-on: ubuntu-latest
     steps:
       - name: Require every job to succeed

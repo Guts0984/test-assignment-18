@@ -1,0 +1,467 @@
+// CHECK constraints, partial and trigram indexes and triggers live in the SQL migrations.
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model School {
+  id            String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name          String         @unique
+  users         User[]
+  courses       Course[]
+  promoCodes    PromoCode[]
+  gatewayConfig GatewayConfig?
+
+  @@map("schools")
+}
+
+model User {
+  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email        String    @unique
+  passwordHash String    @map("password_hash")
+  fullName     String    @map("full_name")
+  role         String
+  schoolId     String?   @map("school_id") @db.Uuid
+  timeZone     String    @default("Europe/Kyiv") @map("time_zone")
+  disabledAt   DateTime? @map("disabled_at") @db.Timestamptz(3)
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  school        School?        @relation(fields: [schoolId], references: [id])
+  refreshTokens RefreshToken[]
+  mentorCohorts Cohort[]
+  enrollments   Enrollment[]
+
+  @@index([schoolId, role])
+  @@map("users")
+}
+
+model RefreshToken {
+  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String    @map("user_id") @db.Uuid
+  familyId  String    @map("family_id") @db.Uuid
+  tokenHash String    @unique @map("token_hash")
+  expiresAt DateTime  @map("expires_at") @db.Timestamptz(3)
+  rotatedAt DateTime? @map("rotated_at") @db.Timestamptz(3)
+  revokedAt DateTime? @map("revoked_at") @db.Timestamptz(3)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([familyId])
+  @@index([userId])
+  @@map("refresh_tokens")
+}
+
+model GatewayConfig {
+  schoolId      String   @id @map("school_id") @db.Uuid
+  baseUrl       String   @map("base_url")
+  keyCiphertext String   @map("key_ciphertext")
+  keyLast4      String   @map("key_last4")
+  updatedAt     DateTime @map("updated_at") @db.Timestamptz(3)
+
+  school School @relation(fields: [schoolId], references: [id])
+
+  @@map("gateway_configs")
+}
+
+model Course {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  schoolId    String   @map("school_id") @db.Uuid
+  title       String
+  direction   String
+  description String   @default("")
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  school  School   @relation(fields: [schoolId], references: [id])
+  cohorts Cohort[]
+
+  @@index([schoolId])
+  @@index([direction])
+  @@map("courses")
+}
+
+model Cohort {
+  id            String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  courseId      String    @map("course_id") @db.Uuid
+  schoolId      String    @map("school_id") @db.Uuid
+  mentorId      String    @map("mentor_id") @db.Uuid
+  startDate     DateTime  @map("start_date") @db.Date
+  timeZone      String    @map("time_zone")
+  capacity      Int       @default(0)
+  seatsTaken    Int       @default(0) @map("seats_taken")
+  priceMinor    Int       @map("price_minor")
+  currency      String
+  lessonMinutes Int       @default(90) @map("lesson_minutes")
+  startsAt      DateTime  @map("starts_at") @db.Timestamptz(3)
+  endsAt        DateTime? @map("ends_at") @db.Timestamptz(3)
+  completedAt   DateTime? @map("completed_at") @db.Timestamptz(3)
+  createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  course      Course       @relation(fields: [courseId], references: [id])
+  mentor      User         @relation(fields: [mentorId], references: [id])
+  lessons     Lesson[]
+  enrollments Enrollment[]
+
+  @@index([courseId])
+  @@index([schoolId, startDate])
+  @@index([mentorId])
+  @@index([startDate, id])
+  @@index([priceMinor])
+  @@map("cohorts")
+}
+
+model Lesson {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  cohortId  String   @map("cohort_id") @db.Uuid
+  seq       Int
+  localDate DateTime @map("local_date") @db.Date
+  localTime String   @map("local_time")
+  startsAt  DateTime @map("starts_at") @db.Timestamptz(3)
+  endsAt    DateTime @map("ends_at") @db.Timestamptz(3)
+  version   Int      @default(1)
+
+  cohort   Cohort    @relation(fields: [cohortId], references: [id])
+  homework Homework?
+
+  @@unique([cohortId, seq])
+  @@index([cohortId, startsAt])
+  @@map("lessons")
+}
+
+model Homework {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  lessonId   String   @unique @map("lesson_id") @db.Uuid
+  cohortId   String   @map("cohort_id") @db.Uuid
+  title      String
+  deadlineAt DateTime @map("deadline_at") @db.Timestamptz(3)
+
+  lesson      Lesson       @relation(fields: [lessonId], references: [id])
+  submissions Submission[]
+
+  @@index([cohortId])
+  @@index([deadlineAt])
+  @@map("homeworks")
+}
+
+model Enrollment {
+  id             String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  cohortId       String    @map("cohort_id") @db.Uuid
+  studentId      String    @map("student_id") @db.Uuid
+  status         String
+  listPriceMinor Int       @map("list_price_minor")
+  priceMinor     Int       @map("price_minor")
+  currency       String
+  holdExpiresAt  DateTime? @map("hold_expires_at") @db.Timestamptz(3)
+  transferFromId String?   @map("transfer_from_id") @db.Uuid
+  balanceMinor   BigInt    @default(0) @map("balance_minor")
+  createdAt      DateTime  @map("created_at") @db.Timestamptz(3)
+  updatedAt      DateTime  @map("updated_at") @db.Timestamptz(3)
+  paidAt         DateTime? @map("paid_at") @db.Timestamptz(3)
+
+  cohort          Cohort           @relation(fields: [cohortId], references: [id])
+  student         User             @relation(fields: [studentId], references: [id])
+  transferFrom    Enrollment?      @relation("transfer", fields: [transferFromId], references: [id])
+  transferTo      Enrollment[]     @relation("transfer")
+  operations      MoneyOperation[]
+  refundRequests  RefundRequest[]
+  redemption      PromoRedemption?
+  paymentSessions PaymentSession[]
+  certificate     Certificate?
+  submissions     Submission[]
+
+  @@index([cohortId, status])
+  @@index([studentId])
+  @@index([transferFromId])
+  @@map("enrollments")
+}
+
+model SeatJournal {
+  id            BigInt   @id @default(autoincrement())
+  cohortId      String   @map("cohort_id") @db.Uuid
+  enrollmentId  String?  @map("enrollment_id") @db.Uuid
+  seatsDelta    Int      @map("seats_delta")
+  capacityDelta Int      @default(0) @map("capacity_delta")
+  reason        String
+  actorKind     String   @map("actor_kind")
+  actorId       String?  @map("actor_id") @db.Uuid
+  at            DateTime @db.Timestamptz(3)
+
+  @@index([cohortId])
+  @@index([enrollmentId])
+  @@map("seat_journal")
+}
+
+model MoneyOperation {
+  id                String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  enrollmentId      String   @map("enrollment_id") @db.Uuid
+  kind              String
+  amountMinor       BigInt   @map("amount_minor")
+  currency          String
+  providerPaymentId String?  @unique @map("provider_payment_id")
+  refundRequestId   String?  @unique @map("refund_request_id") @db.Uuid
+  createdAt         DateTime @map("created_at") @db.Timestamptz(3)
+
+  enrollment    Enrollment     @relation(fields: [enrollmentId], references: [id])
+  refundRequest RefundRequest? @relation("refund", fields: [refundRequestId], references: [id])
+  sourceRefund  RefundRequest? @relation("source")
+  entries       LedgerEntry[]
+
+  @@index([enrollmentId])
+  @@index([kind, createdAt])
+  @@map("money_operations")
+}
+
+model LedgerEntry {
+  id           BigInt  @id @default(autoincrement())
+  operationId  String  @map("operation_id") @db.Uuid
+  account      String
+  enrollmentId String? @map("enrollment_id") @db.Uuid
+  debitMinor   BigInt  @default(0) @map("debit_minor")
+  creditMinor  BigInt  @default(0) @map("credit_minor")
+
+  operation MoneyOperation @relation(fields: [operationId], references: [id])
+
+  @@index([operationId])
+  @@index([enrollmentId])
+  @@map("ledger_entries")
+}
+
+model RefundRequest {
+  id                       String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  enrollmentId             String    @map("enrollment_id") @db.Uuid
+  // Set when an unwanted payment (late, duplicate, wrong amount) is sent back.
+  sourcePaymentOperationId String?   @unique @map("source_payment_operation_id") @db.Uuid
+  amountMinor              BigInt    @map("amount_minor")
+  currency                 String
+  reason                   String
+  status                   String    @default("pending")
+  requestedById            String?   @map("requested_by_id") @db.Uuid
+  createdAt                DateTime  @map("created_at") @db.Timestamptz(3)
+  completedAt              DateTime? @map("completed_at") @db.Timestamptz(3)
+
+  enrollment      Enrollment      @relation(fields: [enrollmentId], references: [id])
+  sourceOperation MoneyOperation? @relation("source", fields: [sourcePaymentOperationId], references: [id])
+  operation       MoneyOperation? @relation("refund")
+
+  @@index([enrollmentId])
+  @@index([createdAt])
+  @@map("refund_requests")
+}
+
+model PaymentSession {
+  id                String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  enrollmentId      String   @map("enrollment_id") @db.Uuid
+  amountMinor       Int      @map("amount_minor")
+  providerSessionId String   @unique @map("provider_session_id")
+  payUrl            String   @map("pay_url")
+  createdAt         DateTime @map("created_at") @db.Timestamptz(3)
+
+  enrollment Enrollment @relation(fields: [enrollmentId], references: [id])
+
+  @@unique([enrollmentId, amountMinor])
+  @@map("payment_sessions")
+}
+
+model PaymentNotification {
+  id              String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  schoolId        String    @map("school_id") @db.Uuid
+  providerEventId String    @map("provider_event_id")
+  kind            String
+  payload         Json
+  receivedAt      DateTime  @map("received_at") @db.Timestamptz(3)
+  processedAt     DateTime? @map("processed_at") @db.Timestamptz(3)
+  outcome         String?
+
+  @@unique([schoolId, providerEventId])
+  @@map("payment_notifications")
+}
+
+model PromoCode {
+  id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  schoolId      String   @map("school_id") @db.Uuid
+  code          String
+  courseId      String?  @map("course_id") @db.Uuid
+  discountKind  String   @map("discount_kind")
+  percent       Int?
+  amountMinor   Int?     @map("amount_minor")
+  currency      String?
+  validFrom     DateTime @map("valid_from") @db.Timestamptz(3)
+  validUntil    DateTime @map("valid_until") @db.Timestamptz(3)
+  maxUses       Int      @map("max_uses")
+  usedCount     Int      @default(0) @map("used_count")
+  reservedCount Int      @default(0) @map("reserved_count")
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  school      School            @relation(fields: [schoolId], references: [id])
+  redemptions PromoRedemption[]
+
+  @@unique([schoolId, code])
+  @@map("promo_codes")
+}
+
+model PromoRedemption {
+  enrollmentId  String   @id @map("enrollment_id") @db.Uuid
+  promoId       String   @map("promo_id") @db.Uuid
+  state         String
+  discountMinor Int      @map("discount_minor")
+  updatedAt     DateTime @map("updated_at") @db.Timestamptz(3)
+
+  enrollment Enrollment @relation(fields: [enrollmentId], references: [id])
+  promo      PromoCode  @relation(fields: [promoId], references: [id])
+
+  @@index([promoId])
+  @@map("promo_redemptions")
+}
+
+model WaitlistEntry {
+  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  cohortId     String    @map("cohort_id") @db.Uuid
+  studentId    String    @map("student_id") @db.Uuid
+  position     BigInt    @default(autoincrement())
+  status       String
+  joinedAt     DateTime  @map("joined_at") @db.Timestamptz(3)
+  offeredAt    DateTime? @map("offered_at") @db.Timestamptz(3)
+  enrollmentId String?   @unique @map("enrollment_id") @db.Uuid
+
+  @@index([cohortId, status])
+  @@index([studentId])
+  @@index([offeredAt])
+  @@map("waitlist_entries")
+}
+
+model Submission {
+  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  homeworkId   String    @map("homework_id") @db.Uuid
+  enrollmentId String    @map("enrollment_id") @db.Uuid
+  studentId    String    @map("student_id") @db.Uuid
+  cohortId     String    @map("cohort_id") @db.Uuid
+  status       String
+  body         String
+  submittedAt  DateTime  @map("submitted_at") @db.Timestamptz(3)
+  isLate       Boolean   @map("is_late")
+  reviewerId   String?   @map("reviewer_id") @db.Uuid
+  claimedAt    DateTime? @map("claimed_at") @db.Timestamptz(3)
+  version      Int       @default(1)
+
+  homework   Homework           @relation(fields: [homeworkId], references: [id])
+  enrollment Enrollment         @relation(fields: [enrollmentId], references: [id])
+  file       SubmissionFile?
+  reviews    SubmissionReview[]
+
+  @@unique([homeworkId, enrollmentId])
+  @@index([enrollmentId])
+  @@index([studentId])
+  @@map("submissions")
+}
+
+model SubmissionFile {
+  submissionId String @id @map("submission_id") @db.Uuid
+  fileName     String @map("file_name")
+  mimeType     String @map("mime_type")
+  sizeBytes    Int    @map("size_bytes")
+  content      Bytes
+
+  submission Submission @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+
+  @@map("submission_files")
+}
+
+model SubmissionReview {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  submissionId String   @map("submission_id") @db.Uuid
+  mentorId     String   @map("mentor_id") @db.Uuid
+  verdict      String
+  score        Int?
+  comment      String
+  reviewedAt   DateTime @map("reviewed_at") @db.Timestamptz(3)
+
+  submission Submission @relation(fields: [submissionId], references: [id])
+
+  @@index([submissionId, reviewedAt])
+  @@map("submission_reviews")
+}
+
+model CertificateCounter {
+  courseId   String @id @map("course_id") @db.Uuid
+  lastNumber Int    @default(0) @map("last_number")
+
+  @@map("certificate_counters")
+}
+
+model Certificate {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  courseId     String   @map("course_id") @db.Uuid
+  enrollmentId String   @unique @map("enrollment_id") @db.Uuid
+  studentId    String   @map("student_id") @db.Uuid
+  number       Int
+  verifyToken  String   @unique @map("verify_token")
+  issuedAt     DateTime @map("issued_at") @db.Timestamptz(3)
+
+  enrollment Enrollment @relation(fields: [enrollmentId], references: [id])
+
+  @@unique([courseId, number])
+  @@index([studentId])
+  @@index([issuedAt])
+  @@map("certificates")
+}
+
+model ScheduledNotification {
+  id            String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  kind          String
+  lessonId      String    @map("lesson_id") @db.Uuid
+  lessonVersion Int       @map("lesson_version")
+  dueAt         DateTime  @map("due_at") @db.Timestamptz(3)
+  status        String    @default("pending")
+  processedAt   DateTime? @map("processed_at") @db.Timestamptz(3)
+
+  @@unique([lessonId, kind, lessonVersion])
+  @@map("scheduled_notifications")
+}
+
+model EmailOutbox {
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  dedupeKey  String    @unique @map("dedupe_key")
+  toAddress  String    @map("to_address")
+  subject    String
+  body       String
+  status     String    @default("pending")
+  leaseUntil DateTime? @map("lease_until") @db.Timestamptz(3)
+  attempts   Int       @default(0)
+  createdAt  DateTime  @map("created_at") @db.Timestamptz(3)
+  sentAt     DateTime? @map("sent_at") @db.Timestamptz(3)
+
+  @@map("email_outbox")
+}
+
+model JobFailure {
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  queue      String
+  jobId      String    @map("job_id")
+  schoolId   String?   @map("school_id") @db.Uuid
+  payload    Json
+  error      String
+  attempts   Int
+  failedAt   DateTime  @map("failed_at") @db.Timestamptz(3)
+  resolvedAt DateTime? @map("resolved_at") @db.Timestamptz(3)
+
+  @@unique([queue, jobId])
+  @@index([schoolId, failedAt])
+  @@map("job_failures")
+}
+
+model TestClock {
+  id       Int    @id @default(1)
+  offsetMs BigInt @default(0) @map("offset_ms")
+
+  @@map("test_clock")
+}
+
+model SeedRun {
+  id          String   @id
+  completedAt DateTime @map("completed_at") @db.Timestamptz(3)
+
+  @@map("seed_runs")
+}

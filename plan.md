@@ -261,7 +261,7 @@ Runner: `pnpm acceptance` runs A-1…A-17 in order against the compose stack and
 - AS-28 **Homework.** One homework task per lesson, created with the lesson. Deadline = lesson's local date + 7 days at 23:59:59.999 cohort-local. Rescheduling moves it. A student may submit or resubmit while the status is `submitted` (replace, before review) or `returned`. Not while `in_review`, never after `accepted`. Resubmission is also allowed after the deadline and is flagged late. `is_late` is computed at every submit. "Grade" = mentor verdict + optional score 0–100 + comment.
 - AS-29 **Files.** Stored in Postgres `bytea` (`submission_files`), at most 10 MB, MIME allowlist (pdf, zip, png, jpeg, txt, docx), sniffed by magic bytes. There is no object store in the stack, and both api copies need the same storage.
 - AS-30 **Mentor claim.** `POST /mentor/queue/claim` takes the oldest `submitted` work in the mentor's cohorts (`FOR UPDATE SKIP LOCKED`) under a lock on the mentor's row, which caps concurrent reviews at 5 (`REVIEW_LIMIT_REACHED`). A mentor can release a claim. Reviewing is a claim, then accept or return. Releasing returns the work to `submitted` at its original queue position.
-- AS-31 **Certificate.** Eligible = `accepted / homework count ≥ 0.8` at evaluation time, where "after the last lesson" = after the last lesson's end. The cohort-end sweep sets `paid` → `completed`, then enqueues `certificates` per enrollment. Accepting a submission in a finished cohort re-evaluates. The number comes from `course_certificate_counters` (row-locked `UPDATE … RETURNING`) in the same transaction as the insert, with `UNIQUE(course_id, number)` and `UNIQUE(enrollment_id)`, so a rollback leaves no gap. The PDF is rendered on download from db data. The public verification link is `/verify/{token}` with a 256-bit random token stored as a SHA-256 hash.
+- AS-31 **Certificate.** Eligible = `accepted / homework count ≥ 0.8` at evaluation time, where "after the last lesson" = after the last lesson's end. The cohort-end sweep sets `paid` → `completed`, then enqueues `certificates` per enrollment. Accepting a submission in a finished cohort re-evaluates. The number comes from `course_certificate_counters` (row-locked `UPDATE … RETURNING`) in the same transaction as the insert, with `UNIQUE(course_id, number)` and `UNIQUE(enrollment_id)`, so a rollback leaves no gap. The PDF is rendered on download from db data. The public verification link is `/verify/{token}` with a random token of at least 240 bits. It is stored as is, so the student can open and share the link again later.
 
 **Platform**
 - AS-32 **Language.** README, UI and all docs in English. The assignment sets no language for them. UI is single-locale.
@@ -280,6 +280,9 @@ Runner: `pnpm acceptance` runs A-1…A-17 in order against the compose stack and
 - AS-45 **Rounding.** A percent discount is rounded down (the price rounds up to the next minor unit). Refunds are rounded down. Prices are capped at 1,000,000,000 minor units.
 - AS-46 **A cohort with no lessons** has its start at 00:00 cohort-local on the start date, with no third-lesson boundary (50 % after the start).
 - AS-47 **Late payment status.** A late or unexpected payment that cannot be honoured moves an `expired` or `cancelled` enrollment to `refunded`.
+- AS-48 **Returns of unwanted payments** (late and not honoured, duplicate, wrong amount) are separate refund requests tied to that payment (unique per payment). The «не больше одного раза» limit applies to the refund of the enrollment itself (cancel, exclusion, transfer difference), which is unique per enrollment. Both are capped by the balance in the database.
+- AS-49 **Database guards.** Seat counters, promo counters, balances and certificate counters are written only by triggers from append-only history. A deferred trigger rejects any commit in which an enrollment's status and its seat journal disagree.
+- AS-50 **Seed shape.** Bulk cohorts have 6 weekly lessons (so 100,000 certificates fit within 1,000,000 submissions); the cohorts with lessons around a DST change have 12. The full seed takes about 4 minutes. The seed disables row guards only inside its own transaction, and the invariant checks verify the result.
 
 ---
 
@@ -535,7 +538,7 @@ S = sensitive (required, no default). Apps: A=api, W=worker, Wb=web, P=paystub, 
 | TM-26 | Two mentors (or two tabs) claim the same work; claiming over 5 | T4 | `SKIP LOCKED` + mentor row lock + CHECK | adv: `mentor-claim.race.adv.spec.ts` |
 | TM-27 | Late-flag tampering, submitting while in review, resubmitting accepted work | T3 | server-computed `is_late`, transition map | it: `submissions.it.spec.ts`; adv: `mass-assignment.adv.spec.ts` |
 | TM-28 | Malicious file (wrong MIME, polyglot, oversize, path in filename) | T3 | magic-byte sniff, allowlist, size limit, served with `Content-Disposition: attachment` + `nosniff` | adv: `upload.adv.spec.ts` |
-| TM-29 | Certificate link guessing / enumeration by number or id | T7 | 256-bit token, hash lookup, numbers never resolve | adv: `certificate-link.adv.spec.ts` |
+| TM-29 | Certificate link guessing / enumeration by number or id | T7 | random token of at least 240 bits, numbers never resolve | adv: `certificate-link.adv.spec.ts` |
 | TM-30 | Duplicate or gapped certificate numbers under multi-worker / kill -9 / FLUSHALL | T8 | counter row lock + uniques in one tx | adv: `certificates.adv.spec.ts`; x: A-11 |
 | TM-31 | Job lost or doubled on worker kill or FLUSHALL | T8 | Postgres outbox + sweeper + deterministic jobIds + guarded transitions | adv: `worker-kill.adv.spec.ts`, `flushall.adv.spec.ts`, `multi-worker.adv.spec.ts` |
 | TM-32 | Manager retries another school's failed job, or retries a job to double its effect | T5 | `school_id` scope; retry reruns the idempotent handler | adv: `failed-jobs.adv.spec.ts` |
@@ -650,7 +653,7 @@ Rules that make this parallelism safe:
 ## 9. Progress checklist
 
 - [x] C1 scaffold + CI + compose infra + shared domain rules
-- [ ] C2 db schema, journal, ledger, constraints + seed
+- [x] C2 db schema, journal, ledger, constraints + seed
 - [ ] C3 api core (auth, roles, staff, catalog, courses, cohorts, schedule, limiter)
 - [ ] C4 enrollments, waitlist, promo, transfers + paystub + payments/refunds
 - [ ] C5 homework, mentor, certificates, reports, realtime + worker

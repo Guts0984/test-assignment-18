@@ -35,7 +35,16 @@ export default tseslint.config(
     rules: { 'no-restricted-syntax': ['error', noDefaultExport, noProcessEnv, noClass] },
   },
   {
-    files: ['**/*.config.{ts,mts,mjs}', 'vitest.workspace.ts'],
+    // The only readers of process.env.
+    files: ['**/src/config/env.ts'],
+    rules: { 'no-restricted-syntax': ['error', noDefaultExport, noClass] },
+  },
+  {
+    files: ['**/*.spec.ts'],
+    rules: { 'no-restricted-syntax': ['error', noDefaultExport] },
+  },
+  {
+    files: ['**/*.config.{ts,mts,mjs}', 'vitest.database.ts'],
     rules: { 'no-restricted-syntax': 'off' },
   },
   { files: ['**/*.{js,mjs,cjs}'], ...tseslint.configs.disableTypeChecked },
