@@ -14,6 +14,7 @@
     "@school/queue": "workspace:*",
     "@school/shared": "workspace:*",
     "bullmq": "5.81.6",
+    "ioredis": "5",
     "nodemailer": "^10.6.1",
     "pino": "10.4.0",
     "reflect-metadata": "0.2.2",
@@ -23,7 +24,6 @@
   "devDependencies": {
     "@school/gateway": "workspace:*",
     "@school/paystub": "workspace:*",
-    "@types/nodemailer": "^8.0.2",
-    "ioredis": "5"
+    "@types/nodemailer": "^8.0.2"
   }
 }

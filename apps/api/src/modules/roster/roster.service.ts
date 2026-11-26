@@ -9,7 +9,7 @@ import { rejected } from '../../common/errors/rejections';
 import { runBusiness } from '../../infra/business';
 import { DEPS, type Deps } from '../../infra/deps';
 import { isoDate } from '../catalog/domain';
-import { cohortMoney, searchStudents } from './repo';
+import { cohortMoney, countStudents, searchStudents } from './repo';
 
 type Page = { readonly page: number; readonly pageSize: number };
 
@@ -101,11 +101,10 @@ export class RosterService {
   }
 
   async search(schoolId: string, query: Page & { q: string }) {
-    const students = await searchStudents(this.deps.db, {
-      schoolId,
-      q: query.q,
-      ...window(query),
-    });
+    const [students, total] = await Promise.all([
+      searchStudents(this.deps.db, { schoolId, q: query.q, ...window(query) }),
+      countStudents(this.deps.db, schoolId, query.q),
+    ]);
     const enrollments = await this.deps.db.enrollment.findMany({
       where: { studentId: { in: students.map((s) => s.id) }, cohort: { schoolId } },
       include: { cohort: { include: { course: true } } },
@@ -126,7 +125,7 @@ export class RosterService {
             status: row.status as EnrollmentStatus,
           })),
       })),
-      total: students[0]?.total ?? 0,
+      total,
       page: query.page,
       pageSize: query.pageSize,
     };

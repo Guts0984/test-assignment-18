@@ -40,7 +40,12 @@ export type SearchRow = {
   readonly id: string;
   readonly full_name: string;
   readonly email: string;
-  readonly total: number;
+};
+
+const matches = (schoolId: string, q: string): Prisma.Sql => {
+  const pattern = likePattern(q);
+  return Prisma.sql`school_id = ${schoolId}::uuid
+    AND (lower(full_name) LIKE ${pattern} OR email LIKE ${pattern})`;
 };
 
 /** Students with any enrollment in the school, found by part of the name or e-mail. */
@@ -52,15 +57,14 @@ export const searchStudents = (
     readonly limit: number;
     readonly offset: number;
   },
-): Promise<SearchRow[]> => {
-  const pattern = likePattern(input.q);
-  const matching = Prisma.sql`(lower(u.full_name) LIKE ${pattern} OR u.email LIKE ${pattern})`;
-  return db.$queryRaw<SearchRow[]>`
-    SELECT u.id, u.full_name, u.email, count(*) OVER ()::int AS total
-      FROM users u
-     WHERE u.role = 'student' AND ${matching}
-       AND EXISTS (SELECT 1 FROM enrollments e JOIN cohorts c ON c.id = e.cohort_id
-                    WHERE e.student_id = u.id AND c.school_id = ${input.schoolId}::uuid)
-     ORDER BY u.full_name, u.id
-     LIMIT ${input.limit} OFFSET ${input.offset}`;
+): Promise<SearchRow[]> => db.$queryRaw<SearchRow[]>`
+  SELECT student_id AS id, full_name, email FROM school_students
+   WHERE ${matches(input.schoolId, input.q)}
+   ORDER BY full_name, student_id
+   LIMIT ${input.limit} OFFSET ${input.offset}`;
+
+export const countStudents = async (db: Db, schoolId: string, q: string): Promise<number> => {
+  const [row] = await db.$queryRaw<{ total: number }[]>`
+    SELECT count(*)::int AS total FROM school_students WHERE ${matches(schoolId, q)}`;
+  return row?.total ?? 0;
 };

@@ -304,6 +304,9 @@ Runner: `pnpm acceptance` runs A-1…A-17 in order against the compose stack and
 - AS-68 **Chaos tests** wipe a Redis database of their own with `FLUSHDB`; the cross-stack acceptance suite uses `FLUSHALL`.
 - AS-69 **Web rendering.** Pages are client components on TanStack Query; permissions are enforced by the API, and the page guards are a convenience. Any successful or failed mutation refetches the visible data.
 - AS-70 **Generated client** (orval, TanStack Query, fetch) is committed and checked for drift in CI. Its transport adds one error type and a single-flight session refresh.
+- AS-71 **Container network** is pinned to `10.213.47.0/24` (`COMPOSE_SUBNET`), so it cannot take a home router's address; only that range may set `X-Real-IP`.
+- AS-72 **Acceptance runs.** A-1 and the speed budgets run on the stack started exactly from `.env.example`. The behaviour checks run on the test profile (movable clock). Checks that move the clock far use past dates, so nothing in the seeded data becomes due.
+- AS-73 **Search and report speed** use a trigger-maintained `school_students` table and covering indexes.
 
 ---
 
@@ -679,7 +682,7 @@ Rules that make this parallelism safe:
 - [x] C4 enrollments, waitlist, promo, transfers + paystub + payments/refunds
 - [x] C5 homework, mentor, certificates, reports, realtime + worker
 - [x] C6 web
-- [ ] C7 nginx + full compose + acceptance + e2e + perf
+- [x] C7 nginx + full compose + acceptance + e2e + perf
 - [ ] C8 README + docs
 - [ ] Mutation check recorded in `docs/SECURITY-TESTS.md`
 - [ ] Acceptance A-1…A-17 results recorded below

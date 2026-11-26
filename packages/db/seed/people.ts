@@ -9,15 +9,15 @@ export const seedPeople = async (
 ): Promise<void> => {
   await tx.$executeRawUnsafe(
     `INSERT INTO schools (id, name)
-     SELECT md5('school-' || s)::uuid,
+     SELECT pg_temp.seed_uuid('school-' || s),
             (ARRAY['Northwind Academy', 'Dnipro Code School', 'Vistula Digital', 'Hudson Learning'])[s]
        FROM generate_series(1, $1::int) s`,
     SCHOOL_COUNT,
   );
   await tx.$executeRawUnsafe(
     `INSERT INTO users (id, email, password_hash, full_name, role, school_id, created_at)
-     SELECT md5(r.role || '-' || s || '-1')::uuid, r.role || '@school' || s || '.example.test',
-            $2, initcap(r.role) || ' of school ' || s, r.role, md5('school-' || s)::uuid, $3
+     SELECT pg_temp.seed_uuid(r.role || '-' || s || '-1'), r.role || '@school' || s || '.example.test',
+            $2, initcap(r.role) || ' of school ' || s, r.role, pg_temp.seed_uuid('school-' || s), $3
        FROM generate_series(1, $1::int) s, (VALUES ('admin'), ('manager')) r(role)`,
     SCHOOL_COUNT,
     passwordHash,
@@ -25,9 +25,9 @@ export const seedPeople = async (
   );
   await tx.$executeRawUnsafe(
     `INSERT INTO users (id, email, password_hash, full_name, role, school_id, created_at)
-     SELECT md5('mentor-' || s || '-' || m)::uuid,
+     SELECT pg_temp.seed_uuid('mentor-' || s || '-' || m),
             'mentor' || m || '@school' || s || '.example.test', $3,
-            'Mentor ' || m || ' of school ' || s, 'mentor', md5('school-' || s)::uuid, $4
+            'Mentor ' || m || ' of school ' || s, 'mentor', pg_temp.seed_uuid('school-' || s), $4
        FROM generate_series(1, $1::int) s, generate_series(1, $2::int) m`,
     SCHOOL_COUNT,
     sizes.mentorsPerSchool,
@@ -36,7 +36,7 @@ export const seedPeople = async (
   );
   await tx.$executeRawUnsafe(
     `INSERT INTO users (id, email, password_hash, full_name, role, time_zone, created_at)
-     SELECT md5('student-' || n)::uuid, 'student' || n || '@students.example.test', $2,
+     SELECT pg_temp.seed_uuid('student-' || n), 'student' || n || '@students.example.test', $2,
             (ARRAY['Olena','Taras','Iryna','Andrii','Zofia','Jakub','Emma','Noah','Sofiia',
                    'Maksym','Anna','Piotr','Olivia','Liam','Daryna','Bohdan'])[1 + n % 16]
             || ' ' ||

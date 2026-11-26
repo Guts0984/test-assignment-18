@@ -65,6 +65,11 @@ export const INVARIANT_QUERIES = {
   'certificate numbers are consecutive per course': `
     SELECT course_id FROM certificates GROUP BY course_id
     HAVING min(number) <> 1 OR max(number) <> count(*)`,
+  'every enrolled student is searchable in the school': `
+    SELECT DISTINCT e.student_id FROM enrollments e JOIN cohorts c ON c.id = e.cohort_id
+    LEFT JOIN school_students s ON s.school_id = c.school_id AND s.student_id = e.student_id
+    JOIN users u ON u.id = e.student_id
+    WHERE s.student_id IS NULL OR s.full_name <> u.full_name OR s.email <> u.email`,
   'open offers match the waitlist': `
     SELECT w.id FROM waitlist_entries w
     LEFT JOIN enrollments e ON e.id = w.enrollment_id

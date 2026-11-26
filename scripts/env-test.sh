@@ -15,5 +15,6 @@ set_var TEST_CONTROL_TOKEN "$(head -c 24 /dev/urandom | od -An -tx1 | tr -d ' \n
 set_var SWEEP_INTERVAL_MS 250
 set_var JOB_BACKOFF_MS 100
 set_var RATE_LIMIT_LOGIN_IP_MAX 100000
+set_var RATE_LIMIT_LOGIN_ACCOUNT_MAX 100000
 set_var RATE_LIMIT_REGISTER_IP_MAX 100000
 set_var SEED_SCALE "${SEED_SCALE:-0.01}"

@@ -16,7 +16,7 @@ export const seedHomework = async (tx: Tx, sizes: SeedSizes, now: Date): Promise
   );
   await tx.$executeRawUnsafe(
     `CREATE TEMP TABLE work ON COMMIT DROP AS
-     SELECT md5('submission-' || e.id || '-' || h.id)::uuid AS id, h.id AS homework_id,
+     SELECT pg_temp.seed_uuid('submission-' || e.id || '-' || h.id) AS id, h.id AS homework_id,
             e.id AS enrollment_id, e.student_id, e.cohort_id, c.mentor_id, h.deadline_at,
             CASE WHEN l.seq = 6 AND abs(hashtext(e.id::text)) % 3 = 0
                  THEN 'returned' ELSE 'accepted' END AS status,
@@ -31,7 +31,7 @@ export const seedHomework = async (tx: Tx, sizes: SeedSizes, now: Date): Promise
   );
   await tx.$executeRawUnsafe(
     `INSERT INTO work
-     SELECT md5('submission-' || e.id || '-' || h.id)::uuid, h.id, e.id, e.student_id,
+     SELECT pg_temp.seed_uuid('submission-' || e.id || '-' || h.id), h.id, e.id, e.student_id,
             e.cohort_id, c.mentor_id, h.deadline_at,
             CASE
               WHEN l.seq <= 3 AND x.roll < 60 THEN 'accepted'

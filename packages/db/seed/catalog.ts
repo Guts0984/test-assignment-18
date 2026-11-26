@@ -8,7 +8,7 @@ import { LESSONS_PER_COHORT, SCHOOL_COUNT, type SeedSizes } from './sizes';
 export const seedCatalog = async (tx: Tx, sizes: SeedSizes, now: Date): Promise<void> => {
   await tx.$executeRawUnsafe(
     `INSERT INTO courses (id, school_id, title, direction, description, created_at)
-     SELECT md5('course-' || n)::uuid, md5('school-' || (1 + n % $2::int))::uuid,
+     SELECT pg_temp.seed_uuid('course-' || n), pg_temp.seed_uuid('school-' || (1 + n % $2::int)),
             (ARRAY['Practical','Advanced','Intensive','Applied','Modern'])[1 + n % 5] || ' ' ||
             (ARRAY['TypeScript','Python','Product Design','Data Analysis','QA Automation',
                    'DevOps','Digital Marketing','Project Management','React','SQL','Go'])[1 + n % 11]
@@ -24,9 +24,9 @@ export const seedCatalog = async (tx: Tx, sizes: SeedSizes, now: Date): Promise<
     `INSERT INTO cohorts (id, course_id, school_id, mentor_id, start_date, time_zone,
                           price_minor, currency, lesson_minutes, starts_at, ends_at,
                           completed_at, created_at)
-     SELECT md5('cohort-' || c)::uuid, md5('course-' || course)::uuid,
-            md5('school-' || school)::uuid,
-            md5('mentor-' || school || '-' || (1 + (c / $3::int) % $4::int))::uuid,
+     SELECT pg_temp.seed_uuid('cohort-' || c), pg_temp.seed_uuid('course-' || course),
+            pg_temp.seed_uuid('school-' || school),
+            pg_temp.seed_uuid('mentor-' || school || '-' || (1 + (c / $3::int) % $4::int)),
             start_date, tz,
             (ARRAY[800000, 24000, 29000])[1 + currency_no] + (course % 20) * 500,
             (ARRAY['UAH','EUR','USD'])[1 + currency_no], 90,
@@ -51,7 +51,7 @@ export const seedCatalog = async (tx: Tx, sizes: SeedSizes, now: Date): Promise<
   );
   await tx.$executeRawUnsafe(
     `INSERT INTO lessons (id, cohort_id, seq, local_date, local_time, starts_at, ends_at)
-     SELECT md5('lesson-' || c.id || '-' || s)::uuid, c.id, s,
+     SELECT pg_temp.seed_uuid('lesson-' || c.id || '-' || s), c.id, s,
             c.start_date + 7 * (s - 1), '19:00',
             (c.start_date + 7 * (s - 1) + time '19:00') AT TIME ZONE c.time_zone,
             (c.start_date + 7 * (s - 1) + time '20:30') AT TIME ZONE c.time_zone
@@ -64,7 +64,7 @@ export const seedCatalog = async (tx: Tx, sizes: SeedSizes, now: Date): Promise<
 export const seedLessonWork = async (tx: Tx, now: Date): Promise<void> => {
   await tx.$executeRawUnsafe(
     `INSERT INTO homeworks (id, lesson_id, cohort_id, title, deadline_at)
-     SELECT md5('homework-' || l.id)::uuid, l.id, l.cohort_id, 'Homework ' || l.seq,
+     SELECT pg_temp.seed_uuid('homework-' || l.id), l.id, l.cohort_id, 'Homework ' || l.seq,
             (l.local_date + 7 + time '23:59:59.999') AT TIME ZONE c.time_zone
        FROM lessons l JOIN cohorts c ON c.id = l.cohort_id`,
   );

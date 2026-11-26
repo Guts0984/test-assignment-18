@@ -87,11 +87,11 @@ export default tseslint.config(
     rules: { 'no-restricted-syntax': ['error', noDefaultExport, noClass] },
   },
   {
-    files: ['**/*.spec.ts', 'apps/*/test/**/*.ts'],
+    files: ['**/*.spec.ts', 'apps/*/test/**/*.ts', 'tests/**/*.ts', 'apps/web/e2e/**/*.ts'],
     rules: { 'no-restricted-syntax': ['error', noDefaultExport] },
   },
   {
-    files: ['**/*.config.{ts,mts,mjs}', 'vitest.database.ts'],
+    files: ['**/*.config.{ts,mts,mjs}', 'vitest.database.ts', 'scripts/**/*.mjs'],
     languageOptions: { globals: { process: 'readonly', URL: 'readonly' } },
     rules: { 'no-restricted-syntax': 'off' },
   },

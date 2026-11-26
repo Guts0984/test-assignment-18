@@ -1,5 +1,12 @@
 {
   "extends": "./tsconfig.base.json",
-  "compilerOptions": { "noEmit": true },
-  "include": ["vitest.config.ts", "vitest.database.ts"]
+  "compilerOptions": { "noEmit": true, "lib": ["es2024", "dom"] },
+  "include": [
+    "vitest.config.ts",
+    "vitest.stack.config.ts",
+    "vitest.database.ts",
+    "playwright.config.ts",
+    "tests",
+    "apps/web/e2e"
+  ]
 }

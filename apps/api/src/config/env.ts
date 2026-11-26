@@ -32,7 +32,7 @@ export const apiEnvSchema = z
     INSTANCE_ID: z.string().min(1).default('api'),
     PUBLIC_BASE_URL: z.url().default('http://localhost:8080'),
     CORS_ORIGINS: list.default(['http://localhost:8080']),
-    TRUSTED_PROXY_CIDRS: list.pipe(z.array(cidr)).default(['172.16.0.0/12', '10.0.0.0/8']),
+    TRUSTED_PROXY_CIDRS: list.pipe(z.array(cidr)).default(['10.213.47.0/24']),
     JWT_ACCESS_SECRET: z.string().min(32),
     JWT_ACCESS_TTL_SEC: positive.default(900),
     REFRESH_TTL_SEC: positive.default(2_592_000),

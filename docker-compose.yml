@@ -1,10 +1,50 @@
 name: school
 
+# Settings come from .env (or the file named by ENV_FILE). Addresses inside the network are set
+# here, because the values in .env point at the ports published for tools on the host.
+x-env-file: &env-file
+  - path: ${ENV_FILE:-.env}
+    required: true
+
+x-network-env: &network-env
+  DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+  REDIS_URL: redis://redis:6379
+  SMTP_HOST: mailpit
+  SMTP_PORT: '1025'
+
+x-api: &api
+  build:
+    context: .
+    target: api
+  image: school-api
+  env_file: *env-file
+  depends_on:
+    migrate:
+      condition: service_completed_successfully
+    redis:
+      condition: service_healthy
+  healthcheck:
+    test: ['CMD', 'wget', '-qO-', 'http://127.0.0.1:3000/api/health']
+    interval: 3s
+    timeout: 3s
+    retries: 40
+  restart: unless-stopped
+
 services:
   postgres:
     image: postgres:16-alpine
     # Room for two api copies, several workers and parallel test databases.
-    command: ['postgres', '-c', 'max_connections=300']
+    command:
+      - postgres
+      - -c
+      - max_connections=300
+      - -c
+      - shared_buffers=256MB
+      - -c
+      - work_mem=16MB
+      # Solid-state storage: reading an index page costs about the same as the next one.
+      - -c
+      - random_page_cost=1.1
     environment:
       POSTGRES_USER: ${POSTGRES_USER:?set in .env}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set in .env}
@@ -37,6 +77,8 @@ services:
 
   mailpit:
     image: axllent/mailpit:v1.27
+    environment:
+      MP_MAX_MESSAGES: '100000'
     ports:
       - '127.0.0.1:${MAILPIT_UI_PORT:-8025}:8025'
       - '127.0.0.1:${SMTP_PORT:-1025}:1025'
@@ -45,6 +87,107 @@ services:
       interval: 2s
       timeout: 3s
       retries: 30
+
+  # Applies migrations and, on an empty database, the seed. Then it exits.
+  migrate:
+    build:
+      context: .
+      target: migrate
+    image: school-migrate
+    env_file: *env-file
+    environment: *network-env
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  api-1:
+    <<: *api
+    environment:
+      <<: *network-env
+      INSTANCE_ID: api-1
+
+  api-2:
+    <<: *api
+    environment:
+      <<: *network-env
+      INSTANCE_ID: api-2
+
+  # Scale with: docker compose up --scale worker=3
+  worker:
+    build:
+      context: .
+      target: worker
+    image: school-worker
+    env_file: *env-file
+    environment: *network-env
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      redis:
+        condition: service_healthy
+      mailpit:
+        condition: service_healthy
+    restart: unless-stopped
+
+  paystub:
+    build:
+      context: .
+      target: paystub
+    image: school-paystub
+    env_file: *env-file
+    environment:
+      PAYSTUB_DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/paystub
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ['CMD', 'wget', '-qO-', 'http://127.0.0.1:4000/health']
+      interval: 3s
+      timeout: 3s
+      retries: 30
+    restart: unless-stopped
+
+  web:
+    build:
+      context: .
+      target: web
+    image: school-web
+    healthcheck:
+      test: ['CMD', 'wget', '-qO-', 'http://127.0.0.1:3000/']
+      interval: 3s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:1.27-alpine
+    ports:
+      - '${HTTP_PORT:-8080}:80'
+    volumes:
+      - ./infra/nginx/nginx.conf:/etc/nginx/nginx.conf:ro,Z
+    depends_on:
+      api-1:
+        condition: service_healthy
+      api-2:
+        condition: service_healthy
+      web:
+        condition: service_healthy
+      paystub:
+        condition: service_healthy
+    healthcheck:
+      test: ['CMD', 'wget', '-qO-', 'http://127.0.0.1/api/health']
+      interval: 3s
+      timeout: 3s
+      retries: 30
+    restart: unless-stopped
+
+networks:
+  default:
+    ipam:
+      config:
+        # Fixed on purpose: left to itself Docker may take 192.168.0.0/20, which covers the
+        # address of most home routers and cuts the host off from its network.
+        - subnet: ${COMPOSE_SUBNET:-10.213.47.0/24}
 
 volumes:
   postgres-data:

@@ -3,6 +3,7 @@ import { hashPassword } from '../src/password';
 import { seedCatalog, seedLessonWork } from './catalog';
 import { seedEnrollments } from './enrollments';
 import { seedGateways } from './gateways';
+import { SEED_UUID_FUNCTION } from './ids';
 import { seedHomework } from './homework';
 import { seedPeople } from './people';
 import { seedPromos } from './promos';
@@ -48,6 +49,7 @@ export const seedDatabase = async (db: Db, options: SeedOptions): Promise<boolea
       await tx.$executeRawUnsafe(`SELECT pg_advisory_xact_lock(${LOCK_KEY})`);
       if (await tx.seedRun.findUnique({ where: { id: MARKER } })) return false;
       await tx.$executeRawUnsafe(`SET LOCAL work_mem = '128MB'`);
+      await tx.$executeRawUnsafe(SEED_UUID_FUNCTION);
       await setBulkTriggers(tx, 'DISABLE');
       await seedPeople(tx, sizes, passwordHash, now);
       await seedCatalog(tx, sizes, now);
@@ -69,6 +71,7 @@ export const seedDatabase = async (db: Db, options: SeedOptions): Promise<boolea
     },
     { timeout: HOUR, maxWait: HOUR },
   );
-  if (seeded) await db.$executeRawUnsafe('ANALYZE');
+  // Fresh statistics and a complete visibility map, which index-only scans rely on.
+  if (seeded) await db.$executeRawUnsafe('VACUUM ANALYZE');
   return seeded;
 };

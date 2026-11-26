@@ -3,7 +3,7 @@ import { toZonedParts } from '@school/shared/schedule/display';
 import { meetsHomeworkThreshold } from '@school/shared/certificate/eligibility';
 import argon2 from 'argon2';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { DEMO_LOGINS } from '../seed/ids';
+import { DEMO_LOGINS, seedId } from '../seed/ids';
 import { seedDatabase } from '../seed/run';
 import { seedSizes } from '../seed/sizes';
 import { assertInvariants } from '../src/invariants/assert';
@@ -162,6 +162,33 @@ describe('seed', () => {
       const user = await database.db.user.findUniqueOrThrow({ where: { email } });
       expect(await argon2.verify(user.passwordHash, 'demo-password-2026')).toBe(true);
     }
+  });
+
+  it('gives every row an id the API accepts', async () => {
+    const wellFormed = '^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$';
+    for (const table of [
+      'schools',
+      'users',
+      'courses',
+      'cohorts',
+      'lessons',
+      'homeworks',
+      'enrollments',
+      'submissions',
+      'certificates',
+    ]) {
+      expect([
+        table,
+        await count(`SELECT count(*) AS n FROM ${table} WHERE id::text !~ '${wellFormed}'`),
+      ]).toEqual([table, 0]);
+    }
+    expect(seedId('school-1')).toBe(
+      (
+        await database.db.$queryRawUnsafe<{ id: string }[]>(
+          `SELECT id FROM schools WHERE id = '${seedId('school-1')}'`,
+        )
+      )[0]?.id,
+    );
   });
 
   it('does nothing the second time', async () => {

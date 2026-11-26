@@ -1,0 +1,8 @@
+# Test overlay: reaches each api copy directly, to aim a request at a chosen one.
+services:
+  api-1:
+    ports:
+      - '127.0.0.1:3001:3000'
+  api-2:
+    ports:
+      - '127.0.0.1:3002:3000'

@@ -101,21 +101,98 @@ jobs:
       - uses: ./.github/actions/setup
       - run: pnpm run build
 
-  infra:
+  # Builds every image once and fills the layer cache the stack jobs below start from.
+  images:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v7
       - run: cp .env.example .env
-      - run: docker compose up --detach --wait --wait-timeout 120
-      - run: ./scripts/env-test.sh
+      - uses: docker/setup-buildx-action@v4
+      - uses: docker/bake-action@v7
+        with:
+          source: .
+          files: docker-compose.yml
+          set: |
+            *.cache-from=type=gha,scope=school
+            api-1.cache-to=type=gha,mode=max,scope=school
+
+  # A-1 exactly as the assignment says, with the full seed, and the speed budgets on it.
+  compose-up:
+    needs: images
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/setup
+      - run: pnpm run build:libs
+      - run: ./scripts/acceptance/compose-up.sh
+        env:
+          WAIT_TIMEOUT: '1500'
+      - run: pnpm run test:perf
+        env:
+          ENV_FILE: .env
       - if: failure()
-        run: docker compose logs --no-color
+        run: docker compose logs --no-color --tail 200
+
+  e2e:
+    needs: images
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        project: [static, clock]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/stack
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm exec playwright test --project=${{ matrix.project }} --no-deps
+      - if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-${{ matrix.project }}
+          path: |
+            playwright-report
+            test-results
+      - if: failure()
+        run: docker compose --env-file .env.test logs --no-color --tail 200
+
+  acceptance:
+    needs: images
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        group: [seats, money, background]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/stack
+        with:
+          seed-scale: '0.05'
+      - run: pnpm exec vitest run -c vitest.stack.config.ts tests/acceptance/${{ matrix.group }}
+      - if: matrix.group == 'seats'
+        run: pnpm exec vitest run -c vitest.stack.config.ts tests/cross-stack
+      - run: pnpm exec vitest run -c vitest.stack.config.ts tests/reconcile
+      - if: failure()
+        run: docker compose --env-file .env.test logs --no-color --tail 300
 
   ci-ok:
     if: always()
     needs:
-      [typecheck, lint, unit, integration, adversarial, worker-chaos, client-drift, build, infra]
+      - typecheck
+      - lint
+      - unit
+      - integration
+      - adversarial
+      - worker-chaos
+      - client-drift
+      - build
+      - images
+      - compose-up
+      - e2e
+      - acceptance
     runs-on: ubuntu-latest
     steps:
       - name: Require every job to succeed

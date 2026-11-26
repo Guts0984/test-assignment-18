@@ -24,9 +24,7 @@
     "@school/shared": "workspace:*",
     "argon2": "0.45.2",
     "luxon": "3.7.2",
-    "zod": "4.6.7"
-  },
-  "devDependencies": {
+    "zod": "4.6.7",
     "prisma": "6.19.3"
   }
 }

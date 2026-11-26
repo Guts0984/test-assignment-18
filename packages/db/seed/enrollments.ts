@@ -17,8 +17,8 @@ const buildPlan = async (tx: Tx, sizes: SeedSizes, now: Date): Promise<void> => 
     ) ON COMMIT DROP`);
   await tx.$executeRawUnsafe(
     `INSERT INTO plan
-     SELECT md5('enrollment-' || c || '-' || k)::uuid, co.id,
-            md5('student-' || (1 + (c * $5::int + k) % $3::int))::uuid,
+     SELECT pg_temp.seed_uuid('enrollment-' || c || '-' || k), co.id,
+            pg_temp.seed_uuid('student-' || (1 + (c * $5::int + k) % $3::int)),
             CASE
               WHEN k % 50 < 2 THEN 'refunded'
               WHEN k % 50 < 4 THEN 'cancelled'
@@ -32,7 +32,7 @@ const buildPlan = async (tx: Tx, sizes: SeedSizes, now: Date): Promise<void> => 
             t.created_at + interval '1 day', co.completed_at IS NOT NULL
        FROM generate_series(0, $1::int - 1) c
        CROSS JOIN generate_series(0, $2::int - 1) k
-       JOIN cohorts co ON co.id = md5('cohort-' || c)::uuid
+       JOIN cohorts co ON co.id = pg_temp.seed_uuid('cohort-' || c)
        CROSS JOIN LATERAL (
          SELECT LEAST(co.starts_at - make_interval(days => 2 + k % 40),
                       $6::timestamptz - interval '3 days') AS created_at) t`,
@@ -45,13 +45,13 @@ const buildPlan = async (tx: Tx, sizes: SeedSizes, now: Date): Promise<void> => 
   );
   await tx.$executeRawUnsafe(
     `INSERT INTO plan
-     SELECT md5('successor-' || p.id)::uuid, target.id, p.student_id,
+     SELECT pg_temp.seed_uuid('successor-' || p.id), target.id, p.student_id,
             CASE WHEN target.completed_at IS NULL THEN 'paid' ELSE 'completed' END,
             p.id, p.price, p.currency, p.closed_at, p.closed_at,
             target.completed_at IS NOT NULL
        FROM plan p
-       JOIN generate_series(0, $1::int - 1) c ON p.cohort_id = md5('cohort-' || c)::uuid
-       JOIN cohorts target ON target.id = md5('cohort-' || (c + 3 * $2::int))::uuid
+       JOIN generate_series(0, $1::int - 1) c ON p.cohort_id = pg_temp.seed_uuid('cohort-' || c)
+       JOIN cohorts target ON target.id = pg_temp.seed_uuid('cohort-' || (c + 3 * $2::int))
       WHERE p.fate = 'transferred'`,
     sizes.bulkCohorts,
     sizes.courses,
@@ -105,27 +105,27 @@ const writeMoney = async (tx: Tx): Promise<void> => {
   await tx.$executeRawUnsafe(`
     INSERT INTO refund_requests (id, enrollment_id, amount_minor, currency, reason, status,
                                  created_at, completed_at)
-    SELECT md5('refund-' || id)::uuid, id,
+    SELECT pg_temp.seed_uuid('refund-' || id), id,
            CASE WHEN abs(hashtext(id::text)) % 2 = 0 THEN price ELSE price / 2 END,
            currency, 'cancel', 'succeeded', closed_at, closed_at + interval '1 minute'
       FROM plan WHERE fate = 'refunded'`);
   await tx.$executeRawUnsafe(`
     INSERT INTO money_operations (id, enrollment_id, kind, amount_minor, currency,
                                   provider_payment_id, refund_request_id, created_at)
-    SELECT md5('payment-' || id)::uuid, id, 'payment', price, currency, 'seed-' || id, NULL,
+    SELECT pg_temp.seed_uuid('payment-' || id), id, 'payment', price, currency, 'seed-' || id, NULL,
            created_at + interval '5 minutes'
       FROM plan
      WHERE source_id IS NULL AND fate IN ('paid', 'completed', 'refunded', 'transferred')
     UNION ALL
-    SELECT md5('refund-op-' || p.id)::uuid, p.id, 'refund', r.amount_minor, p.currency, NULL,
+    SELECT pg_temp.seed_uuid('refund-op-' || p.id), p.id, 'refund', r.amount_minor, p.currency, NULL,
            r.id, r.completed_at
       FROM plan p JOIN refund_requests r ON r.enrollment_id = p.id
     UNION ALL
-    SELECT md5('transfer-out-' || p.source_id)::uuid, p.source_id, 'transfer_out', p.price,
+    SELECT pg_temp.seed_uuid('transfer-out-' || p.source_id), p.source_id, 'transfer_out', p.price,
            p.currency, NULL, NULL, p.created_at
       FROM plan p WHERE p.source_id IS NOT NULL
     UNION ALL
-    SELECT md5('transfer-in-' || p.id)::uuid, p.id, 'transfer_in', p.price, p.currency, NULL,
+    SELECT pg_temp.seed_uuid('transfer-in-' || p.id), p.id, 'transfer_in', p.price, p.currency, NULL,
            NULL, p.created_at
       FROM plan p WHERE p.source_id IS NOT NULL`);
   await tx.$executeRawUnsafe(`
@@ -146,6 +146,15 @@ const writeMoney = async (tx: Tx): Promise<void> => {
      WHERE e.id = l.enrollment_id`);
 };
 
+/** The search table's trigger is off during the bulk load, so it is filled here. */
+const writeSchoolStudents = async (tx: Tx): Promise<void> => {
+  await tx.$executeRawUnsafe(`
+    INSERT INTO school_students (school_id, student_id, full_name, email)
+    SELECT DISTINCT c.school_id, u.id, u.full_name, u.email
+      FROM plan p JOIN cohorts c ON c.id = p.cohort_id JOIN users u ON u.id = p.student_id
+    ON CONFLICT DO NOTHING`);
+};
+
 /** Waitlist history, so conversion reports have data. */
 const writeWaitlistHistory = async (tx: Tx): Promise<void> => {
   await tx.$executeRawUnsafe(`
@@ -162,6 +171,7 @@ const writeWaitlistHistory = async (tx: Tx): Promise<void> => {
 export const seedEnrollments = async (tx: Tx, sizes: SeedSizes, now: Date): Promise<void> => {
   await buildPlan(tx, sizes, now);
   await writeEnrollments(tx);
+  await writeSchoolStudents(tx);
   await writeCapacityAndJournal(tx);
   await writeMoney(tx);
   await writeWaitlistHistory(tx);

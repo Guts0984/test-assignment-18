@@ -461,6 +461,18 @@ model TestClock {
   @@map("test_clock")
 }
 
+/// Maintained by triggers; used by the manager's student search.
+model SchoolStudent {
+  schoolId  String @map("school_id") @db.Uuid
+  studentId String @map("student_id") @db.Uuid
+  fullName  String @map("full_name")
+  email     String
+
+  @@id([schoolId, studentId])
+  @@index([studentId])
+  @@map("school_students")
+}
+
 model SeedRun {
   id          String   @id
   completedAt DateTime @map("completed_at") @db.Timestamptz(3)
