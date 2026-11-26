@@ -4987,7 +4987,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/StudentPageDto_Output"
+                  "$ref": "#/components/schemas/CohortStudentPageDto_Output"
                 }
               }
             }
@@ -7464,7 +7464,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SubmissionDto_Output"
+                  "$ref": "#/components/schemas/MentorSubmissionDto_Output"
                 }
               }
             }
@@ -7908,7 +7908,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/StudentPageDto_Output"
+                  "$ref": "#/components/schemas/MentorStudentPageDto_Output"
                 }
               }
             }
@@ -8786,7 +8786,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PageDto_Output"
+                  "$ref": "#/components/schemas/FailedJobPageDto_Output"
                 }
               }
             }
@@ -10986,7 +10986,7 @@
         ],
         "additionalProperties": false
       },
-      "StudentPageDto_Output": {
+      "CohortStudentPageDto_Output": {
         "type": "object",
         "properties": {
           "items": {
@@ -10999,19 +10999,16 @@
                   "format": "uuid",
                   "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
                 },
-                "studentName": {
+                "studentId": {
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                },
+                "fullName": {
                   "type": "string"
                 },
                 "email": {
                   "type": "string"
-                },
-                "courseTitle": {
-                  "type": "string"
-                },
-                "cohortId": {
-                  "type": "string",
-                  "format": "uuid",
-                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
                 },
                 "status": {
                   "type": "string",
@@ -11026,32 +11023,34 @@
                     "completed"
                   ]
                 },
-                "accepted": {
+                "priceMinor": {
                   "type": "integer",
                   "minimum": -9007199254740991,
                   "maximum": 9007199254740991
                 },
-                "submitted": {
+                "paidMinor": {
                   "type": "integer",
                   "minimum": -9007199254740991,
                   "maximum": 9007199254740991
                 },
-                "total": {
-                  "type": "integer",
-                  "minimum": -9007199254740991,
-                  "maximum": 9007199254740991
+                "currency": {
+                  "type": "string",
+                  "enum": [
+                    "UAH",
+                    "EUR",
+                    "USD"
+                  ]
                 }
               },
               "required": [
                 "enrollmentId",
-                "studentName",
+                "studentId",
+                "fullName",
                 "email",
-                "courseTitle",
-                "cohortId",
                 "status",
-                "accepted",
-                "submitted",
-                "total"
+                "priceMinor",
+                "paidMinor",
+                "currency"
               ],
               "additionalProperties": false
             }
@@ -11808,20 +11807,6 @@
               ],
               "additionalProperties": false
             }
-          },
-          "courseTitle": {
-            "type": "string"
-          },
-          "homeworkTitle": {
-            "type": "string"
-          },
-          "studentName": {
-            "type": "string"
-          },
-          "deadlineAt": {
-            "type": "string",
-            "format": "date-time",
-            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
           }
         },
         "required": [
@@ -11832,11 +11817,7 @@
           "submittedAt",
           "isLate",
           "file",
-          "reviews",
-          "courseTitle",
-          "homeworkTitle",
-          "studentName",
-          "deadlineAt"
+          "reviews"
         ],
         "additionalProperties": false
       },
@@ -11985,6 +11966,125 @@
         ],
         "additionalProperties": false
       },
+      "MentorSubmissionDto_Output": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          },
+          "homeworkId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "submitted",
+              "in_review",
+              "accepted",
+              "returned"
+            ]
+          },
+          "body": {
+            "type": "string"
+          },
+          "submittedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          "isLate": {
+            "type": "boolean"
+          },
+          "file": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "sizeBytes": {
+                "type": "integer",
+                "minimum": -9007199254740991,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "name",
+              "sizeBytes"
+            ],
+            "additionalProperties": false,
+            "nullable": true
+          },
+          "reviews": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "verdict": {
+                  "type": "string",
+                  "enum": [
+                    "accepted",
+                    "returned"
+                  ]
+                },
+                "comment": {
+                  "type": "string"
+                },
+                "score": {
+                  "type": "integer",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991,
+                  "nullable": true
+                },
+                "reviewedAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                }
+              },
+              "required": [
+                "verdict",
+                "comment",
+                "score",
+                "reviewedAt"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "courseTitle": {
+            "type": "string"
+          },
+          "homeworkTitle": {
+            "type": "string"
+          },
+          "studentName": {
+            "type": "string"
+          },
+          "deadlineAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          }
+        },
+        "required": [
+          "id",
+          "homeworkId",
+          "status",
+          "body",
+          "submittedAt",
+          "isLate",
+          "file",
+          "reviews",
+          "courseTitle",
+          "homeworkTitle",
+          "studentName",
+          "deadlineAt"
+        ],
+        "additionalProperties": false
+      },
       "ReviewDto": {
         "type": "object",
         "properties": {
@@ -12011,6 +12111,100 @@
         },
         "required": [
           "verdict"
+        ],
+        "additionalProperties": false
+      },
+      "MentorStudentPageDto_Output": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "enrollmentId": {
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                },
+                "studentName": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "courseTitle": {
+                  "type": "string"
+                },
+                "cohortId": {
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "held",
+                    "offered",
+                    "paid",
+                    "transferred",
+                    "cancelled",
+                    "refunded",
+                    "expired",
+                    "completed"
+                  ]
+                },
+                "accepted": {
+                  "type": "integer",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                },
+                "submitted": {
+                  "type": "integer",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                },
+                "total": {
+                  "type": "integer",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": [
+                "enrollmentId",
+                "studentName",
+                "email",
+                "courseTitle",
+                "cohortId",
+                "status",
+                "accepted",
+                "submitted",
+                "total"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "total": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "pageSize": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "page",
+          "pageSize"
         ],
         "additionalProperties": false
       },
@@ -12537,7 +12731,7 @@
         ],
         "additionalProperties": false
       },
-      "PageDto_Output": {
+      "FailedJobPageDto_Output": {
         "type": "object",
         "properties": {
           "items": {

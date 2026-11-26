@@ -14,7 +14,7 @@ import { type Principal, schoolOf } from '../../common/auth/principal';
 import { PromosService } from './promos.service';
 
 class IdParamDto extends createZodDto(idParamSchema) {}
-class QueryDto extends createZodDto(promoQuerySchema) {}
+class PromoQueryDto extends createZodDto(promoQuerySchema) {}
 class CreatePromoDto extends createZodDto(createPromoSchema) {}
 class UpdatePromoDto extends createZodDto(updatePromoSchema) {}
 class PromoDto extends createZodDto(promoSchema) {}
@@ -28,7 +28,7 @@ export class PromosController {
 
   @Get()
   @ZodResponse({ status: 200, type: PromoPageDto })
-  list(@CurrentUser() user: Principal, @Query() query: QueryDto) {
+  list(@CurrentUser() user: Principal, @Query() query: PromoQueryDto) {
     return this.promos.list(schoolOf(user), query);
   }
 

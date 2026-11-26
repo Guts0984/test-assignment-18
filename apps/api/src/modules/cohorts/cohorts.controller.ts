@@ -16,7 +16,7 @@ import { type Principal, schoolOf } from '../../common/auth/principal';
 import { CohortsService } from './cohorts.service';
 
 class IdParamDto extends createZodDto(idParamSchema) {}
-class ListQueryDto extends createZodDto(cohortListQuerySchema) {}
+class CohortListQueryDto extends createZodDto(cohortListQuerySchema) {}
 class CreateCohortDto extends createZodDto(createCohortSchema) {}
 class UpdateCohortDto extends createZodDto(updateCohortSchema) {}
 class RescheduleDto extends createZodDto(rescheduleLessonSchema) {}
@@ -38,7 +38,7 @@ export class CohortsController {
 
   @Get('cohorts')
   @ZodResponse({ status: 200, type: CohortPageDto })
-  list(@CurrentUser() user: Principal, @Query() query: ListQueryDto) {
+  list(@CurrentUser() user: Principal, @Query() query: CohortListQueryDto) {
     return this.cohorts.list(schoolOf(user), query);
   }
 

@@ -8,8 +8,8 @@ import { type Principal, schoolOf } from '../../common/auth/principal';
 import { JobsService } from './jobs.service';
 
 class IdParamDto extends createZodDto(idParamSchema) {}
-class QueryDto extends createZodDto(failedJobQuerySchema) {}
-class PageDto extends createZodDto(failedJobPageSchema) {}
+class FailedJobQueryDto extends createZodDto(failedJobQuerySchema) {}
+class FailedJobPageDto extends createZodDto(failedJobPageSchema) {}
 
 @ApiTags('manager')
 @Roles('manager')
@@ -18,8 +18,8 @@ export class JobsController {
   constructor(@Inject(JobsService) private readonly jobs: JobsService) {}
 
   @Get()
-  @ZodResponse({ status: 200, type: PageDto })
-  list(@CurrentUser() user: Principal, @Query() query: QueryDto) {
+  @ZodResponse({ status: 200, type: FailedJobPageDto })
+  list(@CurrentUser() user: Principal, @Query() query: FailedJobQueryDto) {
     return this.jobs.list(schoolOf(user), query);
   }
 

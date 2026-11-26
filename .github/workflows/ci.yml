@@ -80,15 +80,15 @@ jobs:
       - if: failure()
         run: docker compose logs --no-color
 
-  openapi-drift:
+  client-drift:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7
       - uses: ./.github/actions/setup
       - run: cp .env.example .env
-      - run: pnpm run gen:openapi
-      - name: Fail if the committed API description is stale
+      - run: pnpm run gen:client
+      - name: Fail if the committed API description or the generated web client is stale
         run: |
           git add --intent-to-add .
           git diff --exit-code
@@ -115,7 +115,7 @@ jobs:
   ci-ok:
     if: always()
     needs:
-      [typecheck, lint, unit, integration, adversarial, worker-chaos, openapi-drift, build, infra]
+      [typecheck, lint, unit, integration, adversarial, worker-chaos, client-drift, build, infra]
     runs-on: ubuntu-latest
     steps:
       - name: Require every job to succeed

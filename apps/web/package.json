@@ -1,0 +1,33 @@
+{
+  "name": "@school/web",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "gen:client": "orval --config orval.config.mjs",
+    "build": "next build",
+    "typecheck": "tsc -p tsconfig.json",
+    "dev": "next dev",
+    "start": "next start",
+    "lint:fsd": "steiger ./src"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^7.0.9",
+    "@school/shared": "workspace:*",
+    "@tanstack/react-query": "^5.108.4",
+    "next": "15.5.29",
+    "react": "19.2.9",
+    "react-dom": "19.2.9",
+    "react-hook-form": "^7.92.0",
+    "socket.io-client": "4.8.4",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@feature-sliced/steiger-plugin": "^0.8.2",
+    "@tailwindcss/postcss": "^4.3.5",
+    "@types/react": "^19.3.3",
+    "@types/react-dom": "^19.3.0",
+    "orval": "^8.49.0",
+    "steiger": "^0.10.0",
+    "tailwindcss": "^4.3.5"
+  }
+}

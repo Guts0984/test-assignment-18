@@ -1,4 +1,5 @@
 import { existsSync } from 'node:fs';
+import { resolve } from 'node:path';
 import swc from 'unplugin-swc';
 import { defineConfig } from 'vitest/config';
 
@@ -32,6 +33,7 @@ export default defineConfig({
   test: {
     projects: [
       {
+        resolve: { alias: { '@': resolve('apps/web/src') } },
         test: {
           name: 'unit',
           include: ['{packages,apps}/*/src/**/*.spec.ts'],
@@ -46,7 +48,8 @@ export default defineConfig({
         ...realServices('chaos', ['apps/worker/test/adv/**/*.adv.spec.ts']),
         test: {
           ...realServices('chaos', ['apps/worker/test/adv/**/*.adv.spec.ts']).test,
-          fileParallelism: false,
+          pool: 'forks',
+          poolOptions: { forks: { singleFork: true } },
           testTimeout: 180_000,
         },
       },

@@ -1,0 +1,14 @@
+@import 'tailwindcss';
+
+@source '../';
+
+body {
+  background: var(--color-slate-50);
+  color: var(--color-slate-900);
+  overflow-wrap: anywhere;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-blue-500);
+  outline-offset: 2px;
+}

@@ -19,10 +19,10 @@ import { type Principal, schoolOf } from '../../common/auth/principal';
 import { RosterService } from './roster.service';
 
 class IdParamDto extends createZodDto(idParamSchema) {}
-class StudentQueryDto extends createZodDto(studentQuerySchema) {}
+class CohortStudentQueryDto extends createZodDto(studentQuerySchema) {}
 class PageQueryDto extends createZodDto(studentQuerySchema.omit({ q: true })) {}
 class SearchQueryDto extends createZodDto(studentSearchSchema) {}
-class StudentPageDto extends createZodDto(cohortStudentPageSchema) {}
+class CohortStudentPageDto extends createZodDto(cohortStudentPageSchema) {}
 class CohortWaitlistDto extends createZodDto(cohortWaitlistSchema) {}
 class MoneyPageDto extends createZodDto(moneyPageSchema) {}
 class SearchPageDto extends createZodDto(studentSearchPageSchema) {}
@@ -46,11 +46,11 @@ export class RosterController {
   }
 
   @Get('cohorts/:id/students')
-  @ZodResponse({ status: 200, type: StudentPageDto })
+  @ZodResponse({ status: 200, type: CohortStudentPageDto })
   students(
     @CurrentUser() user: Principal,
     @Param() params: IdParamDto,
-    @Query() query: StudentQueryDto,
+    @Query() query: CohortStudentQueryDto,
   ) {
     return this.roster.students(schoolOf(user), params.id, query);
   }

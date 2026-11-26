@@ -8,15 +8,16 @@
   "scripts": {
     "build:libs": "pnpm --filter \"./packages/*\" --filter @school/paystub run build",
     "build": "pnpm -r run build",
-    "typecheck": "pnpm run build:libs && pnpm -r --parallel run typecheck",
-    "lint": "pnpm run build:libs && eslint . && prettier --check .",
+    "typecheck": "pnpm run build:libs && tsc -p tsconfig.json && pnpm -r --parallel run typecheck",
+    "lint": "pnpm run build:libs && eslint . && pnpm --filter @school/web run lint:fsd && prettier --check .",
     "format": "prettier --write .",
     "test": "pnpm run build && vitest run",
     "test:unit": "pnpm run build:libs && vitest run --project unit",
     "test:integration": "pnpm run build:libs && vitest run --project integration",
-    "gen:openapi": "pnpm run build && pnpm --filter @school/api run gen:openapi",
+    "gen:openapi": "pnpm run build:libs && pnpm --filter @school/api run build && pnpm --filter @school/api run gen:openapi",
     "test:adversarial": "pnpm run build:libs && vitest run --project adversarial",
-    "test:chaos": "pnpm run build && vitest run --project chaos"
+    "test:chaos": "pnpm run build:libs && pnpm --filter @school/worker run build && vitest run --project chaos",
+    "gen:client": "pnpm run gen:openapi && pnpm --filter @school/web run gen:client"
   },
   "devDependencies": {
     "@eslint/js": "9.39.5",
@@ -24,6 +25,9 @@
     "@swc/core": "1.16.22",
     "@types/node": "22.20.7",
     "eslint": "9.39.5",
+    "eslint-import-resolver-typescript": "^4.4.5",
+    "eslint-plugin-boundaries": "^7.4.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
     "prettier": "3.10.1",
     "typescript": "5.9.3",
     "typescript-eslint": "8.74.0",

@@ -19,14 +19,14 @@ import { MentorService } from './mentor.service';
 
 class IdParamDto extends createZodDto(idParamSchema) {}
 class QueueQueryDto extends createZodDto(queueQuerySchema) {}
-class StudentQueryDto extends createZodDto(mentorStudentQuerySchema) {}
+class MentorStudentQueryDto extends createZodDto(mentorStudentQuerySchema) {}
 class ClaimDto extends createZodDto(claimSchema) {}
 class ReviewDto extends createZodDto(reviewSchema) {}
 class QueuePageDto extends createZodDto(queuePageSchema) {}
 class ReviewsDto extends createZodDto(mentorReviewsSchema) {}
-class SubmissionDto extends createZodDto(mentorSubmissionSchema) {}
+class MentorSubmissionDto extends createZodDto(mentorSubmissionSchema) {}
 class ClaimResultDto extends createZodDto(claimResultSchema) {}
-class StudentPageDto extends createZodDto(mentorStudentPageSchema) {}
+class MentorStudentPageDto extends createZodDto(mentorStudentPageSchema) {}
 
 @ApiTags('mentor')
 @Roles('mentor')
@@ -54,7 +54,7 @@ export class MentorController {
   }
 
   @Get('submissions/:id')
-  @ZodResponse({ status: 200, type: SubmissionDto })
+  @ZodResponse({ status: 200, type: MentorSubmissionDto })
   submission(@CurrentUser() user: Principal, @Param() params: IdParamDto) {
     return this.mentor.submission(user.id, params.id);
   }
@@ -76,8 +76,8 @@ export class MentorController {
   }
 
   @Get('students')
-  @ZodResponse({ status: 200, type: StudentPageDto })
-  students(@CurrentUser() user: Principal, @Query() query: StudentQueryDto) {
+  @ZodResponse({ status: 200, type: MentorStudentPageDto })
+  students(@CurrentUser() user: Principal, @Query() query: MentorStudentQueryDto) {
     return this.mentor.students(user.id, query);
   }
 }

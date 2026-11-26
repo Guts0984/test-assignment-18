@@ -14,7 +14,7 @@ import { type Principal, schoolOf } from '../../common/auth/principal';
 import { CoursesService } from './courses.service';
 
 class IdParamDto extends createZodDto(idParamSchema) {}
-class ListQueryDto extends createZodDto(courseListQuerySchema) {}
+class CourseListQueryDto extends createZodDto(courseListQuerySchema) {}
 class CreateCourseDto extends createZodDto(createCourseSchema) {}
 class UpdateCourseDto extends createZodDto(updateCourseSchema) {}
 class CourseDto extends createZodDto(courseSchema) {}
@@ -28,7 +28,7 @@ export class CoursesController {
 
   @Get()
   @ZodResponse({ status: 200, type: CoursePageDto })
-  list(@CurrentUser() user: Principal, @Query() query: ListQueryDto) {
+  list(@CurrentUser() user: Principal, @Query() query: CourseListQueryDto) {
     return this.courses.list(schoolOf(user), query);
   }
 
