@@ -104,7 +104,7 @@ record(
   `${checks.map((c) => `${c.script} ${c.passed ? 'ok' : 'failed'}`).join(', ')}, client ${drift.passed ? 'unchanged' : 'changed'}; CI runs the same on every commit`,
   checks.reduce((sum, c) => sum + c.seconds, 0),
 );
-const readme = run('node', ['scripts/check-readme.mjs']);
+const readme = run('node', ['scripts/readme.mjs']);
 record('A-17', readme.passed, 'README sections, transition tables, jobs, indexes', readme.seconds);
 
 const ids = Array.from({ length: 17 }, (_, i) => `A-${i + 1}`);

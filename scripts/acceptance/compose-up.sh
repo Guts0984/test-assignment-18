@@ -23,6 +23,15 @@ code=$(curl -s -o /dev/null -w '%{http_code}' -H 'content-type: application/json
 echo "demo login -> ${code}"
 [ "$code" = 200 ]
 
+# Every login the README lists really signs in.
+for email in $(grep -oE '`[a-z0-9]+@[a-z0-9.]+\.example\.test`' README.md | tr -d '`' | sort -u); do
+  code=$(curl -s -o /dev/null -w '%{http_code}' -H 'content-type: application/json' \
+    -d "{\"email\":\"${email}\",\"password\":\"${password}\"}" \
+    "http://localhost:${port}/api/auth/login")
+  echo "${email} -> ${code}"
+  [ "$code" = 200 ]
+done
+
 for service in postgres redis api-1 api-2 nginx web paystub mailpit; do
   health=$(docker inspect --format '{{.State.Health.Status}}' "$(docker compose ps -q "$service")")
   echo "${service}: ${health}"

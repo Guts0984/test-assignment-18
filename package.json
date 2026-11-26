@@ -9,7 +9,7 @@
     "build:libs": "pnpm --filter \"./packages/*\" --filter @school/paystub run build",
     "build": "pnpm -r run build",
     "typecheck": "pnpm run build:libs && tsc -p tsconfig.json && pnpm -r --parallel run typecheck",
-    "lint": "pnpm run build:libs && eslint . && pnpm --filter @school/web run lint:fsd && node scripts/check-dependencies.mjs && prettier --check .",
+    "lint": "pnpm run build:libs && eslint . && pnpm --filter @school/web run lint:fsd && node scripts/check-dependencies.mjs && node scripts/readme.mjs && prettier --check .",
     "format": "prettier --write .",
     "test": "pnpm run build && vitest run",
     "test:unit": "pnpm run build:libs && vitest run --project unit",
@@ -21,7 +21,8 @@
     "test:acceptance": "vitest run -c vitest.stack.config.ts tests/acceptance && vitest run -c vitest.stack.config.ts tests/reconcile",
     "test:perf": "vitest run -c vitest.stack.config.ts tests/perf",
     "test:e2e": "playwright test",
-    "acceptance": "node scripts/acceptance/run.mjs"
+    "acceptance": "node scripts/acceptance/run.mjs",
+    "readme": "pnpm run build:libs && node scripts/readme.mjs --write"
   },
   "devDependencies": {
     "@eslint/js": "9.39.5",

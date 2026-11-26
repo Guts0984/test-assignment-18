@@ -3,8 +3,8 @@ import { z } from 'zod';
 const id = z.uuid();
 
 /**
- * Every background queue. The description fields feed the README, which a check compares
- * against this registry.
+ * Every background queue. The description fields are copied into the README by
+ * `scripts/readme.mjs`, and CI fails when the two differ.
  */
 export const QUEUES = {
   'hold-expiry': {
@@ -14,7 +14,8 @@ export const QUEUES = {
   },
   'waitlist-offers': {
     payload: z.strictObject({ cohortId: id }),
-    enqueued: 'When a seat is freed or capacity grows',
+    enqueued:
+      'By the sweeper when a cohort has free seats and waiting students (a freed seat is normally offered inside the transaction that frees it)',
     dedup: 'Allocation locks the cohort row and offers only free seats',
   },
   'payment-notifications': {
@@ -29,12 +30,12 @@ export const QUEUES = {
   },
   'lesson-reminders': {
     payload: z.strictObject({ notificationId: id }),
-    enqueued: 'When a lesson is created or moved, delayed until 24 h and 1 h before it',
+    enqueued: 'By the sweeper when a reminder falls due, 24 h and 1 h before a lesson',
     dedup: 'One row per lesson, kind and lesson version; unique email key per student',
   },
   'deadline-reminders': {
     payload: z.strictObject({ notificationId: id }),
-    enqueued: 'When homework gets a deadline, delayed until 24 h before it',
+    enqueued: 'By the sweeper when a reminder falls due, 24 h before a homework deadline',
     dedup: 'One row per homework, kind and version; unique email key per student',
   },
   certificates: {

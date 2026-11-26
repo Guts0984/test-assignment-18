@@ -47,8 +47,9 @@ describe('kill -9 during expiry', () => {
       rig.db.enrollment.count({ where: { cohortId: { in: cohorts }, status: 'held' } });
     const killed: number[] = [];
     while ((await left()) > 0 && killed.length < 6) {
-      const worker = rig.startWorker();
+      // Counted before the worker starts, so it cannot finish everything first.
       const before = await left();
+      const worker = rig.startWorker();
       await until(async () => (await left()) < before, 'progress');
       await rig.kill(worker);
       killed.push(await left());

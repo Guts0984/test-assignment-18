@@ -17,72 +17,72 @@ Test paths are relative to the repo root. `it:` = integration test (real Postgre
 
 | ID | Requirement (RU quote → EN) | Block | Test |
 |---|---|---|---|
-| ST-1 | «PostgreSQL 16 + Prisma; сырой SQL там, где нужны блокировки, ограничения и отчёты. Источник правды — Postgres» → Postgres 16 with Prisma; raw SQL for locks, constraints and reports; Postgres is the source of truth | C2 | it: `packages/db/test/constraints.it.spec.ts`; adv: `apps/api/test/adv/redis-loss.adv.spec.ts` |
-| ST-2 | «Redis 7 — BullMQ: истечение брони места, предложения из листа ожидания, приём уведомлений от платёжной системы, возвраты, напоминания о занятиях и дедлайнах, сертификаты, письма» → BullMQ queues for hold expiry, waitlist offers, payment notification intake, refunds, lesson and deadline reminders, certificates, emails | C5 | it: `apps/worker/test/queues.it.spec.ts` (each queue named and processed) |
-| ST-3 | «Адаптер Socket.IO между копиями api» → Socket.IO Redis adapter across api copies | C5, C7 | adv: `apps/api/test/adv/realtime.adv.spec.ts`; x: `tests/cross-stack/realtime-multicopy.x.spec.ts` |
+| ST-1 | «PostgreSQL 16 + Prisma; сырой SQL там, где нужны блокировки, ограничения и отчёты. Источник правды — Postgres» → Postgres 16 with Prisma; raw SQL for locks, constraints and reports; Postgres is the source of truth | C2 | `packages/db/test/constraints.it.spec.ts`; `apps/worker/test/adv/flushall.adv.spec.ts` |
+| ST-2 | «Redis 7 — BullMQ: истечение брони места, предложения из листа ожидания, приём уведомлений от платёжной системы, возвраты, напоминания о занятиях и дедлайнах, сертификаты, письма» → BullMQ queues for hold expiry, waitlist offers, payment notification intake, refunds, lesson and deadline reminders, certificates, emails | C5 | `apps/worker/test/adv/queues.adv.spec.ts`; `apps/worker/test/adv/flushall.adv.spec.ts`; `apps/worker/test/adv/reminders.adv.spec.ts` |
+| ST-3 | «Адаптер Socket.IO между копиями api» → Socket.IO Redis adapter across api copies | C5, C7 | `apps/api/test/adv/realtime.adv.spec.ts`; `tests/acceptance/seats.x.spec.ts` |
 | ST-4 | «При потере данных Redis ничего не теряется» → losing Redis data loses nothing | C5 | adv: `apps/worker/test/adv/flushall.adv.spec.ts` |
-| ST-5 | «NestJS: REST + OpenAPI (@nestjs/swagger), Socket.IO (@nestjs/websockets). В docker compose работают две копии за nginx» → NestJS REST + Swagger + Socket.IO gateway; two api copies behind nginx | C3, C7 | it: `apps/api/test/openapi.it.spec.ts`; x: `tests/cross-stack/smoke.x.spec.ts` (both copies answer, `X-Instance` header) |
-| ST-6 | «apps/worker — отдельный процесс NestJS с обработчиками BullMQ. Можно запустить несколько копий» → separate NestJS worker process, can run several copies | C5 | adv: `apps/worker/test/adv/multi-worker.adv.spec.ts` |
-| ST-7 | «Next.js 15 (App Router), React 19. Клиент API генерируется из OpenAPI; TanStack Query, React Hook Form, Tailwind» → Next 15 App Router, React 19, generated client, TanStack Query, RHF, Tailwind | C6 | CI step `gen:client && git diff --exit-code`; unit: `apps/web/src/**/*.spec.ts` |
-| ST-8 | «packages/shared — Zod-схемы ввода, расписание занятий в часовом поясе потока, дедлайны, сумма возврата, условие сертификата, переходы статусов» → shared zod input schemas, schedule in cohort tz, deadlines, refund amount, certificate condition, status transitions | C1 | unit: `packages/shared/src/**/*.spec.ts` |
-| ST-9 | «Тесты: Vitest; интеграционные — на настоящих Postgres и Redis; e2e — Playwright» → Vitest, real Postgres/Redis integration, Playwright e2e | C1…C7 | CI jobs `unit`, `integration`, `e2e` |
+| ST-5 | «NestJS: REST + OpenAPI (@nestjs/swagger), Socket.IO (@nestjs/websockets). В docker compose работают две копии за nginx» → NestJS REST + Swagger + Socket.IO gateway; two api copies behind nginx | C3, C7 | `apps/api/test/adv/route-sweep.adv.spec.ts`; `tests/cross-stack/edge.x.spec.ts` |
+| ST-6 | «apps/worker — отдельный процесс NestJS с обработчиками BullMQ. Можно запустить несколько копий» → separate NestJS worker process, can run several copies | C5 | `apps/worker/test/adv/jobs.adv.spec.ts`; `apps/worker/test/adv/certificates.adv.spec.ts` |
+| ST-7 | «Next.js 15 (App Router), React 19. Клиент API генерируется из OpenAPI; TanStack Query, React Hook Form, Tailwind» → Next 15 App Router, React 19, generated client, TanStack Query, RHF, Tailwind | C6 | CI job `client-drift`; `apps/web/src/shared/lib/countdown.spec.ts`; `apps/web/e2e/enroll.journey.e2e.ts` |
+| ST-8 | «packages/shared — Zod-схемы ввода, расписание занятий в часовом поясе потока, дедлайны, сумма возврата, условие сертификата, переходы статусов» → shared zod input schemas, schedule in cohort tz, deadlines, refund amount, certificate condition, status transitions | C1 | `packages/shared/src/schedule/generate.spec.ts`; `packages/shared/src/homework/deadline.spec.ts`; `packages/shared/src/refund/refund.spec.ts`; `packages/shared/src/status/transitions.spec.ts` |
+| ST-9 | «Тесты: Vitest; интеграционные — на настоящих Postgres и Redis; e2e — Playwright» → Vitest, real Postgres/Redis integration, Playwright e2e | C1…C7 | CI jobs `unit`, `integration`, `adversarial`, `e2e` in `.github/workflows/ci.yml` |
 
 ### 1.2 Scenarios (Сценарии)
 
 | ID | Requirement (RU quote → EN) | Block | Test |
 |---|---|---|---|
-| SC-S1 | «Ищет курс в каталоге по названию, направлению, дате старта и цене. Видит потоки с числом свободных мест» → catalog search by title, direction, start date, price; shows cohorts with free seats | C3 | it: `apps/api/src/modules/catalog/catalog.it.spec.ts`; e2e: `apps/web/e2e/enroll-pay.e2e.ts` |
-| SC-S2 | «Записывается на поток: место держится за ним 15 минут, пока он оплачивает (на экране обратный отсчёт). Может применить промокод» → enrolling holds the seat 15 min with an on-screen countdown; promo code may be applied | C4, C6 | it: `apps/api/src/modules/enrollments/holds.it.spec.ts`; unit: `apps/web/src/features/hold-countdown/model/countdown.spec.ts`; e2e: `enroll-pay.e2e.ts` |
-| SC-S3 | «Если мест нет, встаёт в лист ожидания. Когда место освобождается, получает письмо с предложением: у него 24 часа, чтобы оплатить» → join waitlist when full; on a freed seat, email offer with 24 h to pay | C4, C5 | it: `waitlist.it.spec.ts`; adv: `waitlist.race.adv.spec.ts`; e2e: `waitlist.e2e.ts` |
-| SC-S4 | «В личном кабинете видит расписание занятий в своём часовом поясе, домашние задания и дедлайны, оценки ментора и прогресс» → cabinet: schedule in own tz, homework, deadlines, mentor grades, progress | C5, C6 | it: `apps/api/src/modules/cabinet/cabinet.it.spec.ts`; unit: `packages/shared/src/schedule/display.spec.ts`; e2e: `homework-cert.e2e.ts` |
-| SC-S5 | «Сдаёт домашку (текст и файл), может пересдать до дедлайна. Видит комментарий ментора» → submit text + file, resubmit before deadline, see mentor comment | C5 | it: `submissions.it.spec.ts`; e2e: `homework-cert.e2e.ts` |
-| SC-S6 | «Просит перевод в другой поток того же курса или отменяет участие. Перед отменой видит, сколько денег вернётся» → request transfer to another cohort of the same course, or cancel; refund amount preview before cancel | C4 | it: `transfers.it.spec.ts`, `cancel.it.spec.ts` (preview equals actual refund); e2e: `transfer-cancel.e2e.ts` |
-| SC-S7 | «После окончания потока скачивает сертификат, если выполнил условие» → download certificate after cohort end if condition met | C5 | it: `certificates.it.spec.ts`; e2e: `homework-cert.e2e.ts` |
-| SC-M1 | «Видит очередь домашек на проверку: сначала самые старые. Одновременно на проверке у ментора не больше 5 работ» → review queue oldest-first; max 5 in review per mentor | C5 | it: `mentor-queue.it.spec.ts`; adv: `mentor-claim.race.adv.spec.ts` (20 parallel claims → 5) |
-| SC-M2 | «Принимает работу или возвращает на доработку с комментарием» → accept, or return with comment | C5 | it: `review.it.spec.ts` |
-| SC-M3 | «Видит своих студентов и их прогресс» → mentor sees own students and progress | C5 | it: `mentor-students.it.spec.ts`; adv: `idor.adv.spec.ts` |
-| SC-MG1 | «Создаёт курсы, потоки (дата старта, часовой пояс, число мест, цена, ментор) и расписание: «по вторникам и четвергам в 19:00 по Киеву, 12 занятий»» → create courses, cohorts (start, tz, capacity, price, mentor) and recurring schedule | C3 | unit: `packages/shared/src/schedule/generate.spec.ts`; it: `cohorts.it.spec.ts` |
-| SC-MG2 | «Переносит отдельное занятие на другое время» → reschedule a single lesson | C3, C5 | it: `lessons.reschedule.it.spec.ts`; adv: `reminders.adv.spec.ts` |
-| SC-MG3 | «Создаёт промокоды: скидка, число использований, срок действия» → promo codes: discount, max uses, validity window | C4 | it: `promos.it.spec.ts`; unit: `packages/shared/src/pricing/promo.spec.ts` |
-| SC-MG4 | «Видит студентов потока, лист ожидания, оплаты и возвраты. Переводит студента в другой поток или исключает его с возвратом» → cohort students, waitlist, payments, refunds; transfer or exclude with refund | C4 | it: `manager-cohort.it.spec.ts`, `exclude.it.spec.ts` |
-| SC-MG5 | «Видит упавшие фоновые задачи и запускает их повторно» → see failed jobs and retry them | C5 | adv: `failed-jobs.adv.spec.ts` |
-| SC-A1 | «Управляет сотрудниками и их ролями: менеджер, ментор» → admin manages staff and roles (manager, mentor) | C3 | it: `staff.it.spec.ts`; adv: `route-sweep.adv.spec.ts` |
-| SC-A2 | «Подключает платёжную систему: адрес, ключ» → admin configures payment gateway URL and key | C4 | it: `gateway-config.it.spec.ts` (key encrypted at rest, never returned) |
+| SC-S1 | «Ищет курс в каталоге по названию, направлению, дате старта и цене. Видит потоки с числом свободных мест» → catalog search by title, direction, start date, price; shows cohorts with free seats | C3 | `apps/api/test/catalog.it.spec.ts`; `apps/web/e2e/enroll.journey.e2e.ts` |
+| SC-S2 | «Записывается на поток: место держится за ним 15 минут, пока он оплачивает (на экране обратный отсчёт). Может применить промокод» → enrolling holds the seat 15 min with an on-screen countdown; promo code may be applied | C4, C6 | `apps/api/test/adv/expiry-vs-payment.race.adv.spec.ts`; `apps/api/test/adv/promo.race.adv.spec.ts`; `apps/web/src/shared/lib/countdown.spec.ts`; `apps/web/e2e/enroll.journey.e2e.ts` |
+| SC-S3 | «Если мест нет, встаёт в лист ожидания. Когда место освобождается, получает письмо с предложением: у него 24 часа, чтобы оплатить» → join waitlist when full; on a freed seat, email offer with 24 h to pay | C4, C5 | `apps/api/test/adv/waitlist.race.adv.spec.ts`; `apps/web/e2e/waitlist.journey.e2e.ts` |
+| SC-S4 | «В личном кабинете видит расписание занятий в своём часовом поясе, домашние задания и дедлайны, оценки ментора и прогресс» → cabinet: schedule in own tz, homework, deadlines, mentor grades, progress | C5, C6 | `apps/api/test/homework.it.spec.ts`; `packages/shared/src/schedule/generate.spec.ts`; `apps/web/e2e/homework.journey.e2e.ts` |
+| SC-S5 | «Сдаёт домашку (текст и файл), может пересдать до дедлайна. Видит комментарий ментора» → submit text + file, resubmit before deadline, see mentor comment | C5 | `apps/api/test/homework.it.spec.ts`; `apps/web/e2e/homework.journey.e2e.ts` |
+| SC-S6 | «Просит перевод в другой поток того же курса или отменяет участие. Перед отменой видит, сколько денег вернётся» → request transfer to another cohort of the same course, or cancel; refund amount preview before cancel | C4 | `apps/api/test/adv/transfer.race.adv.spec.ts`; `apps/api/test/adv/double-refund.race.adv.spec.ts`; `apps/web/e2e/transfer.journey.e2e.ts` |
+| SC-S7 | «После окончания потока скачивает сертификат, если выполнил условие» → download certificate after cohort end if condition met | C5 | `apps/api/test/adv/study-access.adv.spec.ts`; `apps/web/e2e/homework.journey.e2e.ts` |
+| SC-M1 | «Видит очередь домашек на проверку: сначала самые старые. Одновременно на проверке у ментора не больше 5 работ» → review queue oldest-first; max 5 in review per mentor | C5 | `apps/api/test/adv/mentor-claim.race.adv.spec.ts` |
+| SC-M2 | «Принимает работу или возвращает на доработку с комментарием» → accept, or return with comment | C5 | `apps/api/test/homework.it.spec.ts`; `apps/web/e2e/homework.journey.e2e.ts` |
+| SC-M3 | «Видит своих студентов и их прогресс» → mentor sees own students and progress | C5 | `apps/api/test/homework.it.spec.ts`; `apps/api/test/adv/study-access.adv.spec.ts` |
+| SC-MG1 | «Создаёт курсы, потоки (дата старта, часовой пояс, число мест, цена, ментор) и расписание: «по вторникам и четвергам в 19:00 по Киеву, 12 занятий»» → create courses, cohorts (start, tz, capacity, price, mentor) and recurring schedule | C3 | `packages/shared/src/schedule/generate.spec.ts`; `apps/api/test/cohorts.it.spec.ts` |
+| SC-MG2 | «Переносит отдельное занятие на другое время» → reschedule a single lesson | C3, C5 | `apps/api/test/cohorts.it.spec.ts`; `apps/worker/test/adv/reminders.adv.spec.ts` |
+| SC-MG3 | «Создаёт промокоды: скидка, число использований, срок действия» → promo codes: discount, max uses, validity window | C4 | `apps/api/test/management.it.spec.ts`; `packages/shared/src/pricing/promo.spec.ts` |
+| SC-MG4 | «Видит студентов потока, лист ожидания, оплаты и возвраты. Переводит студента в другой поток или исключает его с возвратом» → cohort students, waitlist, payments, refunds; transfer or exclude with refund | C4 | `apps/api/test/management.it.spec.ts`; `apps/api/test/adv/double-refund.race.adv.spec.ts` |
+| SC-MG5 | «Видит упавшие фоновые задачи и запускает их повторно» → see failed jobs and retry them | C5 | `apps/api/test/reports.it.spec.ts`; `apps/worker/test/adv/jobs.adv.spec.ts` |
+| SC-A1 | «Управляет сотрудниками и их ролями: менеджер, ментор» → admin manages staff and roles (manager, mentor) | C3 | `apps/api/test/cohorts.it.spec.ts`; `apps/api/test/adv/route-sweep.adv.spec.ts` |
+| SC-A2 | «Подключает платёжную систему: адрес, ключ» → admin configures payment gateway URL and key | C4 | `apps/api/test/management.it.spec.ts` |
 
 ### 1.3 Rules table (Правила)
 
 | ID | Requirement (RU quote → EN) | Block | Test |
 |---|---|---|---|
-| R-SEATS | «оплаченные + удерживаемые + предложенные из листа ожидания ≤ число мест. Менеджер может увеличить число мест, но не уменьшить ниже уже занятых» → paid + held + offered ≤ capacity; capacity can grow, never below taken | C2, C4 | it: `packages/db/test/constraints.it.spec.ts` (CHECK fires); it: `capacity.it.spec.ts`; adv: `last-seats.race.adv.spec.ts` |
-| R-HOLD-1 | «Бронь места: 15 минут» → hold lasts 15 min | C4 | it: `holds.it.spec.ts` (TTL−1 s still held, TTL expired, TTL+1 s) |
-| R-HOLD-2 | «Истёкшая бронь возвращает место ровно один раз» → expired hold returns the seat exactly once | C4, C5 | adv: `expiry-once.adv.spec.ts` (expire job ×10 parallel + sweeper) |
-| R-HOLD-3 | «Оплата, пришедшая после истечения: если место ещё есть — студент записан, если нет — деньги возвращаются автоматически. Деньги без места не остаются никогда» → late payment: enrol if seat free, else auto-refund; never money without a seat | C4 | adv: `late-payment.adv.spec.ts`; e2e: `late-payment-refund.e2e.ts` |
-| R-WAIT-1 | «очередь по времени записи» → FIFO by join time | C4 | it: `waitlist.it.spec.ts` |
-| R-WAIT-2 | «Освободившееся место предлагается первому в очереди на 24 часа; если он не оплатил, место переходит к следующему» → freed seat offered to the first for 24 h, then moves to the next | C4, C5 | adv: `waitlist.race.adv.spec.ts` |
-| R-WAIT-3 | «Одно место — одно предложение» → one seat, one offer | C4 | adv: `waitlist.race.adv.spec.ts` (offers count = freed seats) |
-| R-PRICE-1 | «Цена фиксируется в момент брони места» → price is fixed at hold time | C4 | it: `pricing.it.spec.ts` (manager changes price after hold; held price unchanged) |
-| R-PRICE-2 | «Промокод уменьшает цену; число использований промокода не превышает лимит даже при одновременных оплатах» → promo lowers price; uses never exceed limit under concurrency | C4 | adv: `promo.race.adv.spec.ts` |
-| R-PRICE-3 | «Бронь, которая истекла или не оплачена, промокод не тратит» → expired or unpaid hold does not consume a promo use | C4 | it: `promos.it.spec.ts` (reserve → expire → reservation released) |
-| R-TRANSFER | «в другой поток того же курса, если там есть место: новое место занимается и старое освобождается в одной транзакции. Разница в цене доплачивается или возвращается» → transfer within the course only if seat; take new and free old in one tx; price difference charged or refunded | C4 | adv: `transfer.race.adv.spec.ts`; it: `transfers.it.spec.ts`; e2e: `transfer-cancel.e2e.ts` |
+| R-SEATS | «оплаченные + удерживаемые + предложенные из листа ожидания ≤ число мест. Менеджер может увеличить число мест, но не уменьшить ниже уже занятых» → paid + held + offered ≤ capacity; capacity can grow, never below taken | C2, C4 | `packages/db/test/constraints.it.spec.ts`; `apps/api/test/adv/waitlist.race.adv.spec.ts`; `apps/api/test/adv/last-seats.race.adv.spec.ts` |
+| R-HOLD-1 | «Бронь места: 15 минут» → hold lasts 15 min | C4 | `apps/api/test/adv/expiry-vs-payment.race.adv.spec.ts` |
+| R-HOLD-2 | «Истёкшая бронь возвращает место ровно один раз» → expired hold returns the seat exactly once | C4, C5 | `apps/api/test/adv/expiry-vs-payment.race.adv.spec.ts`; `apps/worker/test/adv/worker-kill.adv.spec.ts` |
+| R-HOLD-3 | «Оплата, пришедшая после истечения: если место ещё есть — студент записан, если нет — деньги возвращаются автоматически. Деньги без места не остаются никогда» → late payment: enrol if seat free, else auto-refund; never money without a seat | C4 | `apps/api/test/adv/expiry-vs-payment.race.adv.spec.ts`; `apps/web/e2e/late-payment.journey.e2e.ts` |
+| R-WAIT-1 | «очередь по времени записи» → FIFO by join time | C4 | `apps/api/test/adv/waitlist.race.adv.spec.ts` |
+| R-WAIT-2 | «Освободившееся место предлагается первому в очереди на 24 часа; если он не оплатил, место переходит к следующему» → freed seat offered to the first for 24 h, then moves to the next | C4, C5 | `apps/api/test/adv/waitlist.race.adv.spec.ts` |
+| R-WAIT-3 | «Одно место — одно предложение» → one seat, one offer | C4 | `apps/api/test/adv/waitlist.race.adv.spec.ts` |
+| R-PRICE-1 | «Цена фиксируется в момент брони места» → price is fixed at hold time | C4 | `apps/api/test/adv/promo.race.adv.spec.ts` |
+| R-PRICE-2 | «Промокод уменьшает цену; число использований промокода не превышает лимит даже при одновременных оплатах» → promo lowers price; uses never exceed limit under concurrency | C4 | `apps/api/test/adv/promo.race.adv.spec.ts` |
+| R-PRICE-3 | «Бронь, которая истекла или не оплачена, промокод не тратит» → expired or unpaid hold does not consume a promo use | C4 | `apps/api/test/adv/promo.race.adv.spec.ts` |
+| R-TRANSFER | «в другой поток того же курса, если там есть место: новое место занимается и старое освобождается в одной транзакции. Разница в цене доплачивается или возвращается» → transfer within the course only if seat; take new and free old in one tx; price difference charged or refunded | C4 | `apps/api/test/adv/transfer.race.adv.spec.ts`; `apps/web/e2e/transfer.journey.e2e.ts` |
 | R-REFUND-1 | «до старта потока — 100 %; до начала третьего занятия — 50 %; позже — без возврата» → 100 % before start, 50 % before lesson 3 starts, 0 % after | C1 | unit: `packages/shared/src/refund/refund.spec.ts` (boundaries ±1 s, property tests) |
-| R-REFUND-2 | «Время сравнивается по часовому поясу потока» → compared in cohort tz | C1 | unit: `refund.spec.ts` (America/New_York, DST) |
-| R-REFUND-3 | «Возврат по одной записи — не больше одного раза и не больше оплаченного» → at most one refund per enrollment and never more than paid | C2, C4 | it: `packages/db/test/constraints.it.spec.ts`; adv: `double-refund.race.adv.spec.ts` |
+| R-REFUND-2 | «Время сравнивается по часовому поясу потока» → compared in cohort tz | C1 | `packages/shared/src/refund/refund.spec.ts`; `tests/acceptance/money.x.spec.ts` |
+| R-REFUND-3 | «Возврат по одной записи — не больше одного раза и не больше оплаченного» → at most one refund per enrollment and never more than paid | C2, C4 | `packages/db/test/ledger.it.spec.ts`; `apps/api/test/adv/double-refund.race.adv.spec.ts` |
 | R-SCHED-1 | «занятия задаются по местному времени потока и не сдвигаются при переходе на летнее время» → lessons are defined in cohort local time and do not shift across DST | C1 | unit: `packages/shared/src/schedule/generate.spec.ts` (Kyiv 2026-03-29, Warsaw, New York 2026-03-08 / 2026-11-01) |
-| R-SCHED-2 | «Студент видит их в своём часовом поясе» → student sees them in own tz | C1, C6 | unit: `display.spec.ts`; e2e: `homework-cert.e2e.ts` |
-| R-REMIND-1 | «письмо за 24 часа и за 1 час до занятия, ровно одно каждого вида» → email 24 h and 1 h before, exactly one of each kind | C5 | adv: `reminders.adv.spec.ts` |
-| R-REMIND-2 | «После переноса занятия старые напоминания не приходят, новые — по новому времени» → after reschedule old reminders never arrive, new ones follow new time | C5 | adv: `reminders.adv.spec.ts` (reschedule 30 min before reminder) |
+| R-SCHED-2 | «Студент видит их в своём часовом поясе» → student sees them in own tz | C1, C6 | `packages/shared/src/schedule/generate.spec.ts`; `apps/web/e2e/homework.journey.e2e.ts` |
+| R-REMIND-1 | «письмо за 24 часа и за 1 час до занятия, ровно одно каждого вида» → email 24 h and 1 h before, exactly one of each kind | C5 | `apps/worker/test/adv/reminders.adv.spec.ts` |
+| R-REMIND-2 | «После переноса занятия старые напоминания не приходят, новые — по новому времени» → after reschedule old reminders never arrive, new ones follow new time | C5 | `apps/worker/test/adv/reminders.adv.spec.ts`; `apps/api/test/cohorts.it.spec.ts` |
 | R-HW-1 | «дедлайн — 23:59 по часовому поясу потока через 7 дней после занятия» → deadline 23:59 cohort-local, 7 days after the lesson | C1 | unit: `packages/shared/src/homework/deadline.spec.ts` |
-| R-HW-2 | «Работа, сданная после дедлайна, принимается с отметкой «поздно»» → late work accepted with a "late" flag | C5 | it: `submissions.it.spec.ts` |
-| R-HW-3 | «У одной работы в любой момент не больше одного проверяющего» → one reviewer per submission at any time | C2, C5 | adv: `mentor-claim.race.adv.spec.ts` |
-| R-CERT-1 | «выдаётся после последнего занятия, если принято не меньше 80 % домашек» → issued after the last lesson if ≥ 80 % homework accepted | C1, C5 | unit: `packages/shared/src/certificate/eligibility.spec.ts` (79.9 % / 80 %); it: `certificates.it.spec.ts` |
-| R-CERT-2 | «Номер сквозной по курсу, без пропусков и повторов» → per-course sequential number, no gaps, no repeats | C2, C5 | adv: `certificates.adv.spec.ts` |
-| R-CERT-3 | «Выдаётся ровно один раз» → issued exactly once | C2, C5 | adv: `certificates.adv.spec.ts` |
-| R-MONEY-1 | «в минорных единицах валюты потока (UAH, EUR, USD)» → minor units of the cohort currency | C1, C2 | unit: `packages/shared/src/money/money.spec.ts`; adv: `input.adv.spec.ts` (float price → 400) |
+| R-HW-2 | «Работа, сданная после дедлайна, принимается с отметкой «поздно»» → late work accepted with a "late" flag | C5 | `apps/api/test/homework.it.spec.ts` |
+| R-HW-3 | «У одной работы в любой момент не больше одного проверяющего» → one reviewer per submission at any time | C2, C5 | `apps/api/test/adv/mentor-claim.race.adv.spec.ts` |
+| R-CERT-1 | «выдаётся после последнего занятия, если принято не меньше 80 % домашек» → issued after the last lesson if ≥ 80 % homework accepted | C1, C5 | `packages/shared/src/certificate/eligibility.spec.ts`; `apps/worker/test/adv/certificates.adv.spec.ts` |
+| R-CERT-2 | «Номер сквозной по курсу, без пропусков и повторов» → per-course sequential number, no gaps, no repeats | C2, C5 | `apps/worker/test/adv/certificates.adv.spec.ts`; `packages/db/test/constraints.it.spec.ts` |
+| R-CERT-3 | «Выдаётся ровно один раз» → issued exactly once | C2, C5 | `apps/worker/test/adv/certificates.adv.spec.ts` |
+| R-MONEY-1 | «в минорных единицах валюты потока (UAH, EUR, USD)» → minor units of the cohort currency | C1, C2 | `packages/shared/src/money/money.spec.ts`; `apps/api/test/adv/input.adv.spec.ts` |
 | R-MONEY-2 | «Оплаты и возвраты не удаляются и не меняются; баланс записи равен сумме её операций» → payments/refunds are immutable; enrollment balance = sum of its operations | C2 | it: `packages/db/test/ledger.it.spec.ts` (UPDATE/DELETE blocked by trigger); `assertInvariants()` after every adv test |
-| R-STATUS-E | «Статусы записи: held, offered, paid, transferred, cancelled, refunded, expired, completed» → enrollment statuses | C1, C2 | unit: `packages/shared/src/status/enrollment.spec.ts` (every pair allowed/forbidden); it: DB CHECK |
-| R-STATUS-H | «Статусы домашки: submitted, in_review, accepted, returned» → submission statuses | C1, C2 | unit: `packages/shared/src/status/submission.spec.ts` |
-| R-STATUS-README | «Таблицы переходов (кто и из какого статуса) — в README» → transition tables in README | C8 | `scripts/check-readme-transitions.ts` (README tables generated from and diffed against shared transition maps, run in CI) |
-| R-JOURNAL-1 | «каждое изменение занятости потока (бронь, оплата, истечение, предложение из листа ожидания, перевод, отмена, исключение, изменение числа мест) — отдельная запись: поток, на сколько, по какой записи, кто, когда» → every occupancy change is a journal row: cohort, delta, enrollment, actor, time | C2, C4 | it: `seat-journal.it.spec.ts` (each reason produces exactly one row) |
+| R-STATUS-E | «Статусы записи: held, offered, paid, transferred, cancelled, refunded, expired, completed» → enrollment statuses | C1, C2 | `packages/shared/src/status/transitions.spec.ts` |
+| R-STATUS-H | «Статусы домашки: submitted, in_review, accepted, returned» → submission statuses | C1, C2 | `packages/shared/src/status/transitions.spec.ts` |
+| R-STATUS-README | «Таблицы переходов (кто и из какого статуса) — в README» → transition tables in README | C8 | `scripts/readme.mjs` (tables generated from the shared maps; lint fails on any difference) |
+| R-JOURNAL-1 | «каждое изменение занятости потока (бронь, оплата, истечение, предложение из листа ожидания, перевод, отмена, исключение, изменение числа мест) — отдельная запись: поток, на сколько, по какой записи, кто, когда» → every occupancy change is a journal row: cohort, delta, enrollment, actor, time | C2, C4 | `apps/api/test/journal.it.spec.ts` |
 | R-JOURNAL-2 | «Счётчики мест по каждому потоку всегда равны сумме журнала» → counters always equal the journal sum | C2 | `assertInvariants()`; it: `packages/db/test/constraints.it.spec.ts` |
 
 ### 1.4 Seed (Сид)
@@ -90,25 +90,25 @@ Test paths are relative to the repo root. `it:` = integration test (real Postgre
 | ID | Requirement (RU quote → EN) | Block | Test |
 |---|---|---|---|
 | SEED-1 | «200 курсов, 2 000 потоков в трёх часовых поясах (Europe/Kyiv, Europe/Warsaw, America/New_York) и трёх валютах, за 2 года и на полгода вперёд» → 200 courses, 2,000 cohorts, 3 tz, 3 currencies, 2 years back to 6 months ahead | C2 | it: `packages/db/test/seed.it.spec.ts` (counts, distributions; run at `SEED_SCALE=1` in the e2e CI job) |
-| SEED-2 | «300 000 студентов, 500 000 записей, из них часть отменена, возвращена или переведена» → 300k students, 500k enrollments, some cancelled/refunded/transferred | C2 | same |
-| SEED-3 | «1 000 000 домашек в разных статусах, 100 000 сертификатов» → 1M submissions in all statuses, 100k certificates | C2 | same, plus `assertInvariants()` on the seeded db |
-| SEED-4 | «несколько потоков, которые стартуют в ближайшие дни с последними свободными местами и листом ожидания» → several cohorts starting soon with last seats and a waitlist | C2 | same |
-| SEED-5 | «несколько потоков с занятиями на неделе перехода на летнее время» → several cohorts with lessons in DST week | C2 | same |
-| SEED-6 | «Логины — в README» → logins in README | C8 | `scripts/check-readme-logins.ts` logs in with every README login against the compose stack |
+| SEED-2 | «300 000 студентов, 500 000 записей, из них часть отменена, возвращена или переведена» → 300k students, 500k enrollments, some cancelled/refunded/transferred | C2 | `packages/db/test/seed.it.spec.ts` |
+| SEED-3 | «1 000 000 домашек в разных статусах, 100 000 сертификатов» → 1M submissions in all statuses, 100k certificates | C2 | `packages/db/test/seed.it.spec.ts` |
+| SEED-4 | «несколько потоков, которые стартуют в ближайшие дни с последними свободными местами и листом ожидания» → several cohorts starting soon with last seats and a waitlist | C2 | `packages/db/test/seed.it.spec.ts` |
+| SEED-5 | «несколько потоков с занятиями на неделе перехода на летнее время» → several cohorts with lessons in DST week | C2 | `packages/db/test/seed.it.spec.ts` |
+| SEED-6 | «Логины — в README» → logins in README | C8 | `scripts/acceptance/compose-up.sh` signs in with every README login |
 
 ### 1.5 Payment stub (Заглушка платёжной системы)
 
 | ID | Requirement (RU quote → EN) | Block | Test |
 |---|---|---|---|
-| PS-1 | «Отдельный сервис в docker compose» → separate compose service | C4, C7 | x: `smoke.x.spec.ts` |
-| PS-2 | «страница оплаты: кнопки «оплатить», «отказ», «закрыть без оплаты»» → pay page with pay / decline / close-without-paying | C4 | it: `apps/paystub/test/pay-page.it.spec.ts`; e2e: `enroll-pay.e2e.ts` |
-| PS-3 | «уведомляет сервис об оплате и возврате подписанным запросом (HMAC), повторяет при ошибке» → HMAC-signed payment/refund notifications, retried on error | C4 | it: `apps/paystub/test/delivery.it.spec.ts` (api returns 500 ×3 → delivered on retry); adv: `webhook.adv.spec.ts` (bad signature, replay, stale timestamp) |
-| PS-4 | «принимает запросы на возврат, показывает все оплаты и возвраты» → accepts refund requests; lists all payments and refunds | C4 | it: `apps/paystub/test/refunds.it.spec.ts` |
-| PS-5 | «режим хаоса (переключатель в .env)» → chaos switch in .env | C4 | it: `apps/paystub/test/chaos.it.spec.ts` |
-| PS-6 | «уведомление об оплате отправляется дважды, одновременно в обе копии api» → payment notification sent twice concurrently to both api copies | C4 | x: `tests/cross-stack/chaos-payments.x.spec.ts` |
-| PS-7 | «уведомление об оплате иногда приходит через 20 минут, когда бронь места уже истекла» → sometimes delivered 20 min later | C4 | it: `chaos.it.spec.ts` (delay scheduled = 1,200 s; control endpoint releases it); adv: `late-payment.adv.spec.ts` |
-| PS-8 | «уведомление о возврате иногда приходит раньше ответа на запрос возврата» → refund notification sometimes before the refund response | C4 | adv: `refund-chaos.adv.spec.ts` |
-| PS-9 | «каждый пятый запрос на возврат получает ответ 500 или таймаут» → every 5th refund request gets 500 or timeout | C4 | it: `chaos.it.spec.ts`; adv: `refund-chaos.adv.spec.ts` |
+| PS-1 | «Отдельный сервис в docker compose» → separate compose service | C4, C7 | `tests/cross-stack/edge.x.spec.ts`; `scripts/acceptance/compose-up.sh` |
+| PS-2 | «страница оплаты: кнопки «оплатить», «отказ», «закрыть без оплаты»» → pay page with pay / decline / close-without-paying | C4 | `apps/paystub/test/stub.it.spec.ts`; `apps/web/e2e/enroll.journey.e2e.ts` |
+| PS-3 | «уведомляет сервис об оплате и возврате подписанным запросом (HMAC), повторяет при ошибке» → HMAC-signed payment/refund notifications, retried on error | C4 | `apps/paystub/test/stub.it.spec.ts`; `apps/api/test/adv/webhook.adv.spec.ts` |
+| PS-4 | «принимает запросы на возврат, показывает все оплаты и возвраты» → accepts refund requests; lists all payments and refunds | C4 | `apps/paystub/test/stub.it.spec.ts` |
+| PS-5 | «режим хаоса (переключатель в .env)» → chaos switch in .env | C4 | `apps/paystub/src/chaos.spec.ts`; `apps/api/test/adv/refund-chaos.adv.spec.ts` |
+| PS-6 | «уведомление об оплате отправляется дважды, одновременно в обе копии api» → payment notification sent twice concurrently to both api copies | C4 | `apps/api/test/adv/refund-chaos.adv.spec.ts`; `apps/paystub/src/chaos.spec.ts` |
+| PS-7 | «уведомление об оплате иногда приходит через 20 минут, когда бронь места уже истекла» → sometimes delivered 20 min later | C4 | `apps/api/test/adv/refund-chaos.adv.spec.ts`; `apps/paystub/src/chaos.spec.ts` |
+| PS-8 | «уведомление о возврате иногда приходит раньше ответа на запрос возврата» → refund notification sometimes before the refund response | C4 | `apps/api/test/adv/refund-chaos.adv.spec.ts` |
+| PS-9 | «каждый пятый запрос на возврат получает ответ 500 или таймаут» → every 5th refund request gets 500 or timeout | C4 | `apps/paystub/src/chaos.spec.ts`; `apps/api/test/adv/refund-chaos.adv.spec.ts` |
 
 ### 1.6 Invariants (Инварианты)
 
@@ -116,82 +116,82 @@ Test paths are relative to the repo root. `it:` = integration test (real Postgre
 
 | ID | Requirement (RU quote → EN) | Block | Test |
 |---|---|---|---|
-| INV-1 | «Мест не больше, чем есть… счётчики всегда равны сумме журнала» → never over capacity; counters = journal sum | C2, C4 | adv: `last-seats.race.adv.spec.ts`, `assertInvariants()` everywhere |
-| INV-2 | «200 одновременных записей на 5 последних мест через обе копии api — ровно 5 броней, остальные получают «мест нет» и могут встать в лист ожидания» → 200 concurrent on last 5 via both copies → exactly 5 holds, rest `NO_SEATS` and may join the waitlist | C4, C7 | adv: `last-seats.race.adv.spec.ts` (two in-process app copies); x: `last-seats.x.spec.ts` (via nginx) |
-| INV-3 | «Оплата, пришедшая в момент истечения брони, — либо студент записан, либо место вернулось и деньги возвращены; никогда оба и никогда ни одного» → payment at the expiry instant: enrolled XOR (seat freed AND refunded) | C4, C5 | adv: `expiry-vs-payment.race.adv.spec.ts` |
-| INV-4 | «Освободились 3 места одновременно — предложения получили ровно трое первых, каждый одно. Непринятое предложение переходит к следующему один раз» → 3 freed at once → first three get one offer each; unpaid offer passes on once | C4, C5 | adv: `waitlist.race.adv.spec.ts` |
-| INV-5 | «50 одновременных оплат с промокодом на 10 использований — скидку получили ровно 10» → 50 concurrent with a 10-use promo → exactly 10 discounts | C4 | adv: `promo.race.adv.spec.ts` |
-| INV-6 | «Перевод в поток, где одновременно занимают последнее место, — либо студент в новом потоке и старое место свободно, либо остался в старом» → transfer racing for the last seat ends in exactly one cohort | C4 | adv: `transfer.race.adv.spec.ts` |
-| INV-7a | «Одно уведомление 10 раз в обе копии api — одна оплата» → same notification ×10 to both copies → one payment | C4 | adv: `duplicate-webhook.race.adv.spec.ts`; x: `chaos-payments.x.spec.ts` |
-| INV-7b | «Возврат при ошибках платёжной системы доходит после повторов, вернули ровно один раз и не больше оплаченного» → refund succeeds after retries, exactly once, ≤ paid | C4, C5 | adv: `refund-chaos.adv.spec.ts` |
-| INV-7c | «Отмена студентом и исключение менеджером одновременно — один возврат» → concurrent student cancel + manager exclude → one refund | C4 | adv: `double-refund.race.adv.spec.ts` |
-| INV-8 | «Напоминания — ровно одно каждого вида и вовремя. Включая неделю перехода на летнее время и перенос занятия за 30 минут до напоминания» → one reminder of each kind, on time, incl. DST week and reschedule 30 min before | C5 | adv: `reminders.adv.spec.ts` |
-| INV-9 | «При нескольких копиях worker, kill -9 посреди выдачи и потере Redis каждый студент получил не больше одного сертификата, номера по курсу идут подряд» → multi-worker, kill -9 and Redis loss → ≤ 1 certificate each, consecutive numbers | C5 | adv: `certificates.adv.spec.ts` |
-| INV-10a | «kill -9 воркера посреди истечения броней или выдачи сертификатов — после рестарта всё доделано без двойного учёта» → kill -9 mid-expiry or mid-certificates → finished after restart, no double counting | C5 | adv: `worker-kill.adv.spec.ts` |
-| INV-10b | «несколько копий worker не выполняют одну задачу дважды» → several workers never run one job twice (effect-wise) | C5 | adv: `multi-worker.adv.spec.ts` |
-| INV-10c | «задача, исчерпавшая попытки, видна менеджеру и запускается повторно вручную» → exhausted job visible to manager and retryable manually | C5 | adv: `failed-jobs.adv.spec.ts` (also survives FLUSHALL) |
-| INV-11 | «После FLUSHALL брони и предложения истекают, напоминания приходят, возвраты доходят, и ничего не выполняется дважды» → after FLUSHALL holds/offers expire, reminders arrive, refunds land, nothing twice | C5 | adv: `flushall.adv.spec.ts` |
-| INV-12a | «студент видит только свои записи, домашки и сертификаты» → student sees only own enrollments, submissions, certificates | C3–C5 | adv: `idor.adv.spec.ts` |
-| INV-12b | «ментор — только своих студентов и их работы» → mentor only own students and work | C5 | adv: `idor.adv.spec.ts` |
-| INV-12c | «менеджер — только свою школу» → manager only own school | C3–C5 | adv: `idor.adv.spec.ts`, `route-sweep.adv.spec.ts` (cross-school matrix) |
-| INV-12d | «ключ платёжной системы работает только для уведомлений» → gateway key works only for notifications | C4 | adv: `webhook.adv.spec.ts` (key as Bearer / HMAC on other routes → 401) |
-| INV-12e | «сертификат проверяется по публичной ссылке, но ссылку нельзя подобрать» → public verification link, unguessable | C5 | adv: `certificate-link.adv.spec.ts` (256-bit token, sequential numbers / ids don't resolve, 1,000 random tokens → 404, timing-flat) |
-| INV-12f | «на некорректный ввод — понятная ошибка с кодом, одинаковая по формату во всех эндпоинтах и описанная в OpenAPI; никогда «Internal server error»» → clear coded error, same shape everywhere, in OpenAPI, never a bare 500 | C3 | adv: `input.adv.spec.ts` (table per endpoint group); it: `openapi.it.spec.ts` (every operation declares the `ApiError` schema) |
-| INV-12g | «Права — на сервере, в каждом эндпоинте и в сокетах» → enforced server-side on every endpoint and socket | C3, C5 | adv: `route-sweep.adv.spec.ts`, `realtime.adv.spec.ts` |
-| INV-TIME | «Время в задачах (15 минут брони, 24 часа предложения, напоминания, дедлайны, границы возврата) подменяется в тестах» → time is substitutable in tests | C1, C3, C5 | unit: `packages/shared/src/clock/clock.spec.ts`; it: `test-clock.it.spec.ts` (endpoint refused when disabled or with a wrong token) |
+| INV-1 | «Мест не больше, чем есть… счётчики всегда равны сумме журнала» → never over capacity; counters = journal sum | C2, C4 | `apps/api/test/adv/last-seats.race.adv.spec.ts` |
+| INV-2 | «200 одновременных записей на 5 последних мест через обе копии api — ровно 5 броней, остальные получают «мест нет» и могут встать в лист ожидания» → 200 concurrent on last 5 via both copies → exactly 5 holds, rest `NO_SEATS` and may join the waitlist | C4, C7 | `apps/api/test/adv/last-seats.race.adv.spec.ts`; `tests/acceptance/seats.x.spec.ts` |
+| INV-3 | «Оплата, пришедшая в момент истечения брони, — либо студент записан, либо место вернулось и деньги возвращены; никогда оба и никогда ни одного» → payment at the expiry instant: enrolled XOR (seat freed AND refunded) | C4, C5 | `apps/api/test/adv/expiry-vs-payment.race.adv.spec.ts` |
+| INV-4 | «Освободились 3 места одновременно — предложения получили ровно трое первых, каждый одно. Непринятое предложение переходит к следующему один раз» → 3 freed at once → first three get one offer each; unpaid offer passes on once | C4, C5 | `apps/api/test/adv/waitlist.race.adv.spec.ts` |
+| INV-5 | «50 одновременных оплат с промокодом на 10 использований — скидку получили ровно 10» → 50 concurrent with a 10-use promo → exactly 10 discounts | C4 | `apps/api/test/adv/promo.race.adv.spec.ts` |
+| INV-6 | «Перевод в поток, где одновременно занимают последнее место, — либо студент в новом потоке и старое место свободно, либо остался в старом» → transfer racing for the last seat ends in exactly one cohort | C4 | `apps/api/test/adv/transfer.race.adv.spec.ts` |
+| INV-7a | «Одно уведомление 10 раз в обе копии api — одна оплата» → same notification ×10 to both copies → one payment | C4 | `apps/api/test/adv/webhook.adv.spec.ts`; `tests/acceptance/money.x.spec.ts` |
+| INV-7b | «Возврат при ошибках платёжной системы доходит после повторов, вернули ровно один раз и не больше оплаченного» → refund succeeds after retries, exactly once, ≤ paid | C4, C5 | `apps/api/test/adv/refund-chaos.adv.spec.ts` |
+| INV-7c | «Отмена студентом и исключение менеджером одновременно — один возврат» → concurrent student cancel + manager exclude → one refund | C4 | `apps/api/test/adv/double-refund.race.adv.spec.ts` |
+| INV-8 | «Напоминания — ровно одно каждого вида и вовремя. Включая неделю перехода на летнее время и перенос занятия за 30 минут до напоминания» → one reminder of each kind, on time, incl. DST week and reschedule 30 min before | C5 | `apps/worker/test/adv/reminders.adv.spec.ts`; `tests/acceptance/background.x.spec.ts` |
+| INV-9 | «При нескольких копиях worker, kill -9 посреди выдачи и потере Redis каждый студент получил не больше одного сертификата, номера по курсу идут подряд» → multi-worker, kill -9 and Redis loss → ≤ 1 certificate each, consecutive numbers | C5 | `apps/worker/test/adv/certificates.adv.spec.ts` |
+| INV-10a | «kill -9 воркера посреди истечения броней или выдачи сертификатов — после рестарта всё доделано без двойного учёта» → kill -9 mid-expiry or mid-certificates → finished after restart, no double counting | C5 | `apps/worker/test/adv/worker-kill.adv.spec.ts`; `apps/worker/test/adv/certificates.adv.spec.ts` |
+| INV-10b | «несколько копий worker не выполняют одну задачу дважды» → several workers never run one job twice (effect-wise) | C5 | `apps/worker/test/adv/jobs.adv.spec.ts` |
+| INV-10c | «задача, исчерпавшая попытки, видна менеджеру и запускается повторно вручную» → exhausted job visible to manager and retryable manually | C5 | `apps/worker/test/adv/jobs.adv.spec.ts`; `apps/api/test/reports.it.spec.ts` |
+| INV-11 | «После FLUSHALL брони и предложения истекают, напоминания приходят, возвраты доходят, и ничего не выполняется дважды» → after FLUSHALL holds/offers expire, reminders arrive, refunds land, nothing twice | C5 | `apps/worker/test/adv/flushall.adv.spec.ts` |
+| INV-12a | «студент видит только свои записи, домашки и сертификаты» → student sees only own enrollments, submissions, certificates | C3–C5 | `apps/api/test/adv/idor.adv.spec.ts`; `apps/api/test/adv/study-access.adv.spec.ts` |
+| INV-12b | «ментор — только своих студентов и их работы» → mentor only own students and work | C5 | `apps/api/test/adv/study-access.adv.spec.ts` |
+| INV-12c | «менеджер — только свою школу» → manager only own school | C3–C5 | `apps/api/test/adv/tenancy.adv.spec.ts`; `apps/api/test/adv/idor.adv.spec.ts`; `apps/api/test/adv/route-sweep.adv.spec.ts` |
+| INV-12d | «ключ платёжной системы работает только для уведомлений» → gateway key works only for notifications | C4 | `apps/api/test/adv/webhook.adv.spec.ts` |
+| INV-12e | «сертификат проверяется по публичной ссылке, но ссылку нельзя подобрать» → public verification link, unguessable | C5 | `apps/api/test/adv/study-access.adv.spec.ts` |
+| INV-12f | «на некорректный ввод — понятная ошибка с кодом, одинаковая по формату во всех эндпоинтах и описанная в OpenAPI; никогда «Internal server error»» → clear coded error, same shape everywhere, in OpenAPI, never a bare 500 | C3 | `apps/api/test/adv/input.adv.spec.ts`; `apps/api/test/adv/route-sweep.adv.spec.ts` |
+| INV-12g | «Права — на сервере, в каждом эндпоинте и в сокетах» → enforced server-side on every endpoint and socket | C3, C5 | `apps/api/test/adv/route-sweep.adv.spec.ts`; `apps/api/test/adv/realtime.adv.spec.ts` |
+| INV-TIME | «Время в задачах (15 минут брони, 24 часа предложения, напоминания, дедлайны, границы возврата) подменяется в тестах» → time is substitutable in tests | C1, C3, C5 | `packages/shared/src/clock/clock.spec.ts`; `apps/api/test/test-clock.it.spec.ts` |
 
 ### 1.7 Deliverables (Что сдать)
 
 | ID | Requirement (RU quote → EN) | Block | Test |
 |---|---|---|---|
-| D-1 | «Репозиторий: apps/api, apps/worker, apps/web, packages/shared» → repo layout | C1 | CI `typecheck` over the workspace |
-| D-2 | «cp .env.example .env && docker compose up --build» → one-command start | C7 | `scripts/acceptance/01-compose-up.sh` (clean clone → healthy within timeout) |
-| D-3 | «docker compose: postgres, redis, api ×2, nginx, worker, web, заглушка платёжной системы, почтовый ящик для писем» → services list | C7 | `scripts/acceptance/01-compose-up.sh` asserts every service is healthy |
-| D-4 | «Миграции и сид создаются сами, других ручных шагов нет» → migrations and seed run automatically | C7 | same script, then `seed.it.spec.ts` counts against the stack |
-| D-5 | «Swagger на /docs; сгенерированный клиент совпадает со схемой — проверка в CI» → Swagger on `/docs`; client matches schema, checked in CI | C3, C6 | x: `smoke.x.spec.ts` (`GET /docs` 200); CI `client-drift` step |
-| D-6 | «Кабинет студента работает с телефона (ширина 375 px)» → student cabinet works at 375 px | C6 | e2e: `mobile-375.e2e.ts` (no horizontal scroll, all actions reachable) |
-| D-7 | «Свободные места в каталоге, очередь ментора и список студентов потока у менеджера обновляются вживую» → catalog free seats, mentor queue, manager cohort list update live | C5, C6 | x: `realtime-multicopy.x.spec.ts`; e2e: `enroll-pay.e2e.ts` |
-| D-8 | «обратный отсчёт брони считается по часам сервера» → hold countdown uses the server clock | C4, C6 | unit: `countdown.spec.ts` (skewed client clock still shows server remaining time) |
-| D-9 | «Формы с ошибками у полей» → forms show errors at fields | C6 | unit: `apps/web/src/shared/lib/form/map-api-errors.spec.ts`; e2e: `forms.e2e.ts` |
-| D-10 | «поиск в каталоге — быстрее 200 мс; очередь ментора — быстрее 200 мс; поиск студента по имени и email — быстрее 300 мс; отчёт за 12 месяцев — быстрее 1 с» → latency budgets | C2, C7 | `tests/perf/budgets.perf.spec.ts` on the full seed (p95 over 50 runs, through nginx) |
-| D-11 | «Отчёт для менеджера: заполняемость потоков, выручка и возвраты, конверсия листа ожидания, доля сданных вовремя домашек, выданные сертификаты. Период и фильтры — в URL» → manager report with five metrics; period and filters in URL | C5, C6 | it: `reports.it.spec.ts` (numbers vs hand-computed fixture); e2e: `report-url.e2e.ts` |
-| D-E2E-1 | «студент находит курс → бронь места → оплата → письмо → место в каталоге уменьшилось вживую» | C7 | e2e: `enroll-pay.e2e.ts` |
-| D-E2E-2 | «мест нет → лист ожидания → другой студент отменил → предложение → оплата» | C7 | e2e: `waitlist.e2e.ts` |
-| D-E2E-3 | «бронь истекла → оплата пришла поздно, места нет → автоматический возврат» | C7 | e2e: `late-payment-refund.e2e.ts` |
-| D-E2E-4 | «домашка → ментор вернул на доработку → пересдача → принята → после последнего занятия сертификат» | C7 | e2e: `homework-cert.e2e.ts` |
-| D-E2E-5 | «перевод в другой поток с доплатой; отмена после старта → возврат 50 %» | C7 | e2e: `transfer-cancel.e2e.ts` |
-| D-README-1 | «README: запуск и тесты» | C8 | `scripts/check-readme.ts` (required headings present) |
-| D-README-2 | «как считаются места и почему нельзя продать лишнее, включая лист ожидания и перевод» | C8 | same |
-| D-README-3 | «как защищены бронь, оплата, возврат и перевод от одновременных действий и повторов» | C8 | same |
-| D-README-4 | «как считаются расписание, напоминания и дедлайны в часовых поясах, с примером на переходе на летнее время» | C8 | same; the DST example is copied from a passing unit test's fixture |
-| D-README-5 | «список фоновых задач: когда ставятся, повторы, защита от дублей, восстановление после потери Redis» | C8 | same; the job list is diffed against the queue registry in `packages/shared/src/jobs/registry.ts` |
-| D-README-6 | «таблицы статусов записи и домашки» | C8 | `check-readme-transitions.ts` |
-| D-README-7 | «индексы и ограничения в базе» | C8 | `scripts/check-readme-db.ts` (every index/constraint in `pg_catalog` is listed) |
-| D-README-8 | «принятые решения» | C8 | manual: §3 of this plan copied verbatim, checked by `check-readme.ts` (each assumption ID appears) |
-| D-AMBIG | «Если что-то неоднозначно, решите сами и запишите решение в README» | C8 | as D-README-8 |
-| D-GIT | «История коммитов — по этапам работы, CI на каждый коммит» → staged history, CI on every commit | C1…C8 | `.github/workflows/ci.yml` from C1; `git log` review |
+| D-1 | «Репозиторий: apps/api, apps/worker, apps/web, packages/shared» → repo layout | C1 | CI job `typecheck` in `.github/workflows/ci.yml` |
+| D-2 | «cp .env.example .env && docker compose up --build» → one-command start | C7 | `scripts/acceptance/compose-up.sh` |
+| D-3 | «docker compose: postgres, redis, api ×2, nginx, worker, web, заглушка платёжной системы, почтовый ящик для писем» → services list | C7 | `scripts/acceptance/compose-up.sh` |
+| D-4 | «Миграции и сид создаются сами, других ручных шагов нет» → migrations and seed run automatically | C7 | `scripts/acceptance/compose-up.sh`; `packages/db/test/seed.it.spec.ts` |
+| D-5 | «Swagger на /docs; сгенерированный клиент совпадает со схемой — проверка в CI» → Swagger on `/docs`; client matches schema, checked in CI | C3, C6 | `tests/cross-stack/edge.x.spec.ts`; CI job `client-drift` |
+| D-6 | «Кабинет студента работает с телефона (ширина 375 px)» → student cabinet works at 375 px | C6 | `apps/web/e2e/mobile.static.e2e.ts`; `apps/web/e2e/homework.journey.e2e.ts` |
+| D-7 | «Свободные места в каталоге, очередь ментора и список студентов потока у менеджера обновляются вживую» → catalog free seats, mentor queue, manager cohort list update live | C5, C6 | `tests/acceptance/seats.x.spec.ts`; `apps/web/e2e/enroll.journey.e2e.ts`; `apps/web/e2e/homework.journey.e2e.ts` |
+| D-8 | «обратный отсчёт брони считается по часам сервера» → hold countdown uses the server clock | C4, C6 | `apps/web/src/shared/lib/countdown.spec.ts` |
+| D-9 | «Формы с ошибками у полей» → forms show errors at fields | C6 | `apps/web/src/shared/lib/form-errors.spec.ts`; `apps/web/e2e/forms.static.e2e.ts` |
+| D-10 | «поиск в каталоге — быстрее 200 мс; очередь ментора — быстрее 200 мс; поиск студента по имени и email — быстрее 300 мс; отчёт за 12 месяцев — быстрее 1 с» → latency budgets | C2, C7 | `tests/perf/budgets.x.spec.ts` |
+| D-11 | «Отчёт для менеджера: заполняемость потоков, выручка и возвраты, конверсия листа ожидания, доля сданных вовремя домашек, выданные сертификаты. Период и фильтры — в URL» → manager report with five metrics; period and filters in URL | C5, C6 | `apps/api/test/reports.it.spec.ts`; `apps/web/e2e/url-state.static.e2e.ts` |
+| D-E2E-1 | «студент находит курс → бронь места → оплата → письмо → место в каталоге уменьшилось вживую» | C7 | `apps/web/e2e/enroll.journey.e2e.ts` |
+| D-E2E-2 | «мест нет → лист ожидания → другой студент отменил → предложение → оплата» | C7 | `apps/web/e2e/waitlist.journey.e2e.ts` |
+| D-E2E-3 | «бронь истекла → оплата пришла поздно, места нет → автоматический возврат» | C7 | `apps/web/e2e/late-payment.journey.e2e.ts` |
+| D-E2E-4 | «домашка → ментор вернул на доработку → пересдача → принята → после последнего занятия сертификат» | C7 | `apps/web/e2e/homework.journey.e2e.ts` |
+| D-E2E-5 | «перевод в другой поток с доплатой; отмена после старта → возврат 50 %» | C7 | `apps/web/e2e/transfer.journey.e2e.ts` |
+| D-README-1 | «README: запуск и тесты» | C8 | `scripts/readme.mjs` |
+| D-README-2 | «как считаются места и почему нельзя продать лишнее, включая лист ожидания и перевод» | C8 | `scripts/readme.mjs` |
+| D-README-3 | «как защищены бронь, оплата, возврат и перевод от одновременных действий и повторов» | C8 | `scripts/readme.mjs` |
+| D-README-4 | «как считаются расписание, напоминания и дедлайны в часовых поясах, с примером на переходе на летнее время» | C8 | `scripts/readme.mjs` |
+| D-README-5 | «список фоновых задач: когда ставятся, повторы, защита от дублей, восстановление после потери Redis» | C8 | `scripts/readme.mjs` |
+| D-README-6 | «таблицы статусов записи и домашки» | C8 | `scripts/readme.mjs` |
+| D-README-7 | «индексы и ограничения в базе» | C8 | `scripts/readme.mjs` |
+| D-README-8 | «принятые решения» | C8 | `scripts/readme.mjs` |
+| D-AMBIG | «Если что-то неоднозначно, решите сами и запишите решение в README» | C8 | `scripts/readme.mjs` |
+| D-GIT | «История коммитов — по этапам работы, CI на каждый коммит» → staged history, CI on every commit | C1…C8 | `.github/workflows/ci.yml` from the first commit; `git log` |
 
 ### 1.8 Acceptance checks (Приёмка) — the assignment has 17
 
 | ID | Check (RU quote → EN) | Expected | Block | Test |
 |---|---|---|---|---|
-| A-1 | «cp .env.example .env && docker compose up --build» | everything up, no manual steps | C7 | `scripts/acceptance/01-compose-up.sh` |
-| A-2 | «Typecheck, lint, сгенерированный клиент без изменений, тесты, CI» | pass on every commit | C1… | CI; `scripts/acceptance/02-ci-local.sh` runs the same steps |
-| A-3 | «200 одновременных записей на 5 последних мест, обе копии api» | exactly 5 holds, journal matches | C7 | x: `tests/acceptance/a03-last-seats.x.spec.ts` |
-| A-4 | «Оплата в момент истечения брони (в цикле)» | enrolled or refunded; seats match | C7 | x: `a04-expiry-vs-payment.x.spec.ts` |
-| A-5 | «Освободились 3 места одновременно; предложение не оплачено за 24 часа» | offers to first three, then the fourth, once each | C7 | x: `a05-waitlist.x.spec.ts` |
-| A-6 | «50 одновременных оплат с промокодом на 10 использований» | exactly 10 discounted | C7 | x: `a06-promo.x.spec.ts` |
-| A-7 | «Перевод в поток, где одновременно занимают последнее место» | student in exactly one cohort | C7 | x: `a07-transfer.x.spec.ts` |
-| A-8 | «Уведомление об оплате 10 раз в обе копии api; режим хаоса» | one payment; all refunds landed, none repeated | C7 | x: `a08-chaos.x.spec.ts` (stack restarted with `PAYSTUB_CHAOS_MODE=true`) |
-| A-9 | «Отмена за 1 минуту до старта и через 1 минуту после, по Нью-Йорку» | 100 % and 50 % | C7 | x: `a09-refund-ny.x.spec.ts` |
-| A-10 | «Занятие в 19:00 по Киеву на неделе перехода на летнее время; перенос занятия за 30 минут до напоминания» | lesson at 19:00 Kyiv; one reminder of each kind at the new time | C7 | x: `a10-dst-reminders.x.spec.ts` |
-| A-11 | «Воркеры остановлены, часы сдвинуты на конец потока, две копии worker запущены» | certificates one each, numbers consecutive | C7 | x: `a11-certificates.x.spec.ts` |
-| A-12 | «kill -9 воркера при истечении броней; redis-cli FLUSHALL при идущих бронях» | all done, no double counting | C7 | x: `a12-kill-flush.x.spec.ts` |
-| A-13 | «Журнал мест против счётчиков; оплаты и возвраты против балансов записей — после всех проверок» | match for every cohort and enrollment | C7 | x: `a13-reconcile.x.spec.ts` (runs last, over the whole db) |
-| A-14 | «Менеджер на копии A, запись студента через копию B» | cohort list and catalog seats update in < 1 s | C7 | x: `a14-realtime.x.spec.ts` |
-| A-15 | «Чужая запись, чужие домашки ментором, чужая школа, подобранная ссылка на сертификат — прямыми запросами и через сокет» | refused | C7 | x: `a15-authz.x.spec.ts` |
-| A-16 | «Каталог, очередь ментора, отчёт за 12 месяцев; перезагрузка, «Назад»» | fast; state from URL | C7 | `tests/perf/budgets.perf.spec.ts` + e2e: `a16-url-state.e2e.ts` |
-| A-17 | «README» | matches behavior | C8 | `scripts/check-readme*.ts` + manual review recorded in §9 |
+| A-1 | «cp .env.example .env && docker compose up --build» | everything up, no manual steps | C7 | `scripts/acceptance/compose-up.sh` |
+| A-2 | «Typecheck, lint, сгенерированный клиент без изменений, тесты, CI» | pass on every commit | C1… | CI; `scripts/acceptance/run.mjs` |
+| A-3 | «200 одновременных записей на 5 последних мест, обе копии api» | exactly 5 holds, journal matches | C7 | `tests/acceptance/seats.x.spec.ts` |
+| A-4 | «Оплата в момент истечения брони (в цикле)» | enrolled or refunded; seats match | C7 | `tests/acceptance/money.x.spec.ts` |
+| A-5 | «Освободились 3 места одновременно; предложение не оплачено за 24 часа» | offers to first three, then the fourth, once each | C7 | `tests/acceptance/seats.x.spec.ts` |
+| A-6 | «50 одновременных оплат с промокодом на 10 использований» | exactly 10 discounted | C7 | `tests/acceptance/money.x.spec.ts` |
+| A-7 | «Перевод в поток, где одновременно занимают последнее место» | student in exactly one cohort | C7 | `tests/acceptance/seats.x.spec.ts` |
+| A-8 | «Уведомление об оплате 10 раз в обе копии api; режим хаоса» | one payment; all refunds landed, none repeated | C7 | `tests/acceptance/money.x.spec.ts` |
+| A-9 | «Отмена за 1 минуту до старта и через 1 минуту после, по Нью-Йорку» | 100 % and 50 % | C7 | `tests/acceptance/money.x.spec.ts` |
+| A-10 | «Занятие в 19:00 по Киеву на неделе перехода на летнее время; перенос занятия за 30 минут до напоминания» | lesson at 19:00 Kyiv; one reminder of each kind at the new time | C7 | `tests/acceptance/background.x.spec.ts` |
+| A-11 | «Воркеры остановлены, часы сдвинуты на конец потока, две копии worker запущены» | certificates one each, numbers consecutive | C7 | `tests/acceptance/background.x.spec.ts` |
+| A-12 | «kill -9 воркера при истечении броней; redis-cli FLUSHALL при идущих бронях» | all done, no double counting | C7 | `tests/acceptance/background.x.spec.ts` |
+| A-13 | «Журнал мест против счётчиков; оплаты и возвраты против балансов записей — после всех проверок» | match for every cohort and enrollment | C7 | `tests/reconcile/a13.x.spec.ts` |
+| A-14 | «Менеджер на копии A, запись студента через копию B» | cohort list and catalog seats update in < 1 s | C7 | `tests/acceptance/seats.x.spec.ts` |
+| A-15 | «Чужая запись, чужие домашки ментором, чужая школа, подобранная ссылка на сертификат — прямыми запросами и через сокет» | refused | C7 | `tests/acceptance/seats.x.spec.ts` |
+| A-16 | «Каталог, очередь ментора, отчёт за 12 месяцев; перезагрузка, «Назад»» | fast; state from URL | C7 | `tests/perf/budgets.x.spec.ts`; `apps/web/e2e/url-state.static.e2e.ts` |
+| A-17 | «README» | matches behavior | C8 | `scripts/readme.mjs` |
 
 Runner: `pnpm acceptance` runs A-1…A-17 in order against the compose stack and writes `docs/ACCEPTANCE.md` (check, result, duration, evidence). Results are copied into §9.
 
@@ -269,9 +269,9 @@ Runner: `pnpm acceptance` runs A-1…A-17 in order against the compose stack and
 - AS-33 **Auth.** Email + password (argon2id). Access JWT for 15 min in an httpOnly `SameSite=Lax` cookie. Opaque refresh token rotating, with family reuse detection (reuse revokes the family). CSRF: Origin allowlist on mutating requests, plus `SameSite`. Socket.IO authenticates from the same cookie at handshake and re-checks room joins.
 - AS-34 **Rate limiting** (optional hardening). Login and register: per IP and per account, Redis `INCR`+`EXPIRE` Lua, **fail-open** when Redis is down (logged), because availability of login matters more than throttling during an outage. Holds, checkout, webhooks, mentor, sockets: never throttled. The client IP is `X-Real-IP` set by nginx from `$remote_addr`, trusted only when the TCP peer is in `TRUSTED_PROXY_CIDRS`.
 - AS-35 **Shared test clock.** `Clock` is injected everywhere. Business SQL takes `$now` from it and never calls `now()`. With `TEST_CLOCK_ENABLED=true`, the clock reads an offset from Postgres `test_clock` (shared by api copies and workers) and `POST /api/__test/clock` (header `X-Test-Token`) moves it. When disabled (the `.env.example` default), the route isn't registered. BullMQ delays use real time, so after a clock jump the **sweeper** (every `SWEEP_INTERVAL_MS`) catches due items from Postgres.
-- AS-36 **Jobs and Redis loss.** Every job has a deterministic `jobId` and its effect is a guarded db state transition, which makes it idempotent. The api enqueues on commit, and the worker sweeper re-enqueues everything due or pending from Postgres (holds, offers, notifications, refunds, reminders, certificates, emails). The sweeper is a plain interval guarded by `pg_try_advisory_lock`, not a BullMQ repeatable, so `FLUSHALL` can't remove it.
-- AS-37 **Realtime.** Socket.IO with `transports: ['websocket']`, so nginx needs no sticky sessions. Rooms: `catalog` (public, seat counts only), `user:{id}`, `mentor:{id}`, `cohort:{id}:staff` (manager of that school or the cohort's mentor). The worker emits through `@socket.io/redis-emitter`. Realtime is best-effort and the UI also refetches on reconnect.
-- AS-38 **Seed scale.** `SEED_SCALE` (default `1` = full numbers) multiplies the counts. CI unit and integration jobs use `0.01`, and the e2e/perf job uses `1`. The seed is bulk SQL (`generate_series` + `COPY`) and idempotent (a `seed_runs` marker). All seeded users share one precomputed argon2 hash of `SEED_DEMO_PASSWORD`, a published demo credential (not a secret, default `demo-password-2026`).
+- AS-36 **Jobs and Redis loss.** Every job has a deterministic `jobId` and its effect is a guarded database transition, which makes it idempotent. The api and worker publish after commit, and the sweeper re-publishes everything due or pending from Postgres (holds, offers, notifications, refunds, reminders, certificates, emails). The sweeper is a plain timer in each worker, not a BullMQ repeatable job, so `FLUSHALL` cannot remove it. Several sweepers at once are harmless: same job ids, guarded effects.
+- AS-37 **Realtime.** Socket.IO with `transports: ['websocket']`, so nginx needs no sticky sessions. Rooms: `catalog` (public, seat counts only), `user:{id}`, `mentor:{id}`, `cohort-staff:{id}` (the cohort's mentor or a manager of its school). Events: `seats.changed`, `roster.changed`, `queue.changed`. The api connects copies with the Redis adapter, and the worker publishes through the Redis emitter. Updates are best effort, and the UI refetches on reconnect.
+- AS-38 **Seed scale.** `SEED_SCALE` (default `1`, the full numbers) multiplies the counts. Set-based SQL in one transaction, idempotent through a `seed_runs` marker. CI runs the clean start and speed budgets at `1`, e2e at `0.01` and acceptance at `0.05`. All seeded users share one argon2 hash of `SEED_DEMO_PASSWORD`, a published demo value (default `demo-password-2026`).
 - AS-39 **Late flag in reports.** "Share of homework submitted on time" = submissions whose latest submission was not late / all submissions of tasks whose deadline is in the period.
 - AS-40 **Waitlist conversion** = waitlist entries in the period that led to a paid enrollment / entries that received an offer.
 - AS-41 **Report period** is in UTC days, filters are school-scoped. Query: `?from=YYYY-MM-DD&to=YYYY-MM-DD&courseId&cohortId&currency`. Revenue is shown per currency and never converted.
@@ -283,7 +283,7 @@ Runner: `pnpm acceptance` runs A-1…A-17 in order against the compose stack and
 - AS-47 **Late payment status.** A late or unexpected payment that cannot be honoured moves an `expired` or `cancelled` enrollment to `refunded`.
 - AS-48 **Returns of unwanted payments** (late and not honoured, duplicate, wrong amount) are separate refund requests tied to that payment (unique per payment). The «не больше одного раза» limit applies to the refund of the enrollment itself (cancel, exclusion, transfer difference), which is unique per enrollment. Both are capped by the balance in the database.
 - AS-49 **Database guards.** Seat counters, promo counters, balances and certificate counters are written only by triggers from append-only history. A deferred trigger rejects any commit in which an enrollment's status and its seat journal disagree.
-- AS-50 **Seed shape.** Bulk cohorts have 6 weekly lessons (so 100,000 certificates fit within 1,000,000 submissions); the cohorts with lessons around a DST change have 12. The full seed takes about 4 minutes. The seed disables row guards only inside its own transaction, and the invariant checks verify the result.
+- AS-50 **Seed shape.** Bulk cohorts have 6 weekly lessons (so 100,000 certificates fit within 1,000,000 submissions); the cohorts with lessons around a DST change have 12. The full seed takes about 4 minutes on the host and 5–9 minutes inside Docker. The seed disables row guards only inside its own transaction, and the invariant checks verify the result.
 - AS-51 **Registration is silent about taken addresses.** `POST /auth/register` answers 202 `{status: "accepted"}` whether or not the address exists; the client then signs in. Staff creation by an administrator does report `EMAIL_TAKEN`.
 - AS-52 **Login limiter keys** are per client address and per (account, client address). There is no account-wide lockout, so nobody can lock another person out.
 - AS-53 **Enrollment closes when the cohort starts.** The catalog lists cohorts whose first lesson is in the future. A lesson that has started cannot be moved, a lesson can only be moved to a future time, and a new cohort's first lesson must be in the future.
@@ -299,7 +299,7 @@ Runner: `pnpm acceptance` runs A-1…A-17 in order against the compose stack and
 - AS-63 **Anonymous sockets** may join only the public `catalog` room, which carries seat counts. Every other room needs the matching signed-in account, checked at the handshake and again at each join. (The skill asks to reject unauthenticated connections; the public catalog needs live updates for visitors.)
 - AS-64 **Homework upload** is one multipart request (text and optional file); a resubmission replaces both.
 - AS-65 **Cohort completion** happens when the last lesson ends: paid enrollments become `completed`, open holds expire, waiting entries close. Each completed enrollment is marked due for a certificate; accepting homework afterwards marks it due again.
-- AS-66 **Deadline reminders** go 24 hours before the deadline to paid students who have not handed the work in. A reminder is not sent once its lesson has started or its deadline has passed.
+- AS-66 **Deadline reminders** go 24 hours before the deadline to enrolled students (`paid` or already `completed`) who have not handed the work in. A reminder is not sent once its lesson has started or its deadline has passed.
 - AS-67 **Failed jobs** are recorded in Postgres on the last attempt. The sweeper leaves them alone until a manager retries them or the work succeeds another way.
 - AS-68 **Chaos tests** wipe a Redis database of their own with `FLUSHDB`; the cross-stack acceptance suite uses `FLUSHALL`.
 - AS-69 **Web rendering.** Pages are client components on TanStack Query; permissions are enforced by the API, and the page guards are a convenience. Any successful or failed mutation refetches the visible data.
@@ -683,13 +683,31 @@ Rules that make this parallelism safe:
 - [x] C5 homework, mentor, certificates, reports, realtime + worker
 - [x] C6 web
 - [x] C7 nginx + full compose + acceptance + e2e + perf
-- [ ] C8 README + docs
-- [ ] Mutation check recorded in `docs/SECURITY-TESTS.md`
-- [ ] Acceptance A-1…A-17 results recorded below
-- [ ] Clean-checkout verification (`.env.example` → `.env`, typecheck, lint, test, build, adv, compose smoke)
+- [x] C8 README + docs
+- [x] Mutation check recorded in `docs/SECURITY-TESTS.md`
+- [x] Acceptance A-1…A-17 results recorded below
+- [x] Clean-checkout verification (`.env.example` → `.env`, typecheck, lint, test, build, adv, compose smoke): fresh clone on 2026-11-26, typecheck, lint, build and client check clean, 461/461 tests three runs in a row; compose smoke by A-1 locally and the CI `compose-up` job
 
 ### Acceptance results
 
-| Check | Result | Evidence |
-|---|---|---|
-| A-1 … A-17 | pending | — |
+From `node scripts/acceptance/run.mjs` on 2026-11-26 (full report: `docs/ACCEPTANCE.md`).
+
+| Check | Result | Seconds | Evidence |
+|---|---|---|---|
+| A-1 | pass | 400 | clean `cp .env.example .env && docker compose up --build` |
+| A-2 | pass | 213 | typecheck ok, lint ok, gen:client ok, test ok, client unchanged; CI runs the same on every commit |
+| A-3 | pass | 2 | 200 simultaneous bookings for 5 seats through both api copies give exactly 5 |
+| A-4 | pass | 3 | a payment at the moment of expiry always ends enrolled or refunded, never both |
+| A-5 | pass | 2 | three freed seats go to the first three, and an unpaid offer passes to the fourth |
+| A-6 | pass | 2 | 50 simultaneous payments with a 10-use promo code: exactly 10 are discounted |
+| A-7 | pass | 3 | a transfer racing for the last seat leaves the student in exactly one cohort |
+| A-8 | pass | 4 | one notification sent 10 times to both copies is one payment; chaos refunds all arrive once |
+| A-9 | pass | 1 | cancelling a minute before the start in New York returns 100 %, a minute after 50 % |
+| A-10 | pass | 9 | a lesson in the daylight saving week stays at 19:00 Kyiv; a late move sends each reminder once |
+| A-11 | pass | 12 | workers stopped, clock at the end, two workers started: one certificate each, numbered in a row |
+| A-12 | pass | 7 | kill -9 during expiry and FLUSHALL during bookings: all finished, nothing twice |
+| A-13 | pass | 5 | seat journal equals counters and operations equal balances, for every cohort and enrollment |
+| A-14 | pass | 0 | a booking through copy B updates the manager and the catalog on copy A within a second |
+| A-15 | pass | 0 | other people’s data is refused over HTTP and over the socket |
+| A-16 | pass | 7 | searches the catalog in under 200 ms; opens the mentor queue in under 200 ms; finds a student by name or e-mail in under 300 ms; builds the twelve-month report in under 1 s; latency budgets on the full seed; Playwright: reload and Back keep the filters |
+| A-17 | pass | 0 | README sections, transition tables, jobs, indexes |

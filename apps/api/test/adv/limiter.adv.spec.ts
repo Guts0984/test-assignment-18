@@ -5,7 +5,9 @@ import { startApi, type TestApi } from '../attacker/app';
 import { burst } from '../attacker/burst';
 import { client, type Reply } from '../attacker/client';
 import { expectError } from '../attacker/expect';
+import { notify, paymentNotice, sellingCohort } from '../attacker/money';
 import { createAccount, PASSWORD } from '../attacker/people';
+import { students } from '../attacker/students';
 
 /** The limiter profile: tight windows, two api copies sharing Redis. */
 const PROFILE = {
@@ -115,6 +117,28 @@ describe('login limiter', () => {
     expect(keys.length).toBeGreaterThan(0);
     for (const key of keys) expect(await raw.ttl(key)).toBeGreaterThan(0);
     raw.disconnect();
+  });
+});
+
+describe('no collateral damage', () => {
+  it('never throttles booking or payment notifications, whatever the login limits', async () => {
+    const sale = await sellingCohort(api, { capacity: 10 });
+    const crowd = await students(api, 60);
+    const bookings = await burst(60, (i) => {
+      const who = crowd[i];
+      if (!who) throw new Error('fixture');
+      return who.http.post('/api/enrollments', { cohortId: sale.cohort.id });
+    });
+    expect(bookings.filter((r) => r.status === 201)).toHaveLength(10);
+    expect(bookings.filter((r) => r.status === 409)).toHaveLength(50);
+    const held = bookings.find((r) => r.status === 201)?.body as { id: string };
+    const notice = paymentNotice({
+      schoolId: sale.school.id,
+      orderId: held.id,
+      amountMinor: sale.cohort.priceMinor,
+    });
+    const notices = await burst(80, () => notify(api.url, notice));
+    expect(new Set(notices.map((r) => r.status))).toEqual(new Set([200]));
   });
 });
 

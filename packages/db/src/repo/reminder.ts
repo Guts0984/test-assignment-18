@@ -41,7 +41,8 @@ export const processReminder = async (
       enrollments: {
         some: {
           cohortId: lesson.cohortId,
-          status: 'paid',
+          // The last deadlines fall after the last lesson, when the cohort is already complete.
+          status: { in: ['paid', 'completed'] },
           // Nobody is reminded to hand in work that is already in.
           ...(forDeadline
             ? { submissions: { none: { homeworkId: lesson.homework?.id ?? '' } } }
