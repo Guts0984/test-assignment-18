@@ -96,6 +96,7 @@ export const confirmPaid = async (
     include: { course: true },
   });
   await emailStudent(unit, enrollment.studentId, {
+    schoolId: cohort.schoolId,
     dedupeKey: `paid:${enrollment.id}`,
     subject: `You are enrolled: ${cohort.course.title}`,
     body: `Your place in "${cohort.course.title}" is confirmed. It starts on ${cohort.startDate.toISOString().slice(0, 10)}.`,

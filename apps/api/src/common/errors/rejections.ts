@@ -19,6 +19,9 @@ const MESSAGES = {
   TRANSFER_NOT_ALLOWED: 'This enrollment cannot be moved there',
   TRANSFER_CURRENCY_MISMATCH: 'The other cohort uses another currency',
   CAPACITY_BELOW_TAKEN: 'More seats than that are already taken',
+  SUBMISSION_LOCKED: 'This work is being reviewed or was already accepted',
+  REVIEW_LIMIT_REACHED: 'Finish a review before taking another',
+  NOTHING_TO_REVIEW: 'There is no such work waiting for review',
   GATEWAY_NOT_CONFIGURED: 'The school has not connected a payment system',
   GATEWAY_UNAVAILABLE: 'The payment system is not responding. Try again.',
 } as const satisfies Partial<Record<ErrorCode, string>>;

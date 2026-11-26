@@ -1,6 +1,7 @@
 import { writeFile } from 'node:fs/promises';
 import { createDb } from '@school/db/client';
 import { createPublisher } from '@school/queue/publisher';
+import { createRealtime } from '@school/queue/realtime';
 import { systemTime } from '@school/db/time';
 import { createApp } from './app.factory';
 import { loadEnv } from './config/env';
@@ -20,10 +21,17 @@ const main = async (): Promise<void> => {
   const jobs = createPublisher(queueSettings(env), (error) => {
     logger.warn({ error }, 'job publishing failed');
   });
-  const app = await createApp({ env, db, redis, time: systemTime, logger, jobs });
+  const realtime = createRealtime(
+    { redisUrl: env.REDIS_URL, prefix: env.QUEUE_PREFIX },
+    (error) => {
+      logger.warn({ error }, 'realtime publishing failed');
+    },
+  );
+  const app = await createApp({ env, db, redis, time: systemTime, logger, jobs, realtime });
   await writeFile(output, `${JSON.stringify(buildOpenApi(app), null, 2)}\n`);
   await app.close();
   await jobs.close();
+  realtime.close();
   redis.disconnect();
 };
 

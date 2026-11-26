@@ -16,6 +16,13 @@ import { RosterModule } from './modules/roster/roster.module';
 import { PromosModule } from './modules/promos/promos.module';
 import { GatewayModule } from './modules/gateway/gateway.module';
 import { PaymentsModule } from './modules/payments/payments.module';
+import { HomeworkModule } from './modules/homework/homework.module';
+import { MentorModule } from './modules/mentor/mentor.module';
+import { CabinetModule } from './modules/cabinet/cabinet.module';
+import { CertificatesModule } from './modules/certificates/certificates.module';
+import { ReportsModule } from './modules/reports/reports.module';
+import { JobsModule } from './modules/jobs/jobs.module';
+import { RealtimeModule } from './modules/realtime/realtime.module';
 import { HealthModule } from './modules/health/health.module';
 import { StaffModule } from './modules/staff/staff.module';
 import { TestControlModule } from './modules/test-control/test-control.module';
@@ -37,6 +44,13 @@ export class AppModule {
         PromosModule,
         GatewayModule,
         PaymentsModule,
+        HomeworkModule,
+        MentorModule,
+        CabinetModule,
+        CertificatesModule,
+        ReportsModule,
+        JobsModule,
+        RealtimeModule,
         HealthModule,
         ...(deps.env.TEST_CLOCK_ENABLED ? [TestControlModule] : []),
       ],

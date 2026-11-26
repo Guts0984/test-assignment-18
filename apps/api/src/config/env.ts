@@ -51,6 +51,8 @@ export const apiEnvSchema = z
     GATEWAY_ENCRYPTION_KEY: z.string().refine((v) => Buffer.from(v, 'base64').length === 32, {
       error: 'Expected 32 bytes in base64',
     }),
+    UPLOAD_MAX_BYTES: positive.default(10_485_760),
+    MENTOR_REVIEW_LIMIT: positive.default(5),
     WEBHOOK_MAX_SKEW_SEC: positive.default(300),
     WEBHOOK_CALLBACK_URL: z.url().default('http://nginx/api/payments/webhook'),
     PAYSTUB_HTTP_TIMEOUT_MS: positive.default(5_000),

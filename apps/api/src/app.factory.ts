@@ -8,6 +8,7 @@ import { AppModule } from './app.module';
 import { jsonBody, rejectNulInUrl } from './common/http/body';
 import { REQUEST_ID_HEADER } from './common/http/request';
 import { type Deps } from './infra/deps';
+import { SocketAdapter } from './infra/socket-adapter';
 import { buildOpenApi } from './openapi';
 
 /** The fully configured application, not yet listening. Tests and `main` share it. */
@@ -32,7 +33,9 @@ export const createApp = async (deps: Deps): Promise<NestExpressApplication> => 
   app.use(helmet());
   app.enableCors({ origin: deps.env.CORS_ORIGINS, credentials: true });
   app.use(rejectNulInUrl);
-  app.use(jsonBody(deps.env.BODY_LIMIT_JSON_BYTES));
+  // Homework uploads are multipart and parsed by their own limited parser.
+  app.use(jsonBody(deps.env.BODY_LIMIT_JSON_BYTES, /^\/api\/homework\/[^/]+\/submission\/?$/i));
+  app.useWebSocketAdapter(new SocketAdapter(app, deps));
   app.setGlobalPrefix('api');
   SwaggerModule.setup('docs', app, () => buildOpenApi(app), { jsonDocumentUrl: 'docs-json' });
   await app.init();

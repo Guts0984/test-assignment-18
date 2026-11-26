@@ -1,5 +1,6 @@
 import { createDb } from '@school/db/client';
 import { createPublisher } from '@school/queue/publisher';
+import { createRealtime } from '@school/queue/realtime';
 import { createSharedTestTime, systemTime } from '@school/db/time';
 import { createApp } from './app.factory';
 import { loadEnv } from './config/env';
@@ -15,14 +16,21 @@ const main = async (): Promise<void> => {
   const jobs = createPublisher(queueSettings(env), (error) => {
     logger.warn({ error }, 'job publishing failed');
   });
+  const realtime = createRealtime(
+    { redisUrl: env.REDIS_URL, prefix: env.QUEUE_PREFIX },
+    (error) => {
+      logger.warn({ error }, 'realtime publishing failed');
+    },
+  );
   const time = env.TEST_CLOCK_ENABLED ? createSharedTestTime(db) : systemTime;
-  const app = await createApp({ env, db, redis, time, logger, jobs });
+  const app = await createApp({ env, db, redis, time, logger, jobs, realtime });
   await app.listen(env.API_PORT, '0.0.0.0');
   logger.info({ port: env.API_PORT, instance: env.INSTANCE_ID }, 'api listening');
 
   const stop = async (): Promise<void> => {
     await app.close();
     await jobs.close();
+    realtime.close();
     redis.disconnect();
     await db.$disconnect();
     process.exit(0);

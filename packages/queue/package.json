@@ -13,7 +13,9 @@
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
+    "@school/db": "workspace:*",
     "@school/shared": "workspace:*",
+    "@socket.io/redis-emitter": "5.1.0",
     "bullmq": "5.81.6",
     "ioredis": "^5.11.1",
     "zod": "4.6.7"

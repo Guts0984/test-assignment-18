@@ -12,24 +12,33 @@
     "@nestjs/common": "11.2.12",
     "@nestjs/core": "11.2.12",
     "@nestjs/platform-express": "11.2.12",
+    "@nestjs/platform-socket.io": "11.2.12",
     "@nestjs/swagger": "^11.4.8",
+    "@nestjs/websockets": "11.2.12",
     "@school/db": "workspace:*",
     "@school/gateway": "workspace:*",
     "@school/queue": "workspace:*",
     "@school/shared": "workspace:*",
+    "@socket.io/redis-adapter": "8.3.0",
     "argon2": "0.45.2",
+    "dejavu-fonts-ttf": "^2.37.3",
     "express": "^5.3.0",
     "helmet": "8.3.0",
     "ioredis": "^5.11.1",
     "jose": "6.2.18",
     "nestjs-zod": "5.6.0",
+    "pdfkit": "^0.21.0",
     "pino": "10.4.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.2",
+    "socket.io": "4.8.4",
     "zod": "4.6.7"
   },
   "devDependencies": {
     "@school/paystub": "workspace:*",
-    "@types/express": "^5.0.6"
+    "@types/express": "^5.0.6",
+    "@types/multer": "^2.3.0",
+    "@types/pdfkit": "^0.17.7",
+    "socket.io-client": "4.8.4"
   }
 }

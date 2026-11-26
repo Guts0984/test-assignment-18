@@ -6,6 +6,7 @@ import { openCohorts } from './open-cohorts';
 import { emailStudent } from './outbox';
 import { confirmPaid } from './payment-confirm';
 import { reacquirePromo } from './promo-use';
+import { resolveFailures } from './job-failures';
 import { journalSeats, SYSTEM_ACTOR } from './seat-journal';
 import { hasOpenSeat, occupancyOf } from './seats';
 
@@ -69,7 +70,11 @@ const returnPayment = async (
       at: unit.now,
     });
   }
+  const { schoolId } = await unit.tx.cohort.findUniqueOrThrow({
+    where: { id: enrollment.cohortId },
+  });
   await emailStudent(unit, enrollment.studentId, {
+    schoolId,
     dedupeKey: `returned:${payment.id}`,
     subject: 'Your payment is being returned',
     body: 'We could not use your payment, so the full amount is being returned to you.',
@@ -201,7 +206,9 @@ export const completeRefund = async (
     where: { id: current.id },
     data: { status: 'succeeded', completedAt: unit.now },
   });
+  await resolveFailures(unit.tx, 'refunds', current.id, unit.now);
   await emailStudent(unit, enrollment.studentId, {
+    schoolId: enrollment.cohort.schoolId,
     dedupeKey: `refunded:${current.id}`,
     subject: 'Your refund was sent',
     body: `${(Number(current.amountMinor) / 100).toFixed(2)} ${current.currency} was returned to you.`,

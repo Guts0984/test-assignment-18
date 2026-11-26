@@ -11,11 +11,12 @@
     "typecheck": "pnpm run build:libs && pnpm -r --parallel run typecheck",
     "lint": "pnpm run build:libs && eslint . && prettier --check .",
     "format": "prettier --write .",
-    "test": "pnpm run build:libs && vitest run",
+    "test": "pnpm run build && vitest run",
     "test:unit": "pnpm run build:libs && vitest run --project unit",
     "test:integration": "pnpm run build:libs && vitest run --project integration",
     "gen:openapi": "pnpm run build && pnpm --filter @school/api run gen:openapi",
-    "test:adversarial": "pnpm run build:libs && vitest run --project adversarial"
+    "test:adversarial": "pnpm run build:libs && vitest run --project adversarial",
+    "test:chaos": "pnpm run build && vitest run --project chaos"
   },
   "devDependencies": {
     "@eslint/js": "9.39.5",

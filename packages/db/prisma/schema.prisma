@@ -160,6 +160,7 @@ model Enrollment {
   createdAt      DateTime  @map("created_at") @db.Timestamptz(3)
   updatedAt      DateTime  @map("updated_at") @db.Timestamptz(3)
   paidAt         DateTime? @map("paid_at") @db.Timestamptz(3)
+  certificateDueAt DateTime? @map("certificate_due_at") @db.Timestamptz(3)
 
   cohort          Cohort           @relation(fields: [cohortId], references: [id])
   student         User             @relation(fields: [studentId], references: [id])
@@ -423,6 +424,7 @@ model ScheduledNotification {
 
 model EmailOutbox {
   id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  schoolId   String?   @map("school_id") @db.Uuid
   dedupeKey  String    @unique @map("dedupe_key")
   toAddress  String    @map("to_address")
   subject    String

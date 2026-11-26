@@ -40,7 +40,16 @@ export default defineConfig({
         },
       },
       realServices('integration', ['{packages,apps}/*/{src,test}/**/*.it.spec.ts']),
-      realServices('adversarial', ['apps/*/test/adv/**/*.adv.spec.ts']),
+      realServices('adversarial', ['apps/api/test/adv/**/*.adv.spec.ts']),
+      // Spawns worker processes and wipes its Redis database, so files run one at a time.
+      {
+        ...realServices('chaos', ['apps/worker/test/adv/**/*.adv.spec.ts']),
+        test: {
+          ...realServices('chaos', ['apps/worker/test/adv/**/*.adv.spec.ts']).test,
+          fileParallelism: false,
+          testTimeout: 180_000,
+        },
+      },
     ],
   },
 });

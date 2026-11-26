@@ -296,6 +296,12 @@ Runner: `pnpm acceptance` runs A-1…A-17 in order against the compose stack and
 - AS-60 **Transfer options** need the same course and currency and a target that has not started.
 - AS-61 **Notification identity** is (school, event id); the first content wins. A payment is also unique by (school, provider payment id). A notification signed by one school cannot touch another school's enrollment.
 - AS-62 **The payment stub** accepts refunds by refund id (idempotency key) and order id; it signs every delivery at send time.
+- AS-63 **Anonymous sockets** may join only the public `catalog` room, which carries seat counts. Every other room needs the matching signed-in account, checked at the handshake and again at each join. (The skill asks to reject unauthenticated connections; the public catalog needs live updates for visitors.)
+- AS-64 **Homework upload** is one multipart request (text and optional file); a resubmission replaces both.
+- AS-65 **Cohort completion** happens when the last lesson ends: paid enrollments become `completed`, open holds expire, waiting entries close. Each completed enrollment is marked due for a certificate; accepting homework afterwards marks it due again.
+- AS-66 **Deadline reminders** go 24 hours before the deadline to paid students who have not handed the work in. A reminder is not sent once its lesson has started or its deadline has passed.
+- AS-67 **Failed jobs** are recorded in Postgres on the last attempt. The sweeper leaves them alone until a manager retries them or the work succeeds another way.
+- AS-68 **Chaos tests** wipe a Redis database of their own with `FLUSHDB`; the cross-stack acceptance suite uses `FLUSHALL`.
 
 ---
 
@@ -669,7 +675,7 @@ Rules that make this parallelism safe:
 - [x] C2 db schema, journal, ledger, constraints + seed
 - [x] C3 api core (auth, roles, staff, catalog, courses, cohorts, schedule, limiter)
 - [x] C4 enrollments, waitlist, promo, transfers + paystub + payments/refunds
-- [ ] C5 homework, mentor, certificates, reports, realtime + worker
+- [x] C5 homework, mentor, certificates, reports, realtime + worker
 - [ ] C6 web
 - [ ] C7 nginx + full compose + acceptance + e2e + perf
 - [ ] C8 README + docs

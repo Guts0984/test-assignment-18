@@ -3,6 +3,7 @@ import { createServer, type AddressInfo } from 'node:net';
 import { createDb } from '@school/db/client';
 import { createTestDatabase } from '@school/db/testing/database';
 import { createPublisher } from '@school/queue/publisher';
+import { createRealtime } from '@school/queue/realtime';
 import { fromClock } from '@school/db/time';
 import { createFixedClock } from '@school/shared/clock/clock';
 import { QUEUE_NAMES } from '@school/shared/jobs/registry';
@@ -82,7 +83,10 @@ export const startApi = async (
       const time = fromClock(clock);
       // Each copy has its own pool, as separate processes would.
       const db = createDb(database.url);
-      const deps: Deps = { env, db, redis, time, logger, jobs };
+      const realtime = createRealtime({ redisUrl: env.REDIS_URL, prefix }, () => {});
+      // Socket adapters of one test share a namespace that no other test uses.
+      const shared = Object.freeze({ ...env, QUEUE_PREFIX: prefix });
+      const deps: Deps = { env: shared, db, redis, time, logger, jobs, realtime };
       return { ...(await listen(deps, port)), deps };
     }),
   );
@@ -101,6 +105,7 @@ export const startApi = async (
         await instance.app.close();
         if (instance.deps.redis.status === 'ready') await removeQueues(instance.deps);
         await instance.deps.jobs.close();
+        instance.deps.realtime.close();
         instance.deps.redis.disconnect();
         await instance.deps.db.$disconnect();
       }

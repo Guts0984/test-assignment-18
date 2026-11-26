@@ -54,6 +54,7 @@ const offerSeat = async (
   });
   const course = await unit.tx.course.findUniqueOrThrow({ where: { id: cohort.courseId } });
   await emailStudent(unit, entry.studentId, {
+    schoolId: cohort.schoolId,
     dedupeKey: `offer:${enrollment.id}`,
     subject: `A seat is free: ${course.title}`,
     body:
