@@ -27,8 +27,14 @@ export default tseslint.config(
       '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/no-non-null-assertion': 'error',
       '@typescript-eslint/restrict-template-expressions': ['error', { allowNumber: true }],
+      '@typescript-eslint/no-extraneous-class': ['error', { allowWithDecorator: true }],
       'no-restricted-syntax': ['error', noDefaultExport, noProcessEnv],
     },
+  },
+  {
+    // NestJS and Express describe plain option objects with classes.
+    files: ['apps/api/**/*.ts', 'apps/worker/**/*.ts'],
+    rules: { '@typescript-eslint/no-unsafe-class-instance-assignment': 'off' },
   },
   {
     files: ['packages/shared/src/**/*.ts'],
@@ -40,7 +46,7 @@ export default tseslint.config(
     rules: { 'no-restricted-syntax': ['error', noDefaultExport, noClass] },
   },
   {
-    files: ['**/*.spec.ts'],
+    files: ['**/*.spec.ts', 'apps/*/test/**/*.ts'],
     rules: { 'no-restricted-syntax': ['error', noDefaultExport] },
   },
   {

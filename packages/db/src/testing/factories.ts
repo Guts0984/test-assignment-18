@@ -1,19 +1,20 @@
 import { randomUUID } from 'node:crypto';
 import { type EnrollmentStatus, occupiesSeat } from '@school/shared/status/enrollment';
 import { type Role } from '@school/shared/status/actors';
+import { type School, type User } from '@prisma/client';
 import { type Db } from '../client';
 import { journalCapacity, journalSeats, SYSTEM_ACTOR } from '../repo/seat-journal';
 import { inTransaction } from '../transaction';
 
 export const AT = new Date('2026-03-01T10:00:00.000Z');
 
-export const createSchool = (db: Db) =>
+export const createSchool = (db: Db): Promise<School> =>
   db.school.create({ data: { name: `School ${randomUUID()}` } });
 
 export const createUser = (
   db: Db,
   input: { readonly role?: Role; readonly schoolId?: string; readonly passwordHash?: string } = {},
-) => {
+): Promise<User> => {
   const id = randomUUID();
   return db.user.create({
     data: {

@@ -11,7 +11,12 @@ export const timeZoneSchema = z
   .max(64)
   .refine(isValidTimeZone, { error: 'Unknown time zone' });
 
-export const localDateSchema = z.iso.date();
+/** Dates outside this century are rejected before they can reach the database. */
+export const localDateSchema = z.iso
+  .date()
+  .refine((date) => date >= '2000-01-01' && date <= '2100-12-31', {
+    error: 'Date must be between 2000-01-01 and 2100-12-31',
+  });
 export const localTimeSchema = z
   .string()
   .regex(/^([01]\d|2[0-3]):[0-5]\d$/, 'Expected HH:mm (24-hour)');

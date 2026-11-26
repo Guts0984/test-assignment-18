@@ -13,16 +13,20 @@
     "format": "prettier --write .",
     "test": "pnpm run build:libs && vitest run",
     "test:unit": "pnpm run build:libs && vitest run --project unit",
-    "test:integration": "pnpm run build:libs && vitest run --project integration"
+    "test:integration": "pnpm run build:libs && vitest run --project integration",
+    "gen:openapi": "pnpm run build && pnpm --filter @school/api run gen:openapi",
+    "test:adversarial": "pnpm run build:libs && vitest run --project adversarial"
   },
   "devDependencies": {
     "@eslint/js": "9.39.5",
     "@school/db": "workspace:*",
+    "@swc/core": "1.16.22",
     "@types/node": "22.20.7",
     "eslint": "9.39.5",
     "prettier": "3.10.1",
     "typescript": "5.9.3",
     "typescript-eslint": "8.74.0",
+    "unplugin-swc": "^1.6.0",
     "vitest": "3.2.7"
   }
 }

@@ -52,6 +52,35 @@ jobs:
       - if: failure()
         run: docker compose logs --no-color
 
+  adversarial:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/setup
+      - run: cp .env.example .env
+      - run: docker compose up --detach --wait --wait-timeout 120 postgres redis mailpit
+      - run: pnpm run test:adversarial --shard=${{ matrix.shard }}/3
+      - if: failure()
+        run: docker compose logs --no-color
+
+  openapi-drift:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/setup
+      - run: cp .env.example .env
+      - run: pnpm run gen:openapi
+      - name: Fail if the committed API description is stale
+        run: |
+          git add --intent-to-add .
+          git diff --exit-code
+
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -73,7 +102,7 @@ jobs:
 
   ci-ok:
     if: always()
-    needs: [typecheck, lint, unit, integration, build, infra]
+    needs: [typecheck, lint, unit, integration, adversarial, openapi-drift, build, infra]
     runs-on: ubuntu-latest
     steps:
       - name: Require every job to succeed

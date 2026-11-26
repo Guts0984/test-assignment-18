@@ -1,5 +1,5 @@
-import argon2 from 'argon2';
 import { type Db, type Tx } from '../src/client';
+import { hashPassword } from '../src/password';
 import { seedCatalog, seedLessonWork } from './catalog';
 import { seedEnrollments } from './enrollments';
 import { seedHomework } from './homework';
@@ -34,7 +34,7 @@ export type SeedOptions = {
 /** Fills an empty database. Returns false, changing nothing, if it was already seeded. */
 export const seedDatabase = async (db: Db, options: SeedOptions): Promise<boolean> => {
   const sizes = seedSizes(options.scale);
-  const passwordHash = await argon2.hash(options.password, { type: argon2.argon2id });
+  const passwordHash = await hashPassword(options.password);
   const { now } = options;
   const seeded = await db.$transaction(
     async (tx) => {

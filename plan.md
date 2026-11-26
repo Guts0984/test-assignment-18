@@ -283,6 +283,11 @@ Runner: `pnpm acceptance` runs A-1…A-17 in order against the compose stack and
 - AS-48 **Returns of unwanted payments** (late and not honoured, duplicate, wrong amount) are separate refund requests tied to that payment (unique per payment). The «не больше одного раза» limit applies to the refund of the enrollment itself (cancel, exclusion, transfer difference), which is unique per enrollment. Both are capped by the balance in the database.
 - AS-49 **Database guards.** Seat counters, promo counters, balances and certificate counters are written only by triggers from append-only history. A deferred trigger rejects any commit in which an enrollment's status and its seat journal disagree.
 - AS-50 **Seed shape.** Bulk cohorts have 6 weekly lessons (so 100,000 certificates fit within 1,000,000 submissions); the cohorts with lessons around a DST change have 12. The full seed takes about 4 minutes. The seed disables row guards only inside its own transaction, and the invariant checks verify the result.
+- AS-51 **Registration is silent about taken addresses.** `POST /auth/register` answers 202 `{status: "accepted"}` whether or not the address exists; the client then signs in. Staff creation by an administrator does report `EMAIL_TAKEN`.
+- AS-52 **Login limiter keys** are per client address and per (account, client address). There is no account-wide lockout, so nobody can lock another person out.
+- AS-53 **Enrollment closes when the cohort starts.** The catalog lists cohorts whose first lesson is in the future. A lesson that has started cannot be moved, a lesson can only be moved to a future time, and a new cohort's first lesson must be in the future.
+- AS-54 **Staff changes.** A mentor with unfinished cohorts cannot be disabled or turned into a manager until the cohorts are reassigned. Administrators are not managed through the API.
+- AS-55 **Sessions.** A disabled account stops working at once (the account is read on every request). Logout revokes the refresh family; an already issued access token ends with its 15-minute lifetime, and the cookie is cleared.
 
 ---
 
@@ -654,7 +659,7 @@ Rules that make this parallelism safe:
 
 - [x] C1 scaffold + CI + compose infra + shared domain rules
 - [x] C2 db schema, journal, ledger, constraints + seed
-- [ ] C3 api core (auth, roles, staff, catalog, courses, cohorts, schedule, limiter)
+- [x] C3 api core (auth, roles, staff, catalog, courses, cohorts, schedule, limiter)
 - [ ] C4 enrollments, waitlist, promo, transfers + paystub + payments/refunds
 - [ ] C5 homework, mentor, certificates, reports, realtime + worker
 - [ ] C6 web

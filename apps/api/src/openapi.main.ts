@@ -1,0 +1,29 @@
+import { writeFile } from 'node:fs/promises';
+import { createDb } from '@school/db/client';
+import { systemTime } from '@school/db/time';
+import { createApp } from './app.factory';
+import { loadEnv } from './config/env';
+import { createLogger } from './infra/logger';
+import { createRedis } from './infra/redis';
+import { buildOpenApi } from './openapi';
+
+/** Writes the OpenAPI document the web client is generated from. Needs no running services. */
+const main = async (): Promise<void> => {
+  const output = process.argv[2];
+  if (!output) throw new Error('Usage: openapi.main <output file>');
+  const env = { ...loadEnv(), TEST_CLOCK_ENABLED: false };
+  const logger = createLogger('silent');
+  const db = createDb(env.DATABASE_URL);
+  const redis = createRedis(env.REDIS_URL, logger);
+  const app = await createApp({ env, db, redis, time: systemTime, logger });
+  await writeFile(output, `${JSON.stringify(buildOpenApi(app), null, 2)}\n`);
+  await app.close();
+  redis.disconnect();
+};
+
+main()
+  .then(() => process.exit(0))
+  .catch((error: unknown) => {
+    process.stderr.write(`${error instanceof Error ? (error.stack ?? '') : ''}\n`);
+    process.exit(1);
+  });
