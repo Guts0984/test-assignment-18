@@ -81,11 +81,12 @@ export const seedHomework = async (tx: Tx, sizes: SeedSizes, now: Date): Promise
   );
   await tx.$executeRawUnsafe(
     `INSERT INTO certificates (id, course_id, enrollment_id, student_id, number, verify_token,
-                               issued_at)
+                               issued_at, cohort_id)
      SELECT gen_random_uuid(), course_id, id, student_id,
             row_number() OVER (PARTITION BY course_id ORDER BY ends_at, id),
             replace(gen_random_uuid()::text || gen_random_uuid()::text, '-', ''),
-            LEAST(ends_at + interval '1 hour', $1::timestamptz)
+            LEAST(ends_at + interval '1 hour', $1::timestamptz),
+            (SELECT e.cohort_id FROM enrollments e WHERE e.id = holders.id)
        FROM holders`,
     now,
   );

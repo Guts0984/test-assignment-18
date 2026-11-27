@@ -3,7 +3,7 @@ import { CERTIFICATE_MIN_ACCEPTED_PERCENT } from '@school/shared/certificate/eli
 import { type Cabinet } from '@school/shared/schemas/homework';
 import { type EnrollmentStatus } from '@school/shared/status/enrollment';
 import { DEPS, type Deps } from '../../infra/deps';
-import { toLesson } from '../catalog/domain';
+import { isoDate, toLesson } from '../catalog/domain';
 import { SUBMISSION_INCLUDE, toSubmissionView } from '../homework/view';
 
 @Injectable()
@@ -39,6 +39,7 @@ export class CabinetService {
           enrollmentId: enrollment.id,
           cohortId: cohort.id,
           courseTitle: cohort.course.title,
+          startDate: isoDate(cohort.startDate),
           status: enrollment.status as EnrollmentStatus,
           cohortTimeZone: cohort.timeZone,
           progress: {

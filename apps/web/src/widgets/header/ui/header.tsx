@@ -25,13 +25,13 @@ export const Header = () => {
   return (
     <header className="border-b border-slate-200 bg-white">
       <div className="mx-auto flex max-w-5xl flex-wrap items-center gap-x-4 gap-y-1 px-4 py-2">
-        <nav aria-label="Main" className="flex flex-1 flex-wrap gap-x-4">
+        <nav aria-label="Main" className="flex basis-full flex-wrap gap-x-4 sm:flex-1 sm:basis-0">
           {links.map(([href, label]) => (
             <Link
               key={href}
               href={href}
               aria-current={pathname === href ? 'page' : undefined}
-              className="flex min-h-11 items-center text-sm font-medium text-slate-700 aria-[current=page]:text-blue-700 aria-[current=page]:underline"
+              className="flex min-h-11 items-center text-sm font-medium whitespace-nowrap text-slate-700 aria-[current=page]:text-blue-700 aria-[current=page]:underline"
             >
               {label}
             </Link>
@@ -51,7 +51,7 @@ export const Header = () => {
             </Button>
           </div>
         ) : account === null ? (
-          <div className="flex gap-3 text-sm font-medium">
+          <div className="flex gap-3 text-sm font-medium whitespace-nowrap">
             <Link href="/login" className="flex min-h-11 items-center">
               Sign in
             </Link>

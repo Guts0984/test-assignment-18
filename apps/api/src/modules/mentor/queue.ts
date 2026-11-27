@@ -18,6 +18,11 @@ export const toQueueItem = (row: QueueRow) => ({
   isLate: row.is_late,
 });
 
+/** Work of students who still study: whoever cancelled or moved away waits for nobody. */
+const studying = (submission: Prisma.Sql) => Prisma.sql`EXISTS (
+  SELECT 1 FROM enrollments e
+   WHERE e.id = ${submission}.enrollment_id AND e.status IN ('paid', 'completed'))`;
+
 const select = (condition: Prisma.Sql, tail: Prisma.Sql) => Prisma.sql`
   SELECT s.id AS submission_id, co.title AS course_title, u.full_name AS student_name,
          h.title AS homework_title, s.submitted_at, s.is_late
@@ -41,6 +46,7 @@ export const waitingWork = (
       Prisma.sql`s.id IN (
         SELECT q.id FROM submissions q JOIN cohorts qc ON qc.id = q.cohort_id
          WHERE qc.mentor_id = ${mentorId}::uuid AND q.status = 'submitted'
+           AND ${studying(Prisma.sql`q`)}
          ORDER BY q.submitted_at, q.id LIMIT ${page.limit} OFFSET ${page.offset})`,
       Prisma.empty,
     ),
@@ -51,7 +57,8 @@ export const countWaitingWork = async (db: Db, mentorId: string): Promise<number
   const [row] = await db.$queryRaw<{ total: number }[]>`
     SELECT count(*)::int AS total
       FROM submissions s JOIN cohorts c ON c.id = s.cohort_id
-     WHERE c.mentor_id = ${mentorId}::uuid AND s.status = 'submitted'`;
+     WHERE c.mentor_id = ${mentorId}::uuid AND s.status = 'submitted'
+       AND ${studying(Prisma.sql`s`)}`;
   return row?.total ?? 0;
 };
 

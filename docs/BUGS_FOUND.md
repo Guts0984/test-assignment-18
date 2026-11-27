@@ -26,3 +26,8 @@
 | 22 | The CSRF test assumed port 8080. | `csrf.adv.spec.ts` | It uses the configured origin. |
 | 23 | Homework sent as anything but a multipart form (JSON, plain text, empty) answered 200 and emptied the answer text. | `homework.it.spec.ts` | The upload route refuses every other body with 415. |
 | 24 | After signing out, open tabs never got live updates again: the server closed their socket and the web client did not reconnect. | `live.static.e2e.ts`, `auth.adv.spec.ts` | The client reconnects with growing delays, and a refused refresh clears the cookies so it returns as a visitor. |
+| 25 | `docker compose up --build` failed on Docker Desktop: two services built one image tag. | `compose-config.it.spec.ts` | Only the first api copy builds the image. |
+| 26 | The twelve-month report came close to or over its 1 s budget on slower machines. | measured with `EXPLAIN` on the full data set | Money and certificates are read by cohort (migration `0006`). |
+| 27 | Work of a student who cancelled stayed in the mentor queue. | `homework.it.spec.ts` | Only work of studying students is listed and claimable; held work is released. |
+| 28 | At 375 px menu words broke in the middle, and two cohorts of one course looked the same in the cabinet. | `mobile.static.e2e.ts` | Menu words stay whole; the cabinet shows each start date. |
+| 29 | On macOS some tests failed and the test profile script needed GNU `sed`. | reported from macOS | A portable script and a loopback setup script. |

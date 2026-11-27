@@ -199,6 +199,8 @@ model SeatJournal {
 model MoneyOperation {
   id                String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   enrollmentId      String   @map("enrollment_id") @db.Uuid
+  /// Filled by the database from the enrollment, for the report.
+  cohortId String? @map("cohort_id") @db.Uuid
   kind              String
   amountMinor       BigInt   @map("amount_minor")
   currency          String
@@ -397,6 +399,8 @@ model Certificate {
   id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   courseId     String   @map("course_id") @db.Uuid
   enrollmentId String   @unique @map("enrollment_id") @db.Uuid
+  /// Filled by the database from the enrollment, for the report.
+  cohortId String? @map("cohort_id") @db.Uuid
   studentId    String   @map("student_id") @db.Uuid
   number       Int
   verifyToken  String   @unique @map("verify_token")

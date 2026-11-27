@@ -16,10 +16,9 @@ x-network-env: &network-env
 x-api-env: &api-env
   TRUSTED_PROXY_CIDRS: ${COMPOSE_SUBNET:-10.213.47.0/24}
 
+# One image for both copies. Only the first builds it: two builds of one tag collide on
+# Docker Desktop.
 x-api: &api
-  build:
-    context: .
-    target: api
   image: school-api
   env_file: *env-file
   depends_on:
@@ -106,12 +105,16 @@ services:
 
   api-1:
     <<: *api
+    build:
+      context: .
+      target: api
     environment:
       <<: [*network-env, *api-env]
       INSTANCE_ID: api-1
 
   api-2:
     <<: *api
+    pull_policy: never
     environment:
       <<: [*network-env, *api-env]
       INSTANCE_ID: api-2

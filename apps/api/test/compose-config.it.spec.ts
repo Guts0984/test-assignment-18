@@ -4,7 +4,10 @@ import { describe, expect, it } from 'vitest';
 
 type Config = {
   networks: { default: { ipam: { config: { subnet: string }[] } } };
-  services: Record<string, { environment?: Record<string, string> }>;
+  services: Record<
+    string,
+    { image?: string; build?: unknown; environment?: Record<string, string> }
+  >;
 };
 
 const configWith = async (subnet: string): Promise<Config> => {
@@ -20,6 +23,14 @@ const configWith = async (subnet: string): Promise<Config> => {
 };
 
 describe('compose', () => {
+  // Docker Desktop fails when two builds write one tag.
+  it('builds every image of its own exactly once', async () => {
+    const { services } = await configWith('10.99.1.0/24');
+    const own = Object.values(services).filter((service) => service.image?.startsWith('school-'));
+    const built = own.filter((service) => service.build).map((service) => service.image);
+    expect(built.sort()).toEqual([...new Set(own.map((service) => service.image))].sort());
+  });
+
   // Otherwise every client would be counted as the proxy, and one could lock everyone out.
   it('trusts the proxy on whatever network is chosen', async () => {
     for (const subnet of ['10.99.1.0/24', '172.30.250.0/24']) {

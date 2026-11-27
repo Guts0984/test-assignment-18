@@ -86,6 +86,36 @@ describe('homework', () => {
     }
   });
 
+  it('takes the work of a student who left out of the queue, claimed or not', async () => {
+    const study = await studyingCohort(api, { students: 2 });
+    const [leaver, stayer] = study.students;
+    if (!leaver || !stayer) throw new Error('fixture');
+    const [first = '', second = ''] = study.homework;
+    await handIn(leaver, first);
+    await handIn(leaver, second);
+    api.clock.advance(1_000);
+    const kept = (await handIn(stayer, first)).body as { id: string };
+    const claim = () => study.mentorHttp.post('/api/mentor/queue/claim', {});
+    const held = ((await claim()).body as { submissionId: string }).submissionId;
+
+    const left = await leaver.http.post(`/api/enrollments/${leaver.enrollmentId}/cancel`);
+    expect(left.status).toBe(200);
+    expect((await study.mentorHttp.get('/api/mentor/queue')).body).toMatchObject({
+      total: 1,
+      items: [{ submissionId: kept.id }],
+    });
+    expect((await study.mentorHttp.get('/api/mentor/reviews')).body).toMatchObject({ items: [] });
+    expectError(
+      await study.mentorHttp.post(`/api/mentor/submissions/${held}/review`, {
+        verdict: 'returned',
+        comment: 'too late',
+      }),
+      'NOT_FOUND',
+    );
+    expect((await claim()).body).toEqual({ submissionId: kept.id });
+    expectError(await claim(), 'NOTHING_TO_REVIEW');
+  });
+
   it('keeps an earlier file on resubmission unless it is replaced or removed', async () => {
     const study = await studyingCohort(api);
     const [first = ''] = study.homework;

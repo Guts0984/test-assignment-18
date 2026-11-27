@@ -6,7 +6,9 @@ out="${1:-.env.test}"
 cp .env.example "$out"
 
 set_var() {
-  sed -i "s|^$1=.*|$1=$2|" "$out"
+  # Through a second file: `sed -i` differs between GNU and macOS.
+  sed "s|^$1=.*|$1=$2|" "$out" > "$out.tmp"
+  mv "$out.tmp" "$out"
   grep -q "^$1=" "$out" || { echo "unknown variable: $1" >&2; exit 1; }
 }
 

@@ -4,6 +4,7 @@ import { markPaid } from './mark-paid';
 import { refundPercentOf } from './refund-percent';
 import { SYSTEM_ACTOR } from './seat-journal';
 import { freeSeat } from './seats';
+import { releaseReviewsOfEnrollment } from './review';
 
 /** Money that can be given or moved: the balance less what is already being returned. */
 export const spendableBalance = async (unit: Unit, enrollmentId: string): Promise<number> => {
@@ -57,6 +58,7 @@ export const closeTransferSource = async (
     where: { id: source.id },
     data: { status: 'transferred', updatedAt: unit.now },
   });
+  await releaseReviewsOfEnrollment(unit.tx, source.id);
   await freeSeat(unit, {
     cohortId: source.cohortId,
     enrollmentId: source.id,

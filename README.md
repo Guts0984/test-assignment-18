@@ -74,6 +74,9 @@ pnpm test:acceptance     # acceptance checks 3–15 and the final reconciliation
 pnpm test:e2e            # the five journeys, 375 px, form errors, address state
 ```
 
+CI runs on Linux. On macOS run `./scripts/macos-test-setup.sh` once after each boot first: some
+tests send from several loopback addresses or open 200 connections at once.
+
 `pnpm acceptance` runs all 17 acceptance checks from a clean state and writes
 [docs/ACCEPTANCE.md](docs/ACCEPTANCE.md). See [docs/SECURITY-TESTS.md](docs/SECURITY-TESTS.md)
 for the attack table and the mutation check, and [docs/BUGS_FOUND.md](docs/BUGS_FOUND.md) for the
@@ -371,6 +374,8 @@ finished cohorts. The sweeper is a plain timer, so `FLUSHALL` cannot remove it.
 | `promo_redemptions_apply` | Updates the promo counters from redemptions |
 | `promo_codes_counter_guard` | The counters cannot be written any other way |
 | `certificates_append_only` | No update or delete |
+| `certificates_cohort` | Copies the cohort from the enrollment, for the report |
+| `money_operations_cohort` | Copies the cohort from the enrollment, for the report |
 | `certificates_consecutive` | Accepts only the next number of the course |
 | `enrollments_school_students` | Keeps the student search table current |
 | `users_school_students` | Follows a change of name or e-mail |
@@ -401,7 +406,7 @@ finished cohorts. The sweeper is a plain timer, so `FLUSHALL` cannot remove it.
 | `seat_journal_enrollment_id_idx` | History of an enrollment |
 | `money_operations_enrollment_id_idx` | Operations of an enrollment |
 | `money_operations_kind_created_at_idx` | Money by kind and time |
-| `money_operations_report_idx` | Revenue report without reading the table (partial) |
+| `money_operations_cohort_report_idx` | Revenue report by cohort and day (partial, covering) |
 | `ledger_entries_operation_id_idx` | Balance check of an operation |
 | `ledger_entries_enrollment_id_idx` | Ledger account of an enrollment |
 | `refund_requests_enrollment_id_idx` | Refunds of an enrollment |
@@ -422,7 +427,7 @@ finished cohorts. The sweeper is a plain timer, so `FLUSHALL` cannot remove it.
 | `submission_reviews_mentor_idx` | Reviews by a mentor |
 | `certificates_student_id_idx` | A student’s certificates |
 | `certificates_issued_at_idx` | Certificates in order |
-| `certificates_report_idx` | Certificates report without reading the table |
+| `certificates_cohort_report_idx` | Certificates report by cohort and day |
 | `scheduled_due_idx` | Reminders that are due (partial) |
 | `email_pending_idx` | Emails still to send (partial) |
 | `job_failures_open_idx` | Unresolved failures (partial) |
@@ -534,5 +539,8 @@ Points the assignment leaves open, and what was chosen.
 - AS-75 **Free cohorts** enroll at once, without a payment page; no promo code is spent.
 - AS-76 **A mentor who stops mentoring** (disabled or made a manager) has their open reviews returned to the queue. Reassigning a cohort while the mentor stays active leaves the review with them.
 - AS-77 **Outages and restarts.** With Postgres unreachable the api answers 503. A stopping api copy first stops listening, so nginx turns to the other copy, then serves its open connections until they have been quiet for a second (7 s at most).
+- AS-78 **Work of a student who left** (cancelled, excluded, moved away) leaves the mentor queue at once, and a claim on it is released.
+- AS-79 **Report speed.** Money operations and certificates carry their cohort, filled by the database, so the report does not walk every enrollment of a school (migration `0006`).
+- AS-80 **macOS.** Tests that send from several loopback addresses or open 200 connections at once need `scripts/macos-test-setup.sh` once per boot. CI runs on Linux only.
 
 <!-- /generated:decisions -->

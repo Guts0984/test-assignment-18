@@ -22,7 +22,7 @@ export type Realtime = {
   readonly close: () => Promise<void>;
 };
 
-type SeatRow = { id: string; free: number };
+type SeatRow = { id: string; free: number; mentor_id: string };
 
 /**
  * Publishes live updates through Redis, so any process can reach clients connected to any api
@@ -54,7 +54,7 @@ export const createRealtime = (
       if (cohortIds.length === 0) return;
       try {
         const rows = await db.$queryRaw<SeatRow[]>`
-          SELECT c.id, GREATEST(0, c.capacity - c.seats_taken - (
+          SELECT c.id, c.mentor_id, GREATEST(0, c.capacity - c.seats_taken - (
                    SELECT count(*) FROM waitlist_entries w
                     WHERE w.cohort_id = c.id AND w.status = 'waiting'))::int AS free
             FROM cohorts c WHERE c.id = ANY(${[...cohortIds]}::uuid[])`;
@@ -65,6 +65,10 @@ export const createRealtime = (
           });
           emit(roomName({ kind: 'cohort-staff', id: row.id }), 'roster.changed', {
             cohortId: row.id,
+          });
+          // Someone leaving takes their work out of the mentor's queue.
+          emit(roomName({ kind: 'mentor', id: row.mentor_id }), 'queue.changed', {
+            mentorId: row.mentor_id,
           });
         }
       } catch (error) {

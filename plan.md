@@ -311,6 +311,9 @@ Runner: `pnpm acceptance` runs A-1…A-17 in order against the compose stack and
 - AS-75 **Free cohorts** enroll at once, without a payment page; no promo code is spent.
 - AS-76 **A mentor who stops mentoring** (disabled or made a manager) has their open reviews returned to the queue. Reassigning a cohort while the mentor stays active leaves the review with them.
 - AS-77 **Outages and restarts.** With Postgres unreachable the api answers 503. A stopping api copy first stops listening, so nginx turns to the other copy, then serves its open connections until they have been quiet for a second (7 s at most).
+- AS-78 **Work of a student who left** (cancelled, excluded, moved away) leaves the mentor queue at once, and a claim on it is released.
+- AS-79 **Report speed.** Money operations and certificates carry their cohort, filled by the database, so the report does not walk every enrollment of a school (migration `0006`).
+- AS-80 **macOS.** Tests that send from several loopback addresses or open 200 connections at once need `scripts/macos-test-setup.sh` once per boot. CI runs on Linux only.
 
 ---
 

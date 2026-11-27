@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { SUBMISSION_STATUSES } from '../status/submission';
 import { ENROLLMENT_STATUSES } from '../status/enrollment';
 import { idSchema, instantSchema, pageOf, pageShape, text } from './common';
+import { localDateSchema } from '../schedule/zoned';
 import { lessonSchema } from './catalog';
 
 export const MAX_ANSWER_LENGTH = 20_000;
@@ -58,6 +59,8 @@ export const cabinetCourseSchema = z.object({
   enrollmentId: idSchema,
   cohortId: idSchema,
   courseTitle: z.string(),
+  /** Tells two cohorts of one course apart. */
+  startDate: localDateSchema,
   status: z.enum(ENROLLMENT_STATUSES),
   cohortTimeZone: z.string(),
   progress: z.object({

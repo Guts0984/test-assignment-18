@@ -2,7 +2,7 @@
 
 import { SubmitHomework } from '@/features/submit-homework';
 import { type CabinetDtoOutputCoursesItem } from '@/shared/api';
-import { formatShort } from '@/shared/lib';
+import { formatDay, formatShort } from '@/shared/lib';
 import { Badge, Card } from '@/shared/ui';
 
 type Lesson = CabinetDtoOutputCoursesItem['lessons'][number];
@@ -75,6 +75,7 @@ export const CourseStudy = ({
 }) => (
   <Card label={course.courseTitle}>
     <h2 className="text-lg font-semibold">{course.courseTitle}</h2>
+    <p className="text-sm text-slate-600">Cohort starting {formatDay(course.startDate)}</p>
     <p data-testid="progress">
       Accepted {course.progress.accepted} of {course.progress.total} homework tasks. A certificate
       needs {course.progress.requiredPercent}%.

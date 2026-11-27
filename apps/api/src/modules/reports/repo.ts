@@ -33,8 +33,7 @@ export const money = (db: Db, filter: Filter) => db.$queryRaw<
          coalesce(sum(o.amount_minor) FILTER (WHERE o.kind = 'payment'), 0)::bigint AS paid,
          coalesce(sum(o.amount_minor) FILTER (WHERE o.kind = 'refund'), 0)::bigint AS refunded
     FROM money_operations o
-    JOIN enrollments e ON e.id = o.enrollment_id
-    JOIN cohorts c ON c.id = e.cohort_id
+    JOIN cohorts c ON c.id = o.cohort_id
    WHERE o.kind IN ('payment', 'refund') AND ${between(Prisma.sql`o.created_at`, filter)}
      AND ${scope(filter)}
    GROUP BY o.currency ORDER BY o.currency`;
@@ -60,6 +59,5 @@ export const homeworkOnTime = (db: Db, filter: Filter) => db.$queryRaw<
 export const certificatesIssued = (db: Db, filter: Filter) => db.$queryRaw<{ total: number }[]>`
   SELECT count(*)::int AS total
     FROM certificates x
-    JOIN enrollments e ON e.id = x.enrollment_id
-    JOIN cohorts c ON c.id = e.cohort_id
+    JOIN cohorts c ON c.id = x.cohort_id
    WHERE ${between(Prisma.sql`x.issued_at`, filter)} AND ${scope(filter)}`;

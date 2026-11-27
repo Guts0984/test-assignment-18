@@ -32,6 +32,8 @@ export const claimSubmission = async (
     SELECT s.id FROM submissions s JOIN cohorts c ON c.id = s.cohort_id
      WHERE c.mentor_id = ${input.mentorId}::uuid AND s.status = 'submitted'
        AND (${input.submissionId}::uuid IS NULL OR s.id = ${input.submissionId}::uuid)
+       AND EXISTS (SELECT 1 FROM enrollments e
+                    WHERE e.id = s.enrollment_id AND e.status IN ('paid', 'completed'))
      ORDER BY s.submitted_at, s.id
      LIMIT 1 FOR UPDATE OF s SKIP LOCKED`;
   if (!next) return 'NOTHING_TO_REVIEW';
@@ -118,4 +120,11 @@ export const releaseAllReviews = async (tx: Tx, mentorId: string): Promise<strin
      WHERE c.id = s.cohort_id AND s.reviewer_id = ${mentorId}::uuid AND s.status = 'in_review'
      RETURNING c.mentor_id`;
   return [...new Set(released.map((row) => row.mentor_id))];
+};
+
+/** Returns work held for an enrollment that is ending, so it stops counting for the mentor. */
+export const releaseReviewsOfEnrollment = async (tx: Tx, enrollmentId: string): Promise<void> => {
+  await tx.$executeRaw`
+    UPDATE submissions SET status = 'submitted', reviewer_id = NULL, claimed_at = NULL
+     WHERE enrollment_id = ${enrollmentId}::uuid AND status = 'in_review'`;
 };

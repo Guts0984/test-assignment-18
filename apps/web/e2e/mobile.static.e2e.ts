@@ -37,3 +37,27 @@ test('the student cabinet works on a 375 px phone', async ({ page }) => {
     await expect(page.getByRole('navigation', { name: 'Main' }).getByText(link)).toBeInViewport();
   }
 });
+
+test('menu words stay whole beside a long name', async ({ page }) => {
+  const [who] = await stack.people(1);
+  if (!who) throw new Error('fixture');
+  // Long enough to squeeze a menu that shares its row with the name.
+  await stack.db().user.update({
+    where: { email: who.email },
+    data: { fullName: 'Oleksandra Shevchenkova' },
+  });
+  await signIn(page, who.email);
+  const links = page.getByRole('navigation', { name: 'Main' }).getByRole('link');
+  await expect(links).toHaveCount(4);
+  const broken = await links.evaluateAll((items) =>
+    items
+      .filter((item) => {
+        const text = document.createRange();
+        text.selectNodeContents(item);
+        return text.getClientRects().length > 1;
+      })
+      .map((item) => item.textContent),
+  );
+  expect(broken).toEqual([]);
+  await fits(page);
+});

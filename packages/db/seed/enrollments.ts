@@ -111,7 +111,8 @@ const writeMoney = async (tx: Tx): Promise<void> => {
       FROM plan WHERE fate = 'refunded'`);
   await tx.$executeRawUnsafe(`
     INSERT INTO money_operations (id, enrollment_id, kind, amount_minor, currency,
-                                  provider_payment_id, refund_request_id, created_at)
+                                  provider_payment_id, refund_request_id, created_at, cohort_id)
+    SELECT o.*, e.cohort_id FROM (
     SELECT pg_temp.seed_uuid('payment-' || id), id, 'payment', price, currency, 'seed-' || id, NULL,
            created_at + interval '5 minutes'
       FROM plan
@@ -127,7 +128,10 @@ const writeMoney = async (tx: Tx): Promise<void> => {
     UNION ALL
     SELECT pg_temp.seed_uuid('transfer-in-' || p.id), p.id, 'transfer_in', p.price, p.currency, NULL,
            NULL, p.created_at
-      FROM plan p WHERE p.source_id IS NOT NULL`);
+      FROM plan p WHERE p.source_id IS NOT NULL
+    ) o (id, enrollment_id, kind, amount_minor, currency, provider_payment_id, refund_request_id,
+         created_at)
+    JOIN enrollments e ON e.id = o.enrollment_id`);
   await tx.$executeRawUnsafe(`
     INSERT INTO ledger_entries (operation_id, account, enrollment_id, debit_minor, credit_minor)
     SELECT o.id, side.account, CASE WHEN side.account = 'enrollment' THEN o.enrollment_id END,

@@ -10,6 +10,7 @@ import { spendableBalance } from './payment-confirm';
 import { releasePromo } from './promo-use';
 import { type ActorRef } from './seat-journal';
 import { freeSeat } from './seats';
+import { releaseReviewsOfEnrollment } from './review';
 
 export const requestRefund = async (
   unit: Unit,
@@ -94,6 +95,7 @@ export const cancelEnrollment = async (
   for (const child of await pendingTransfersOf(unit.tx, enrollment.id)) {
     await cancelUnpaid(unit, child, reason, input.actor);
   }
+  await releaseReviewsOfEnrollment(unit.tx, enrollment.id);
   const cohort = await read(enrollment.cohortId);
   const amountMinor = refundAmount({
     netPaidMinor: await spendableBalance(unit, enrollment.id),
