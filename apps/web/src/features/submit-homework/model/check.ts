@@ -10,9 +10,13 @@ export const MAX_FILE_BYTES = 10 * 1024 * 1024;
 export const checkAnswer = (input: {
   readonly body: string;
   readonly file: { readonly name: string; readonly size: number } | null;
+  /** An earlier file that stays attached. */
+  readonly keepsFile?: boolean;
 }): { readonly body?: string; readonly file?: string } => {
   const { body, file } = input;
-  if (body.trim() === '' && !file) return { body: 'Write an answer or attach a file' };
+  if (body.trim() === '' && !file && input.keepsFile !== true) {
+    return { body: 'Write an answer or attach a file' };
+  }
   if (body.length > MAX_ANSWER_LENGTH) return { body: 'The answer is too long' };
   if (!file) return {};
   const extension = file.name.split('.').at(-1)?.toLowerCase() ?? '';

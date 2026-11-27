@@ -81,6 +81,11 @@ const returnPayment = async (
   });
 };
 
+const hasStarted = async (unit: Unit, cohortId: string): Promise<boolean> => {
+  const cohort = await unit.tx.cohort.findUniqueOrThrow({ where: { id: cohortId } });
+  return cohort.startsAt <= unit.now;
+};
+
 /** A payment that arrived after the hold ran out: enrol if a seat is still open. */
 const honourLate = async (unit: Unit, enrollment: Enrollment, cohort: Cohort): Promise<boolean> => {
   if (cohort.startsAt <= unit.now) return false;
@@ -94,7 +99,8 @@ const honourLate = async (unit: Unit, enrollment: Enrollment, cohort: Cohort): P
   if (other) return false;
   if (!hasOpenSeat(await occupancyOf(unit, cohort.id))) return false;
   const { source, gone } = await transferSource(unit, enrollment);
-  if (gone || !(await reacquirePromo(unit, enrollment.id))) return false;
+  if (gone || (source && (await hasStarted(unit, source.cohortId)))) return false;
+  if (!(await reacquirePromo(unit, enrollment.id))) return false;
   await unit.tx.waitlistEntry.updateMany({
     where: { cohortId: cohort.id, studentId: enrollment.studentId, status: 'waiting' },
     data: { status: 'left' },

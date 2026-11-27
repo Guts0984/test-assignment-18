@@ -6749,6 +6749,13 @@
                   "file": {
                     "type": "string",
                     "format": "binary"
+                  },
+                  "removeFile": {
+                    "type": "string",
+                    "enum": [
+                      "true",
+                      "false"
+                    ]
                   }
                 }
               }

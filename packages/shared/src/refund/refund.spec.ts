@@ -1,7 +1,7 @@
 import fc from 'fast-check';
 import { describe, expect, it } from 'vitest';
 import { generateLessons } from '../schedule/generate';
-import { refundAmount, refundBoundaries, refundPercent } from './refund';
+import { cappedPercent, refundAmount, refundBoundaries, refundPercent } from './refund';
 
 const timeZone = 'America/New_York';
 // Starts Tuesday 27 October 2026 (EDT); the third lesson is after the 1 November switch (EST).
@@ -71,6 +71,18 @@ describe('refund percent', () => {
     const empty = refundBoundaries({ lessons: [], startDate: '2026-10-27', timeZone });
     expect(empty.cohortStartsAt.toISOString()).toBe('2026-10-27T04:00:00.000Z');
     expect(refundPercent(new Date('2027-01-01T00:00:00Z'), empty)).toBe(50);
+  });
+});
+
+describe('refund cap', () => {
+  it.each([
+    [100, 100, 100],
+    [100, 50, 50],
+    [100, 0, 0],
+    [50, 100, 50],
+    [0, 100, 0],
+  ] as const)('rule %d%% with cap %d%% gives %d%%', (rule, cap, expected) => {
+    expect(cappedPercent(rule, cap)).toBe(expected);
   });
 });
 

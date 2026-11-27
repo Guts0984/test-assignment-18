@@ -15,13 +15,18 @@ const address = (path: string): string => path.replace(/^\/api/, env.NEXT_PUBLIC
 
 let refreshing: Promise<boolean> | null = null;
 
+/** One tab at a time: the next one then presents the token the previous one received. */
+const acrossTabs = async (work: () => Promise<boolean>): Promise<boolean> =>
+  'locks' in navigator ? await navigator.locks.request('session-refresh', work) : await work();
+
 /**
  * Exchanges the refresh cookie once, however many requests ask at the same moment. Two
  * simultaneous exchanges would look like a stolen token and end the session.
  */
 export const refreshSession = (): Promise<boolean> => {
-  refreshing ??= fetch(address('/api/auth/refresh'), { method: 'POST' })
-    .then((response) => response.ok)
+  refreshing ??= acrossTabs(() =>
+    fetch(address('/api/auth/refresh'), { method: 'POST' }).then((response) => response.ok),
+  )
     .catch(() => false)
     .finally(() => {
       refreshing = null;

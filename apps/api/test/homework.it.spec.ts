@@ -86,6 +86,31 @@ describe('homework', () => {
     }
   });
 
+  it('keeps an earlier file on resubmission unless it is replaced or removed', async () => {
+    const study = await studyingCohort(api);
+    const [first = ''] = study.homework;
+    const pdf = (text: string) => ({ name: `${text}.pdf`, content: Buffer.from(`%PDF-${text}`) });
+    await handIn(study.first, first, { file: pdf('one') });
+    const kept = await handIn(study.first, first, { body: 'only the text changed' });
+    expect(kept.body).toMatchObject({ body: 'only the text changed', file: { name: 'one.pdf' } });
+    // A file alone is an answer: the text may be emptied while the file stays.
+    expect((await handIn(study.first, first, { body: '' })).body).toMatchObject({
+      file: { name: 'one.pdf' },
+    });
+    const replaced = await handIn(study.first, first, { file: pdf('two') });
+    expect(replaced.body).toMatchObject({ file: { name: 'two.pdf' } });
+    expectError(
+      await handIn(study.first, first, { body: '', removeFile: 'true' }),
+      'VALIDATION_FAILED',
+    );
+    expectError(await handIn(study.first, first, { removeFile: 'yes' }), 'VALIDATION_FAILED');
+    const removed = await handIn(study.first, first, { body: 'text', removeFile: 'true' });
+    expect(removed.body).toMatchObject({ file: null });
+    expect(
+      await api.db.submissionFile.count({ where: { submission: { homeworkId: first } } }),
+    ).toBe(0);
+  });
+
   it('refuses hostile uploads with a clear error and stores nothing', async () => {
     const study = await studyingCohort(api);
     const [first = ''] = study.homework;

@@ -1,4 +1,5 @@
 import { signAccessToken } from '../../src/common/auth/access-token';
+import { startSession } from '../../src/modules/auth/repo/refresh-tokens';
 import { ACCESS_COOKIE } from '../../src/common/auth/session';
 import { type TestApi } from './app';
 import { client, type Client } from './client';
@@ -9,9 +10,10 @@ export type Student = { readonly id: string; readonly http: Client };
 const sessionFor = async (api: TestApi, userId: string, url: string): Promise<Client> => {
   const http = client(url);
   const { JWT_ACCESS_SECRET: secret } = api.deps.env;
+  const { sessionId } = await startSession(api.db, userId, { now: new Date(), ttlSec: 3_600 });
   http.cookies.set(
     ACCESS_COOKIE,
-    await signAccessToken(userId, { secret, ttlSec: 900, now: new Date() }),
+    await signAccessToken({ userId, sessionId }, { secret, ttlSec: 900, now: new Date() }),
   );
   return http;
 };

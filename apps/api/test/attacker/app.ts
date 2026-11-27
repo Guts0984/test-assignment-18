@@ -8,6 +8,7 @@ import { fromClock } from '@school/db/time';
 import { createFixedClock } from '@school/shared/clock/clock';
 import { QUEUE_NAMES } from '@school/shared/jobs/registry';
 import { createApp } from '../../src/app.factory';
+import { createDrain } from '../../src/common/http/drain';
 import { type EnvSource, loadEnv } from '../../src/config/env';
 import { type Deps } from '../../src/infra/deps';
 import { createLogger } from '../../src/infra/logger';
@@ -43,9 +44,10 @@ const removeQueues = async (deps: Deps): Promise<void> => {
 };
 
 const listen = async (deps: Deps, port: number) => {
-  const app = await createApp(deps);
+  const drain = createDrain();
+  const app = await createApp(deps, drain);
   await app.listen(port, '127.0.0.1');
-  return { app, url: `http://127.0.0.1:${port}` };
+  return { app, drain, url: `http://127.0.0.1:${port}` };
 };
 
 /**
@@ -53,7 +55,12 @@ const listen = async (deps: Deps, port: number) => {
  * moves. `copies` starts several instances that share both, as behind a load balancer.
  */
 export const startApi = async (
-  options: { readonly env?: EnvSource; readonly copies?: number } = {},
+  options: {
+    readonly env?: EnvSource;
+    readonly copies?: number;
+    /** Lets a test put something between the application and its database. */
+    readonly databaseUrl?: (url: string) => string;
+  } = {},
 ) => {
   const database = await createTestDatabase(process.env['DATABASE_URL'] ?? '');
   const clock = createFixedClock(NOW);
@@ -82,7 +89,7 @@ export const startApi = async (
       const jobs = createPublisher(queueSettings({ ...env, QUEUE_PREFIX: prefix }), () => {});
       const time = fromClock(clock);
       // Each copy has its own pool, as separate processes would.
-      const db = createDb(database.url);
+      const db = createDb(options.databaseUrl?.(database.url) ?? database.url);
       const realtime = createRealtime({ redisUrl: env.REDIS_URL, prefix }, () => {});
       // Socket adapters of one test share a namespace that no other test uses.
       const shared = Object.freeze({ ...env, QUEUE_PREFIX: prefix });
@@ -96,6 +103,7 @@ export const startApi = async (
     url: first.url,
     copies: instances.map(({ url, deps }): ApiCopy => ({ url, deps })),
     app: first.app,
+    drain: first.drain,
     deps: first.deps,
     db: database.db,
     databaseUrl: database.url,
@@ -105,7 +113,7 @@ export const startApi = async (
         await instance.app.close();
         if (instance.deps.redis.status === 'ready') await removeQueues(instance.deps);
         await instance.deps.jobs.close();
-        instance.deps.realtime.close();
+        await instance.deps.realtime.close();
         instance.deps.redis.disconnect();
         await instance.deps.db.$disconnect();
       }

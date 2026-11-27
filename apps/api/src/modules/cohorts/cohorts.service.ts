@@ -98,6 +98,7 @@ export class CohortsService {
   }
 
   async update(schoolId: string, id: string, change: UpdateCohortInput) {
+    const before = await this.deps.db.cohort.findFirst({ where: { id, schoolId } });
     await inTransaction(this.deps.db, async (tx) => {
       if (change.mentorId) await this.requireMentor(tx, schoolId, change.mentorId);
       const { count } = await tx.cohort.updateMany({
@@ -109,6 +110,10 @@ export class CohortsService {
       });
       if (count === 0) throw apiError('NOT_FOUND', 'No such cohort');
     });
+    if (before && change.mentorId && change.mentorId !== before.mentorId) {
+      this.deps.realtime.leaveCohort(before.mentorId, id);
+      this.deps.realtime.queueChanged([before.mentorId, change.mentorId]);
+    }
     return this.get(schoolId, id);
   }
 

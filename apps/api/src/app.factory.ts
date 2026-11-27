@@ -6,13 +6,19 @@ import helmet from 'helmet';
 import 'reflect-metadata';
 import { AppModule } from './app.module';
 import { jsonBody, rejectNulInUrl } from './common/http/body';
+import { createDrain, type Drain } from './common/http/drain';
 import { REQUEST_ID_HEADER } from './common/http/request';
 import { type Deps } from './infra/deps';
 import { SocketAdapter } from './infra/socket-adapter';
 import { buildOpenApi } from './openapi';
 
+const KEEP_ALIVE_MS = 75_000;
+
 /** The fully configured application, not yet listening. Tests and `main` share it. */
-export const createApp = async (deps: Deps): Promise<NestExpressApplication> => {
+export const createApp = async (
+  deps: Deps,
+  drain: Drain = createDrain(),
+): Promise<NestExpressApplication> => {
   const app = await NestFactory.create<NestExpressApplication>(AppModule.register(deps), {
     bodyParser: false,
     logger: false,
@@ -30,6 +36,7 @@ export const createApp = async (deps: Deps): Promise<NestExpressApplication> => 
       next();
     },
   );
+  app.use(drain.middleware);
   app.use(helmet());
   app.enableCors({ origin: deps.env.CORS_ORIGINS, credentials: true });
   app.use(rejectNulInUrl);
@@ -39,5 +46,10 @@ export const createApp = async (deps: Deps): Promise<NestExpressApplication> => 
   app.setGlobalPrefix('api');
   SwaggerModule.setup('docs', app, () => buildOpenApi(app), { jsonDocumentUrl: 'docs-json' });
   await app.init();
+  // Longer than the proxy keeps an idle connection, so the proxy is always the one to close it
+  // and never sends a request into a connection this side has just dropped.
+  const server = app.getHttpServer();
+  server.keepAliveTimeout = KEEP_ALIVE_MS;
+  server.headersTimeout = KEEP_ALIVE_MS + 1_000;
   return app;
 };

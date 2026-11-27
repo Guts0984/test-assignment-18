@@ -16,7 +16,11 @@ export const FILE_TYPES = {
   txt: 'text/plain',
 } as const;
 
-export const submitSchema = z.strictObject({ body: text(0, MAX_ANSWER_LENGTH).default('') });
+export const submitSchema = z.strictObject({
+  body: text(0, MAX_ANSWER_LENGTH).default(''),
+  /** Multipart fields are text. An earlier file is kept unless it is replaced or removed. */
+  removeFile: z.enum(['true', 'false']).default('false'),
+});
 
 export const reviewSchema = z
   .strictObject({

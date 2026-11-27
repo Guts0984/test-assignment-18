@@ -18,12 +18,20 @@ const insert = async (tx: Tx, userId: string, familyId: string, window: Window) 
   return token;
 };
 
-export const startSession = (db: Db, userId: string, window: Window): Promise<string> =>
-  inTransaction(db, (tx) => insert(tx, userId, randomUUID(), window));
+export type Session = { readonly sessionId: string; readonly token: string };
+
+export const startSession = (db: Db, userId: string, window: Window): Promise<Session> => {
+  const sessionId = randomUUID();
+  return inTransaction(db, async (tx) => ({
+    sessionId,
+    token: await insert(tx, userId, sessionId, window),
+  }));
+};
 
 export type Rotation =
-  | { readonly ok: true; readonly userId: string; readonly token: string }
-  | { readonly ok: false; readonly reason: 'invalid' | 'reused' };
+  | ({ readonly ok: true; readonly userId: string } & Session)
+  | { readonly ok: false; readonly reason: 'invalid' }
+  | { readonly ok: false; readonly reason: 'reused'; readonly sessionId: string };
 
 const revoke = (tx: Tx, familyId: string, now: Date) =>
   tx.refreshToken.updateMany({ where: { familyId, revokedAt: null }, data: { revokedAt: now } });
@@ -43,19 +51,21 @@ export const rotateSession = (db: Db, presented: string, window: Window): Promis
     if (!current) return { ok: false, reason: 'invalid' };
     if (current.rotatedAt) {
       await revoke(tx, current.familyId, window.now);
-      return { ok: false, reason: 'reused' };
+      return { ok: false, reason: 'reused', sessionId: current.familyId };
     }
     const dead = current.revokedAt || current.expiresAt <= window.now || current.user.disabledAt;
     if (dead) return { ok: false, reason: 'invalid' };
     await tx.refreshToken.update({ where: { id: current.id }, data: { rotatedAt: window.now } });
     const token = await insert(tx, current.userId, current.familyId, window);
-    return { ok: true, userId: current.userId, token };
+    return { ok: true, userId: current.userId, sessionId: current.familyId, token };
   });
 
-export const endSession = (db: Db, presented: string, now: Date): Promise<void> =>
+/** Ends the session of a refresh token and says which one it was. */
+export const endSession = (db: Db, presented: string, now: Date): Promise<string | undefined> =>
   inTransaction(db, async (tx) => {
     const current = await tx.refreshToken.findUnique({
       where: { tokenHash: hashRefreshToken(presented) },
     });
     if (current) await revoke(tx, current.familyId, now);
+    return current?.familyId;
   });

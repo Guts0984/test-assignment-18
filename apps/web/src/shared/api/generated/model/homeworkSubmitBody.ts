@@ -4,8 +4,10 @@
  * Online school API
  * OpenAPI spec version: 1
  */
+import type { HomeworkSubmitBodyRemoveFile } from './homeworkSubmitBodyRemoveFile';
 
 export type HomeworkSubmitBody = {
   body?: string;
   file?: Blob | File;
+  removeFile?: HomeworkSubmitBodyRemoveFile;
 };

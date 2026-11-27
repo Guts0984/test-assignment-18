@@ -40,7 +40,10 @@ replace them before exposing the system. Useful settings:
   twice, to both api copies at once; some announced 20 minutes late; some refund notifications
   before the refund response; every fifth refund request answered with 500 or not at all.
 - `docker compose up --scale worker=3` runs several workers.
-- `COMPOSE_SUBNET` is the containers' private network. Change it only if it overlaps yours.
+- `COMPOSE_SUBNET` is the containers' private network. Change it if it overlaps yours; the api
+  trusts the proxy on whatever network is set.
+- If you change `HTTP_PORT`, change `PUBLIC_BASE_URL`, `CORS_ORIGINS` and `PAYSTUB_PUBLIC_URL`
+  to match.
 
 ## Tests
 
@@ -149,8 +152,12 @@ requests make it impossible to return more than was paid.
 | Transfer racing a booking or a cancellation | Both cohorts locked in order; exactly one outcome |
 
 Price is fixed when the seat is booked. A promo code lowers it; a percent discount is rounded
-down. Refunds: before the start 100 %, before the third lesson 50 %, later nothing, rounded
-down; at exactly a boundary the lower percentage applies.
+down. A price of zero enrolls at once. Refunds: before the start 100 %, before the third lesson
+50 %, later nothing, rounded down; at exactly a boundary the lower percentage applies.
+
+A student may transfer only before their own cohort starts; later a manager does it. The new
+enrollment can never be refunded at a higher percentage than the old one could at the moment of
+the move.
 
 ## Schedule, reminders and deadlines across time zones
 
@@ -304,6 +311,7 @@ finished cohorts. The sweeper is a plain timer, so `FLUSHALL` cannot remove it.
 | `enrollments_price_check` | `0 <= price <= list price` |
 | `enrollments_currency_check` | UAH, EUR or USD |
 | `enrollments_balance_check` | A balance is never negative: nothing leaves that did not arrive |
+| `enrollments_refund_cap_check` | The refund cap carried by a transfer is 0, 50 or 100 % |
 | `seat_journal_reason_check` | Only the known reasons |
 | `seat_journal_actor_check` | Only the known actors |
 | `seat_journal_delta_check` | One row moves at most one seat |
@@ -503,7 +511,7 @@ Points the assignment leaves open, and what was chosen.
 - AS-52 **Login limiter keys** are per client address and per (account, client address). There is no account-wide lockout, so nobody can lock another person out.
 - AS-53 **Enrollment closes when the cohort starts.** The catalog lists cohorts whose first lesson is in the future. A lesson that has started cannot be moved, a lesson can only be moved to a future time, and a new cohort's first lesson must be in the future.
 - AS-54 **Staff changes.** A mentor with unfinished cohorts cannot be disabled or turned into a manager until the cohorts are reassigned. Administrators are not managed through the API.
-- AS-55 **Sessions.** A disabled account stops working at once (the account is read on every request). Logout revokes the refresh family; an already issued access token ends with its 15-minute lifetime, and the cookie is cleared.
+- AS-55 **Sessions.** An access token names its session (the refresh family), which is checked on every request. Logout, reuse of a refresh token and disabling an account end the session at once and close its sockets on every api copy. A changed role also closes the account's sockets.
 - AS-56 **Writers settle the cohort first.** Every transaction that changes a cohort locks its row, expires overdue holds and offers, and offers free seats to waiters before doing its own work. A payment that arrives at or after the expiry instant is therefore always «late», whether or not the worker has run.
 - AS-57 **Offer length near the start.** An offer lasts 24 hours, but never past the cohort start.
 - AS-58 **A hold with a rejected promo code stands** at full price, and the response says why the code was not applied. A code cannot be applied to a transfer surcharge.
@@ -512,7 +520,7 @@ Points the assignment leaves open, and what was chosen.
 - AS-61 **Notification identity** is (school, event id); the first content wins. A payment is also unique by (school, provider payment id). A notification signed by one school cannot touch another school's enrollment.
 - AS-62 **The payment stub** accepts refunds by refund id (idempotency key) and order id; it signs every delivery at send time.
 - AS-63 **Anonymous sockets** may join only the public `catalog` room, which carries seat counts. Every other room needs the matching signed-in account, checked at the handshake and again at each join. (The skill asks to reject unauthenticated connections; the public catalog needs live updates for visitors.)
-- AS-64 **Homework upload** is one multipart request (text and optional file); a resubmission replaces both.
+- AS-64 **Homework upload** is one multipart request (text and optional file). A resubmission keeps the earlier file unless a new one replaces it or the student removes it.
 - AS-65 **Cohort completion** happens when the last lesson ends: paid enrollments become `completed`, open holds expire, waiting entries close. Each completed enrollment is marked due for a certificate; accepting homework afterwards marks it due again.
 - AS-66 **Deadline reminders** go 24 hours before the deadline to enrolled students (`paid` or already `completed`) who have not handed the work in. A reminder is not sent once its lesson has started or its deadline has passed.
 - AS-67 **Failed jobs** are recorded in Postgres on the last attempt. The sweeper leaves them alone until a manager retries them or the work succeeds another way.
@@ -522,5 +530,9 @@ Points the assignment leaves open, and what was chosen.
 - AS-71 **Container network** is pinned to `10.213.47.0/24` (`COMPOSE_SUBNET`), so it cannot take a home router's address; only that range may set `X-Real-IP`.
 - AS-72 **Acceptance runs.** A-1 and the speed budgets run on the stack started exactly from `.env.example`. The behaviour checks run on the test profile (movable clock). Checks that move the clock far use past dates, so nothing in the seeded data becomes due.
 - AS-73 **Search and report speed** use a trigger-maintained `school_students` table and covering indexes.
+- AS-74 **Transfers and refunds.** A student may transfer only before their own cohort starts; afterwards a manager decides. A transfer carries the refund percentage the old enrollment still had (at the moment the move happens) as a cap on later cancellations, so moving cohorts never restores it. A surcharge paid late, after the old cohort started, is returned. A manager's «Everything paid» exclusion ignores the cap.
+- AS-75 **Free cohorts** enroll at once, without a payment page; no promo code is spent.
+- AS-76 **A mentor who stops mentoring** (disabled or made a manager) has their open reviews returned to the queue. Reassigning a cohort while the mentor stays active leaves the review with them.
+- AS-77 **Outages and restarts.** With Postgres unreachable the api answers 503. A stopping api copy first stops listening, so nginx turns to the other copy, then serves its open connections until they have been quiet for a second (7 s at most).
 
 <!-- /generated:decisions -->

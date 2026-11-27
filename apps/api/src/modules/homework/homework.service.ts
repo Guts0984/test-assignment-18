@@ -28,14 +28,16 @@ export class HomeworkService {
   async submit(
     studentId: string,
     homeworkId: string,
-    body: string,
+    answer: { readonly body: string; readonly removeFile: boolean },
     file: ReceivedFile | undefined,
   ) {
     const upload = file ? checkFile(file) : null;
-    if (body === '' && !upload) throw invalid('body', 'Write an answer or attach a file');
     const outcome = await runBusiness(this.deps, (unit) =>
-      submitHomework(unit, { homeworkId, studentId, body, file: upload }),
+      submitHomework(unit, { ...answer, homeworkId, studentId, file: upload }),
     );
+    if (outcome === 'EMPTY_SUBMISSION') {
+      throw invalid('body', 'Write an answer or attach a file');
+    }
     if (typeof outcome === 'string') throw rejected(outcome);
     this.deps.realtime.queueChanged([outcome.mentorId]);
     const stored = await this.deps.db.submission.findUniqueOrThrow({

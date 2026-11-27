@@ -35,14 +35,19 @@ export class AuthService {
     if (!user || !matches || user.disabledAt) {
       throw apiError('INVALID_CREDENTIALS', 'The e-mail or password is wrong');
     }
-    const refreshToken = await startSession(this.deps.db, user.id, this.window());
-    return { account: toAccount(user), refreshToken, accessToken: await this.sign(user.id) };
+    const { sessionId, token } = await startSession(this.deps.db, user.id, this.window());
+    return {
+      account: toAccount(user),
+      refreshToken: token,
+      accessToken: await this.sign(user.id, sessionId),
+    };
   }
 
   async refresh(presented: string | undefined) {
     if (presented === undefined) throw apiError('UNAUTHENTICATED', 'Sign in to continue');
     const rotation = await rotateSession(this.deps.db, presented, this.window());
     if (!rotation.ok) {
+      if (rotation.reason === 'reused') this.deps.realtime.endSession(rotation.sessionId);
       throw rotation.reason === 'reused'
         ? apiError('TOKEN_REUSED', 'This session was ended. Sign in again.')
         : apiError('UNAUTHENTICATED', 'Sign in to continue');
@@ -51,12 +56,14 @@ export class AuthService {
     return {
       account: toAccount(user),
       refreshToken: rotation.token,
-      accessToken: await this.sign(user.id),
+      accessToken: await this.sign(user.id, rotation.sessionId),
     };
   }
 
   async logout(presented: string | undefined): Promise<void> {
-    if (presented !== undefined) await endSession(this.deps.db, presented, new Date());
+    if (presented === undefined) return;
+    const sessionId = await endSession(this.deps.db, presented, new Date());
+    if (sessionId !== undefined) this.deps.realtime.endSession(sessionId);
   }
 
   async account(userId: string) {
@@ -71,8 +78,8 @@ export class AuthService {
     return { now: new Date(), ttlSec: this.deps.env.REFRESH_TTL_SEC };
   }
 
-  private sign(userId: string): Promise<string> {
+  private sign(userId: string, sessionId: string): Promise<string> {
     const { JWT_ACCESS_SECRET: secret, JWT_ACCESS_TTL_SEC: ttlSec } = this.deps.env;
-    return signAccessToken(userId, { secret, ttlSec, now: new Date() });
+    return signAccessToken({ userId, sessionId }, { secret, ttlSec, now: new Date() });
   }
 }

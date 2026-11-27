@@ -1,4 +1,5 @@
 import { certificateJob } from '@school/shared/jobs/job';
+import { type Tx } from '../client';
 import { type Unit } from './context';
 import { emailStudent } from './outbox';
 
@@ -17,7 +18,12 @@ export const claimSubmission = async (
     readonly limit: number;
   },
 ): Promise<ClaimOutcome> => {
-  await unit.tx.$queryRaw`SELECT id FROM users WHERE id = ${input.mentorId}::uuid FOR UPDATE`;
+  // Checked under the lock: the account may have stopped mentoring since the request began.
+  const [mentor] = await unit.tx.$queryRaw<{ id: string }[]>`
+    SELECT id FROM users
+     WHERE id = ${input.mentorId}::uuid AND role = 'mentor' AND disabled_at IS NULL
+       FOR UPDATE`;
+  if (!mentor) return 'NOTHING_TO_REVIEW';
   const inReview = await unit.tx.submission.count({
     where: { reviewerId: input.mentorId, status: 'in_review' },
   });
@@ -99,4 +105,17 @@ export const reviewSubmission = async (
     body: input.comment === '' ? 'See your account for details.' : input.comment,
   });
   return 'REVIEWED';
+};
+
+/**
+ * Returns everything a mentor holds to the queue, for when they stop mentoring. Answers with the
+ * mentors whose queues gained work.
+ */
+export const releaseAllReviews = async (tx: Tx, mentorId: string): Promise<string[]> => {
+  const released = await tx.$queryRaw<{ mentor_id: string }[]>`
+    UPDATE submissions s SET status = 'submitted', reviewer_id = NULL, claimed_at = NULL
+      FROM cohorts c
+     WHERE c.id = s.cohort_id AND s.reviewer_id = ${mentorId}::uuid AND s.status = 'in_review'
+     RETURNING c.mentor_id`;
+  return [...new Set(released.map((row) => row.mentor_id))];
 };

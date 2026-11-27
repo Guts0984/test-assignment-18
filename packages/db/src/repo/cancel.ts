@@ -1,36 +1,15 @@
-import { type Cohort, type Enrollment } from '@prisma/client';
+import { type Enrollment } from '@prisma/client';
 import { refundJob } from '@school/shared/jobs/job';
-import {
-  refundAmount,
-  refundBoundaries,
-  refundPercent,
-  type RefundPercent,
-  type RefundPolicy,
-} from '@school/shared/refund/refund';
+import { refundAmount, type RefundPolicy } from '@school/shared/refund/refund';
 import { type Tx } from '../client';
 import { type Unit } from './context';
 import { openCohorts } from './open-cohorts';
+import { refundPercentOf } from './refund-percent';
 import { lockEnrollment } from './locks';
 import { spendableBalance } from './payment-confirm';
 import { releasePromo } from './promo-use';
 import { type ActorRef } from './seat-journal';
 import { freeSeat } from './seats';
-
-export const refundPercentFor = async (
-  tx: Tx,
-  cohort: Cohort,
-  at: Date,
-): Promise<RefundPercent> => {
-  const lessons = await tx.lesson.findMany({ where: { cohortId: cohort.id } });
-  return refundPercent(
-    at,
-    refundBoundaries({
-      lessons,
-      startDate: cohort.startDate.toISOString().slice(0, 10),
-      timeZone: cohort.timeZone,
-    }),
-  );
-};
 
 export const requestRefund = async (
   unit: Unit,
@@ -118,7 +97,7 @@ export const cancelEnrollment = async (
   const cohort = await read(enrollment.cohortId);
   const amountMinor = refundAmount({
     netPaidMinor: await spendableBalance(unit, enrollment.id),
-    percent: await refundPercentFor(unit.tx, cohort, unit.now),
+    percent: await refundPercentOf(unit.tx, enrollment, cohort, unit.now),
     policy: input.policy,
   });
   if (amountMinor > 0) {

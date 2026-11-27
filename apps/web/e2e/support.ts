@@ -1,4 +1,5 @@
-import { expect, type Browser, type Page } from '@playwright/test';
+import { readFile } from 'node:fs/promises';
+import { expect, type Browser, type Locator, type Page } from '@playwright/test';
 import { PASSWORD, type Person } from '../../../tests/support/stack';
 
 export const signIn = async (page: Page, email: string, password: string = PASSWORD) => {
@@ -29,3 +30,11 @@ export const payOnStub = async (page: Page) => {
 };
 
 export const status = (page: Page) => page.getByTestId('enrollment-status');
+
+/** Follows a download link and returns what the browser received. */
+export const downloadFrom = async (page: Page, link: Locator) => {
+  const started = page.waitForEvent('download');
+  await link.click();
+  const download = await started;
+  return { name: download.suggestedFilename(), content: await readFile(await download.path()) };
+};

@@ -3885,6 +3885,9 @@ if(homeworkSubmitBody.body !== undefined) {
 if(homeworkSubmitBody.file !== undefined) {
  formData.append(`file`, homeworkSubmitBody.file);
  }
+if(homeworkSubmitBody.removeFile !== undefined) {
+ formData.append(`removeFile`, homeworkSubmitBody.removeFile);
+ }
 
   return apiFetch<SubmissionDtoOutput>(getHomeworkSubmitUrl(id),
   {

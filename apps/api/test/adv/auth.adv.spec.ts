@@ -17,8 +17,14 @@ afterAll(async () => {
 const withAccessToken = (token: string) =>
   client(api.url).get('/api/auth/me', { headers: { cookie: `access_token=${token}` } });
 
-const sign = (subject: string, secret: string, expiresAt: number, algorithm = 'HS256') =>
-  new SignJWT()
+const sign = (
+  subject: string,
+  secret: string,
+  expiresAt: number,
+  algorithm = 'HS256',
+  sessionId = liveSession,
+) =>
+  new SignJWT({ sid: sessionId })
     .setProtectedHeader({ alg: algorithm })
     .setIssuer('school-api')
     .setSubject(subject)
@@ -27,10 +33,15 @@ const sign = (subject: string, secret: string, expiresAt: number, algorithm = 'H
 
 const soon = () => Math.floor(Date.now() / 1000) + 600;
 
+/** The session claim of a real signed-in account, reused when forging other parts. */
+let liveSession = '';
+
 describe('access tokens', () => {
   it('rejects forged, unsigned, expired and re-signed tokens', async () => {
     const { user } = await signedIn(api, 'student');
     const secret = api.deps.env.JWT_ACCESS_SECRET;
+    const session = await api.db.refreshToken.findFirstOrThrow({ where: { userId: user.id } });
+    liveSession = session.familyId;
     const valid = await sign(user.id, secret, soon());
     expect((await withAccessToken(valid)).status).toBe(200);
 
@@ -46,6 +57,10 @@ describe('access tokens', () => {
       await sign(user.id, secret, soon() - 3_600),
       await sign(user.id, secret, soon(), 'HS512'),
       await sign('not-a-uuid', secret, soon()),
+      // Somebody else's session, an unknown one, and no session at all.
+      await sign(other.id, secret, soon()),
+      await sign(user.id, secret, soon(), 'HS256', '018f6f1e-7b1a-7c3e-9d6a-111111111111'),
+      await sign(user.id, secret, soon(), 'HS256', 'x'),
       'garbage',
     ];
     for (const token of attacks) expectError(await withAccessToken(token), 'UNAUTHENTICATED');
@@ -112,6 +127,33 @@ describe('refresh tokens', () => {
       }),
       'UNAUTHENTICATED',
     );
+  });
+
+  it('takes the access token with it on logout, but not other sessions of the account', async () => {
+    const { http, user } = await signedIn(api, 'student');
+    const elsewhere = client(api.url);
+    await elsewhere.post('/api/auth/login', { email: user.email, password: PASSWORD });
+    const access = http.cookies.get('access_token') ?? '';
+    expect((await withAccessToken(access)).status).toBe(200);
+    await http.post('/api/auth/logout');
+    // The copied token is still unexpired and correctly signed.
+    expectError(await withAccessToken(access), 'UNAUTHENTICATED');
+    expect((await elsewhere.get('/api/auth/me')).status).toBe(200);
+  });
+
+  it('takes every access token of the family with it when a refresh token is replayed', async () => {
+    const { http } = await signedIn(api, 'student');
+    const stolen = http.cookies.get('refresh_token') ?? '';
+    const before = http.cookies.get('access_token') ?? '';
+    await http.post('/api/auth/refresh');
+    const after = http.cookies.get('access_token') ?? '';
+    expect((await withAccessToken(after)).status).toBe(200);
+    await client(api.url).post('/api/auth/refresh', undefined, {
+      headers: { cookie: `refresh_token=${stolen}` },
+    });
+    for (const token of [before, after]) {
+      expectError(await withAccessToken(token), 'UNAUTHENTICATED');
+    }
   });
 
   it('keeps cookies away from scripts and scoped', async () => {

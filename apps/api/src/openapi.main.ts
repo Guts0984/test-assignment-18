@@ -31,7 +31,7 @@ const main = async (): Promise<void> => {
   await writeFile(output, `${JSON.stringify(buildOpenApi(app), null, 2)}\n`);
   await app.close();
   await jobs.close();
-  realtime.close();
+  await realtime.close();
   redis.disconnect();
 };
 

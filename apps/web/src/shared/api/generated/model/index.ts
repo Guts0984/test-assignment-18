@@ -91,6 +91,7 @@ export * from './heldDtoOutputPromoErrorCode';
 export * from './heldDtoOutputStatus';
 export * from './holdSeatDto';
 export * from './homeworkSubmitBody';
+export * from './homeworkSubmitBodyRemoveFile';
 export * from './jobsListParams';
 export * from './loginDto';
 export * from './mentorOptionsDtoOutput';

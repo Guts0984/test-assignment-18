@@ -38,6 +38,10 @@ export const refundPercent = (cancelAt: Date, boundaries: RefundBoundaries): Ref
   return third === null || cancelAt < third ? 50 : 0;
 };
 
+/** A transferred enrollment never gets back more than the one it came from still could. */
+export const cappedPercent = (percent: RefundPercent, cap: RefundPercent): RefundPercent =>
+  percent < cap ? percent : cap;
+
 /** The amount to return, rounded down and never above what was actually paid. */
 export const refundAmount = (input: {
   readonly netPaidMinor: number;

@@ -1,5 +1,6 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { startApi, type TestApi } from '../attacker/app';
+import { client } from '../attacker/client';
 import { signedIn } from '../attacker/people';
 import { until } from '../attacker/poll';
 import { socket, type Received } from '../attacker/socket';
@@ -110,6 +111,69 @@ describe('live updates', () => {
       expect(await visitor.join(bad)).toBe(false);
     }
     visitor.close();
+  });
+
+  /** Books a seat and says whether a listener heard about that cohort. */
+  const bookAndListen = async (listener: Awaited<ReturnType<typeof socket>>, cohortId: string) => {
+    const witness = await socket(urlOf(1));
+    await witness.join({ kind: 'catalog' });
+    const buyer = await student(api);
+    await buyer.http.post('/api/enrollments', { cohortId });
+    // The witness proves the update went out before silence is concluded.
+    await within(2_000, () => seen(witness.received, 'seats.changed', cohortId).length > 0);
+    await new Promise((resolve) => setTimeout(resolve, 200));
+    witness.close();
+    return seen(listener.received, 'roster.changed', cohortId).length;
+  };
+
+  const staffListener = async () => {
+    const sale = await sellingCohort(api, { capacity: 5 });
+    const manager = await signedIn(api, 'manager', sale.school.id);
+    const listener = await socket(urlOf(0), { as: manager.http });
+    expect(await listener.join({ kind: 'cohort-staff', id: sale.cohort.id })).toBe(true);
+    expect(await bookAndListen(listener, sale.cohort.id)).toBe(1);
+    return { sale, manager, listener };
+  };
+
+  it('stop at logout: the open socket is closed on whichever copy holds it', async () => {
+    const { sale, manager, listener } = await staffListener();
+    const throughB = await signInAs(api, manager.user.id, urlOf(1));
+    // Another session of the same account does not close this one.
+    throughB.cookies.set('refresh_token', 'unknown');
+    await throughB.post('/api/auth/logout');
+    expect(await bookAndListen(listener, sale.cohort.id)).toBe(2);
+    await manager.http.post('/api/auth/logout');
+    expect(await bookAndListen(listener, sale.cohort.id)).toBe(2);
+    listener.close();
+  });
+
+  it('stop when a refresh token is replayed', async () => {
+    const { sale, manager, listener } = await staffListener();
+    const stolen = manager.http.cookies.get('refresh_token') ?? '';
+    await manager.http.post('/api/auth/refresh');
+    await client(urlOf(1)).post('/api/auth/refresh', undefined, {
+      headers: { cookie: `refresh_token=${stolen}` },
+    });
+    expect(await bookAndListen(listener, sale.cohort.id)).toBe(1);
+    listener.close();
+  });
+
+  it('stop when the account is disabled, and when a mentor is replaced', async () => {
+    const { sale, manager, listener } = await staffListener();
+    const mentor = await socket(urlOf(1), { as: await signInAs(api, sale.mentor.id) });
+    expect(await mentor.join({ kind: 'cohort-staff', id: sale.cohort.id })).toBe(true);
+    expect(await bookAndListen(mentor, sale.cohort.id)).toBe(1);
+    const successor = await signedIn(api, 'mentor', sale.school.id);
+    await manager.http.patch(`/api/manager/cohorts/${sale.cohort.id}`, {
+      mentorId: successor.user.id,
+    });
+    expect(await bookAndListen(mentor, sale.cohort.id)).toBe(1);
+    const admin = await signedIn(api, 'admin', sale.school.id);
+    const before = await bookAndListen(listener, sale.cohort.id);
+    await admin.http.patch(`/api/admin/staff/${manager.user.id}`, { disabled: true });
+    expect(await bookAndListen(listener, sale.cohort.id)).toBe(before);
+    mentor.close();
+    listener.close();
   });
 
   it('stops granting rooms once an account is disabled', async () => {

@@ -1,6 +1,7 @@
 import { type Cohort } from '@prisma/client';
 import { holdExpiryJob } from '@school/shared/jobs/job';
 import { type Unit } from './context';
+import { markPaid } from './mark-paid';
 import { emailStudent } from './outbox';
 import { releasePromo } from './promo-use';
 import { journalSeats, SYSTEM_ACTOR } from './seat-journal';
@@ -53,6 +54,11 @@ const offerSeat = async (
     data: { status: 'offered', offeredAt: unit.now, enrollmentId: enrollment.id },
   });
   const course = await unit.tx.course.findUniqueOrThrow({ where: { id: cohort.courseId } });
+  if (cohort.priceMinor === 0) {
+    // Nothing to pay: the seat is theirs at once.
+    await markPaid(unit, enrollment);
+    return;
+  }
   await emailStudent(unit, entry.studentId, {
     schoolId: cohort.schoolId,
     dedupeKey: `offer:${enrollment.id}`,

@@ -1,5 +1,6 @@
 import { holdExpiryJob } from '@school/shared/jobs/job';
 import { type Unit } from './context';
+import { markPaid } from './mark-paid';
 import { openCohorts } from './open-cohorts';
 import { confirmPaid } from './payment-confirm';
 import { reservePromo, type ApplyRejection } from './promo-use';
@@ -89,6 +90,11 @@ export const holdSeat = async (
     at: unit.now,
   });
   unit.touched.add(cohort.id);
+  if (cohort.priceMinor === 0) {
+    // A free cohort needs no payment, and no promo code is spent on it.
+    await markPaid(unit, enrollment);
+    return { enrollmentId: enrollment.id, promoRejected: null };
+  }
   unit.jobs.push(holdExpiryJob(enrollment.id, holdExpiresAt));
   const promoRejected =
     input.promoCode === undefined

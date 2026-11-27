@@ -29,11 +29,29 @@ test('the hold expires, the payment arrives late with no seat left, and is refun
 
   await payOnStub(page);
   await expect(status(page)).toHaveText('Refunded');
+  const subjects = ['Your payment is being returned', 'Your refund was sent'];
+  // The two messages are delivered independently, in either order: wait for each of them.
+  for (const subject of subjects) {
+    await stack.until(
+      async () => (await stack.mailCount(slow.email, subject)) >= 1,
+      `the e-mail "${subject}"`,
+    );
+  }
+  // With nothing left to send, the counts are final: a duplicate could no longer arrive later.
   await stack.until(
-    async () => (await stack.mailCount(slow.email, 'Your refund was sent')) === 1,
-    'the refund e-mail',
+    async () =>
+      (await stack.db().emailOutbox.count({
+        where: { toAddress: slow.email, status: { not: 'sent' } },
+      })) === 0,
+    'an empty outbox',
   );
-  expect(await stack.mailCount(slow.email, 'Your payment is being returned')).toBe(1);
+  for (const subject of subjects) {
+    expect(
+      await stack.db().emailOutbox.count({ where: { toAddress: slow.email, subject } }),
+      subject,
+    ).toBe(1);
+    expect(await stack.mailCount(slow.email, subject), subject).toBe(1);
+  }
   const refunds = await stack.gatewayRefunds([id]);
   expect(refunds.map((refund) => Number(refund.amount_minor))).toEqual([10_000]);
 });

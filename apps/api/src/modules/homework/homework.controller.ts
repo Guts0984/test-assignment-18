@@ -29,7 +29,7 @@ class SubmissionDto extends createZodDto(submissionSchema) {}
 export class HomeworkController {
   constructor(@Inject(HomeworkService) private readonly homework: HomeworkService) {}
 
-  /** Multipart: the answer text in `body` and an optional `file`. */
+  /** Multipart: the answer in `body`, an optional `file`, and `removeFile` to drop the old one. */
   @Roles('student')
   @Put('homework/:id/submission')
   @UseInterceptors(FileInterceptor('file'))
@@ -37,7 +37,11 @@ export class HomeworkController {
   @ApiBody({
     schema: {
       type: 'object',
-      properties: { body: { type: 'string' }, file: { type: 'string', format: 'binary' } },
+      properties: {
+        body: { type: 'string' },
+        file: { type: 'string', format: 'binary' },
+        removeFile: { type: 'string', enum: ['true', 'false'] },
+      },
     },
   })
   @ZodResponse({ status: 200, type: SubmissionDto })
@@ -47,7 +51,8 @@ export class HomeworkController {
     @Body() input: SubmitDto,
     @UploadedFile() file: ReceivedFile | undefined,
   ) {
-    return this.homework.submit(user.id, params.id, input.body, file);
+    const answer = { body: input.body, removeFile: input.removeFile === 'true' };
+    return this.homework.submit(user.id, params.id, answer, file);
   }
 
   @Roles('student', 'mentor', 'manager')

@@ -1,5 +1,5 @@
 import { HttpException } from '@nestjs/common';
-import { isUniqueViolation } from '@school/db/errors';
+import { isDatabaseUnavailable, isUniqueViolation } from '@school/db/errors';
 import { apiErrorSchema, statusForCode, type ApiError } from '@school/shared/errors/api-error';
 
 export type Rendered = {
@@ -34,5 +34,9 @@ export const renderError = (error: unknown): Rendered => {
     if (known) return known;
   }
   if (isUniqueViolation(error)) return render('CONFLICT', 'This record already exists');
+  if (isDatabaseUnavailable(error)) {
+    // Logged with its cause, but answered as an outage the client may retry.
+    return render('SERVICE_UNAVAILABLE', 'The service is unavailable. Try again shortly.', true);
+  }
   return render('INTERNAL', 'The request could not be completed', true);
 };

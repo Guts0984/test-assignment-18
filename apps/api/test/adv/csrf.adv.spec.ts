@@ -30,10 +30,21 @@ describe('cross-site requests', () => {
     expect(await api.db.course.count({ where: { schoolId: school.id } })).toBe(0);
   });
 
+  it('are refused from an address that only begins like the allowed one', async () => {
+    const { manager } = await staffedSchool(api);
+    const allowed = api.deps.env.CORS_ORIGINS[0] ?? '';
+    for (const origin of [`${allowed}.evil.example`, `${allowed}1`, allowed.slice(0, -1)]) {
+      expectError(
+        await manager.http.post('/api/manager/courses', course, { headers: { origin } }),
+        'CSRF_REJECTED',
+      );
+    }
+  });
+
   it('are accepted from the allowed origin', async () => {
     const { manager } = await staffedSchool(api);
     const reply = await manager.http.post('/api/manager/courses', course, {
-      headers: { origin: 'http://localhost:8080' },
+      headers: { origin: api.deps.env.CORS_ORIGINS[0] ?? '' },
     });
     expect(reply.status).toBe(201);
   });

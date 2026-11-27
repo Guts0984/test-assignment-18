@@ -38,6 +38,10 @@ Test files live in `apps/api/test`, `apps/worker/test`, `apps/web/e2e` and `test
 | Ledger and history | Direct update, delete, truncate; unbalanced entry; over-refund | Rejected by the database | ledger.it, constraints.it |
 | Worker crash | `kill -9` during expiry, certificates, e-mail | Finished once; at most the in-flight e-mail repeats | worker-kill.adv, certificates.adv, A-12 |
 | Redis loss | `FLUSHALL` with work pending | Rebuilt from Postgres, nothing twice | flushall.adv, A-12 |
+| Redirect | `next` values that browsers rewrite into another site | Stay on this site | roles.spec |
+| Refund | Transfer to a later cohort to regain a refund | Refused, or capped | transfer-refund.adv |
+| Session | Use of a token or socket after logout, reuse or disabling | 401; socket closed | auth.adv, realtime.adv |
+| Outage | Postgres unreachable; an api copy stopped under load | 503; no lost request | database-outage.it, edge.x |
 | Test control | Clock route when disabled or with a wrong token | 404 / 401 | test-clock.it |
 | Logs | Passwords, tokens, cookies, keys in log fields | Redacted | logger.spec |
 
@@ -67,8 +71,8 @@ tests were run, and the file was restored. A test suite that stays green here wo
 
 - Rate limiting covers only sign-in and registration (optional hardening). It fails open when
   Redis is down, by default.
-- A signed-out access token stays valid until its 15-minute lifetime ends; the refresh family is
-  revoked at once and a disabled account is refused immediately.
+- If Redis is down at the moment of a logout, the session ends at once for requests, but a socket
+  already open is not told; it receives nothing while Redis is down.
 - A worker killed between the mail server accepting a message and the database update may send
   that one message again.
 - The payment stub is a test double: its transaction pages are open to anyone who can reach it.

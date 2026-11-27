@@ -3,10 +3,14 @@ import { createPublisher } from '@school/queue/publisher';
 import { createRealtime } from '@school/queue/realtime';
 import { createSharedTestTime, systemTime } from '@school/db/time';
 import { createApp } from './app.factory';
+import { createDrain } from './common/http/drain';
 import { loadEnv } from './config/env';
 import { queueSettings } from './infra/queue-settings';
 import { createLogger } from './infra/logger';
 import { createRedis } from './infra/redis';
+
+/** How long a leaving copy waits. Docker kills a container ten seconds after asking. */
+const LEAVING = { quietMs: 1_000, limitMs: 7_000 } as const;
 
 const main = async (): Promise<void> => {
   const env = loadEnv();
@@ -23,14 +27,17 @@ const main = async (): Promise<void> => {
     },
   );
   const time = env.TEST_CLOCK_ENABLED ? createSharedTestTime(db) : systemTime;
-  const app = await createApp({ env, db, redis, time, logger, jobs, realtime });
+  const drain = createDrain();
+  const app = await createApp({ env, db, redis, time, logger, jobs, realtime }, drain);
   await app.listen(env.API_PORT, '0.0.0.0');
   logger.info({ port: env.API_PORT, instance: env.INSTANCE_ID }, 'api listening');
 
   const stop = async (): Promise<void> => {
+    // Running requests are answered before anything they need is closed.
+    await drain.leave(app.getHttpServer(), LEAVING);
     await app.close();
     await jobs.close();
-    realtime.close();
+    await realtime.close();
     redis.disconnect();
     await db.$disconnect();
     process.exit(0);

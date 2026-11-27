@@ -59,7 +59,11 @@ export const studyingCohort = async (
 export const handIn = (
   student: Student,
   homeworkId: string,
-  input: { readonly body?: string; readonly file?: { name: string; content: Buffer } } = {},
+  input: {
+    readonly body?: string;
+    readonly file?: { name: string; content: Buffer };
+    readonly removeFile?: string;
+  } = {},
 ) => {
   const boundary = 'test-boundary-7MA4YWxkTrZu0gW';
   const parts: Buffer[] = [];
@@ -71,6 +75,7 @@ export const handIn = (
     );
   };
   field('name="body"', Buffer.from(input.body ?? 'My answer'));
+  if (input.removeFile !== undefined) field('name="removeFile"', Buffer.from(input.removeFile));
   if (input.file) {
     field(
       `name="file"; filename="${input.file.name}"\r\nContent-Type: application/octet-stream`,

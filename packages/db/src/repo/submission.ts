@@ -9,11 +9,15 @@ export type Upload = {
 };
 
 export type SubmitOutcome =
-  { readonly submissionId: string; readonly mentorId: string } | 'NOT_FOUND' | 'SUBMISSION_LOCKED';
+  | { readonly submissionId: string; readonly mentorId: string }
+  | 'NOT_FOUND'
+  | 'SUBMISSION_LOCKED'
+  | 'EMPTY_SUBMISSION';
 
 /**
  * Hands in homework, or replaces what was handed in. Work in review or already accepted cannot
- * be changed. Lateness is decided by the server at every hand-in.
+ * be changed. Lateness is decided by the server at every hand-in. A resubmission without a file
+ * keeps the earlier one.
  */
 export const submitHomework = async (
   unit: Unit,
@@ -22,6 +26,8 @@ export const submitHomework = async (
     readonly studentId: string;
     readonly body: string;
     readonly file: Upload | null;
+    /** Drops the earlier file when no new one is given. */
+    readonly removeFile: boolean;
   },
 ): Promise<SubmitOutcome> => {
   const homework = await unit.tx.homework.findUnique({ where: { id: input.homeworkId } });
@@ -41,6 +47,12 @@ export const submitHomework = async (
   });
   const from = (current?.status ?? null) as SubmissionStatus | null;
   if (!canTransitionSubmission(from, 'submitted', 'student')) return 'SUBMISSION_LOCKED';
+  const keepsFile =
+    !input.file &&
+    !input.removeFile &&
+    current !== null &&
+    (await unit.tx.submissionFile.count({ where: { submissionId: current.id } })) > 0;
+  if (input.body === '' && !input.file && !keepsFile) return 'EMPTY_SUBMISSION';
   const data = {
     status: 'submitted',
     body: input.body,
@@ -57,7 +69,9 @@ export const submitHomework = async (
     },
     update: { ...data, version: { increment: 1 } },
   });
-  await unit.tx.submissionFile.deleteMany({ where: { submissionId: submission.id } });
+  if (!keepsFile) {
+    await unit.tx.submissionFile.deleteMany({ where: { submissionId: submission.id } });
+  }
   if (input.file) {
     await unit.tx.submissionFile.create({
       data: {

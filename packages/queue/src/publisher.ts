@@ -1,7 +1,7 @@
 import { type Job } from '@school/shared/jobs/job';
 import { QUEUE_NAMES, type QueueName } from '@school/shared/jobs/registry';
 import { Queue } from 'bullmq';
-import { connectionFor } from './connection';
+import { connectionFor, settled } from './connection';
 
 export type QueueSettings = {
   readonly redisUrl: string;
@@ -37,6 +37,10 @@ export const createPublisher = (
       const queue = new Queue(name, { connection, prefix: settings.prefix });
       queue.on('error', (error) => {
         onError(error.message);
+      });
+      // The queue prepares itself in the background; a failure there is reported, not thrown.
+      queue.waitUntilReady().catch((error: unknown) => {
+        onError(String(error));
       });
       return [name, queue] as const;
     }),
@@ -83,6 +87,7 @@ export const createPublisher = (
     recover: (jobs) => settle(jobs, recoverOne),
     queue: queueOf,
     close: async () => {
+      await settled(connection);
       // Closing a queue waits for Redis, so with Redis down only the socket is dropped.
       if (connection.status === 'ready') {
         await Promise.allSettled([...queues.values()].map((queue) => queue.close()));

@@ -40,10 +40,44 @@ test('a transfer with a surcharge, then a cancellation after the start returns 5
   await expect(page.getByTestId('refund-preview')).toContainText('50%');
   await page.getByRole('button', { name: 'Confirm cancellation' }).click();
   await expect(status(page)).toHaveText('Refunded');
-  const id = page.url().split('/enrollments/')[1] ?? '';
-  await stack.until(
-    async () => (await stack.gatewayRefunds([id])).length === 1,
-    'the refund at the payment system',
-  );
-  expect((await stack.gatewayRefunds([id])).map((r) => Number(r.amount_minor))).toEqual([7_000]);
+  const second = (
+    await stack.db().enrollment.findFirstOrThrow({ where: { transferFromId: first } })
+  ).id;
+  expect(page.url()).toContain(`/enrollments/${second}`);
+  const both = [first, second];
+  const named = (id: string) => (id === first ? 'first' : 'second');
+  await stack.until(async () => {
+    const requests = await stack
+      .db()
+      .refundRequest.findMany({ where: { enrollmentId: { in: both } } });
+    return requests.length > 0 && requests.every((request) => request.status === 'succeeded');
+  }, 'every requested refund to be booked');
+
+  // One refund in all: the new enrollment returns 70, the old one returns nothing.
+  const requests = await stack.db().refundRequest.findMany({
+    where: { enrollmentId: { in: both } },
+  });
+  expect(
+    requests.map((r) => `${named(r.enrollmentId)} ${r.reason} ${r.amountMinor} ${r.status}`),
+  ).toEqual(['second cancel 7000 succeeded']);
+  const operations = await stack.db().moneyOperation.findMany({
+    where: { enrollmentId: { in: both } },
+  });
+  expect(
+    operations.map((o) => `${named(o.enrollmentId)} ${o.kind} ${o.amountMinor}`).sort(),
+  ).toEqual([
+    'first payment 10000',
+    'first transfer_out 10000',
+    'second payment 4000',
+    'second refund 7000',
+    'second transfer_in 10000',
+  ]);
+  expect(
+    (await stack.gatewayRefunds(both)).map((r) => `${named(r.order_id)} ${r.amount_minor}`),
+  ).toEqual(['second 7000']);
+  expect(
+    (await stack.gatewayPayments(both))
+      .map((p) => `${named(p.order_id)} ${p.amount_minor} ${p.status}`)
+      .sort(),
+  ).toEqual(['first 10000 paid', 'second 4000 paid']);
 });

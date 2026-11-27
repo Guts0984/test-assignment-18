@@ -9,14 +9,19 @@ export const SubmitHomework = ({
   homeworkId,
   initialBody,
   late,
+  attachedFile,
 }: {
   homeworkId: string;
   initialBody: string;
   late: boolean;
+  /** The name of the file already handed in. */
+  attachedFile: string | null;
 }) => {
   const [body, setBody] = useState(initialBody);
   const [file, setFile] = useState<File | null>(null);
+  const [removeFile, setRemoveFile] = useState(false);
   const [problems, setProblems] = useState<{ body?: string; file?: string }>({});
+  const keepsFile = attachedFile !== null && !removeFile && !file;
   const submit = useHomeworkSubmit();
   const serverError = (path: string) =>
     submit.error?.fields?.find((field) => field.path === path)?.message;
@@ -26,10 +31,17 @@ export const SubmitHomework = ({
       className="flex flex-col gap-2"
       onSubmit={(event) => {
         event.preventDefault();
-        const found = checkAnswer({ body, file });
+        const found = checkAnswer({ body, file, keepsFile });
         setProblems(found);
         if (found.body ?? found.file) return;
-        submit.mutate({ id: homeworkId, data: { body, ...(file ? { file } : {}) } });
+        submit.mutate({
+          id: homeworkId,
+          data: {
+            body,
+            ...(file ? { file } : {}),
+            ...(removeFile && !file ? { removeFile: 'true' as const } : {}),
+          },
+        });
       }}
     >
       {late ? (
@@ -45,6 +57,29 @@ export const SubmitHomework = ({
           setBody(event.target.value);
         }}
       />
+      {attachedFile === null ? null : (
+        <div className="text-sm">
+          <p>
+            Attached: <strong>{attachedFile}</strong>
+            {file
+              ? '. It will be replaced.'
+              : removeFile
+                ? '. It will be removed.'
+                : '. It stays unless you choose another file.'}
+          </p>
+          <label className="flex min-h-11 items-center gap-2">
+            <input
+              type="checkbox"
+              checked={removeFile}
+              disabled={file !== null}
+              onChange={(event) => {
+                setRemoveFile(event.target.checked);
+              }}
+            />
+            Remove the attached file
+          </label>
+        </div>
+      )}
       <Input
         label="File (optional)"
         type="file"

@@ -32,12 +32,58 @@ describe('through nginx', () => {
     expect(keys.filter((key) => key.includes(spoofed))).toEqual([]);
   });
 
-  it('refuses oversized bodies and foreign origins at the edge', async () => {
+  it('answers its own errors in the shared error shape', async () => {
     const anyone = client(stack.URLS.public);
-    const big = await anyone
-      .send('POST', '/api/auth/login', { raw: 'x'.repeat(12_000_000) })
-      .catch(() => ({ status: 413 }));
-    expect(big.status).toBe(413);
+    const nul = await anyone.get('/api/%00');
+    const long = await anyone.get(`/api/${'a'.repeat(20_000)}`);
+    const big = await anyone.send('POST', '/api/auth/login', { raw: 'x'.repeat(12_000_000) });
+    for (const [reply, status, code] of [
+      [nul, 400, 'MALFORMED_REQUEST'],
+      [long, 414, 'MALFORMED_REQUEST'],
+      [big, 413, 'PAYLOAD_TOO_LARGE'],
+    ] as const) {
+      expect([reply.status, reply.headers['content-type']]).toEqual([status, 'application/json']);
+      expect(reply.body).toMatchObject({ code });
+    }
+  });
+
+  it('loses no request while one api copy stops and starts', async () => {
+    const failures: string[] = [];
+    let running = true;
+    let sent = 0;
+    const traffic = async (index: number) => {
+      const anyone = client(stack.URLS.public);
+      while (running) {
+        // Reads and writes: a lost POST is not retried by the proxy.
+        const reply =
+          index % 2 === 0
+            ? await anyone.get('/api/catalog/directions')
+            : await anyone.post('/api/auth/refresh');
+        sent += 1;
+        const expected = index % 2 === 0 ? 200 : 401;
+        if (reply.status !== expected) failures.push(`${reply.status} ${reply.text.slice(0, 80)}`);
+      }
+    };
+    const clients = Array.from({ length: 8 }, (_, i) => traffic(i));
+    // One copy at a time, as in a rolling restart: the next one leaves only when the proxy is
+    // sending requests to the one that came back.
+    for (const copy of ['api-1', 'api-2']) {
+      await stack.apiCopy.stop(copy);
+      await stack.apiCopy.start(copy);
+      await stack.until(
+        async () =>
+          (await client(stack.URLS.public).get('/api/health')).headers['x-instance'] === copy,
+        `${copy} to be back in rotation`,
+      );
+    }
+    running = false;
+    await Promise.all(clients);
+    expect(sent).toBeGreaterThan(100);
+    expect(failures).toEqual([]);
+  });
+
+  it('refuses foreign origins', async () => {
+    const anyone = client(stack.URLS.public);
     const forged = await anyone.post(
       '/api/auth/logout',
       {},

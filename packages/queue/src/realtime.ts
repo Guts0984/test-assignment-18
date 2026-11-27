@@ -1,7 +1,10 @@
 import { type Db } from '@school/db/client';
 import { roomName, type RealtimeEvent, type RealtimePayload } from '@school/shared/realtime/events';
 import { Emitter } from '@socket.io/redis-emitter';
-import { connectionFor } from './connection';
+import { connectionFor, settled } from './connection';
+
+/** Rooms the server puts sockets in itself; clients cannot ask for them. */
+export const internalRoom = (kind: 'session' | 'account', id: string): string => `${kind}:${id}`;
 
 /** The Redis channel prefix shared by the Socket.IO adapter and every emitter. */
 export const adapterKey = (prefix: string): string => `${prefix}:socket.io`;
@@ -10,7 +13,13 @@ export type Realtime = {
   /** Free seats for the catalog and a roster refresh for staff, after a commit. */
   readonly cohortsChanged: (db: Db, cohortIds: readonly string[]) => Promise<void>;
   readonly queueChanged: (mentorIds: readonly string[]) => void;
-  readonly close: () => void;
+  /** Closes the sockets of one signed-in session, on every api copy. */
+  readonly endSession: (sessionId: string) => void;
+  /** Closes every socket of an account. */
+  readonly endAccount: (userId: string) => void;
+  /** Takes an account out of a cohort's staff room, for example a replaced mentor. */
+  readonly leaveCohort: (userId: string, cohortId: string) => void;
+  readonly close: () => Promise<void>;
 };
 
 type SeatRow = { id: string; free: number };
@@ -67,7 +76,19 @@ export const createRealtime = (
         emit(roomName({ kind: 'mentor', id: mentorId }), 'queue.changed', { mentorId });
       }
     },
-    close: () => {
+    endSession: (sessionId) => {
+      emitter.in(internalRoom('session', sessionId)).disconnectSockets(true);
+    },
+    endAccount: (userId) => {
+      emitter.in(internalRoom('account', userId)).disconnectSockets(true);
+    },
+    leaveCohort: (userId, cohortId) => {
+      emitter
+        .in(internalRoom('account', userId))
+        .socketsLeave(roomName({ kind: 'cohort-staff', id: cohortId }));
+    },
+    close: async () => {
+      await settled(connection);
       connection.disconnect();
     },
   };

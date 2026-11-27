@@ -6,6 +6,7 @@ export type Principal = {
   readonly role: Role;
   /** Null for students. */
   readonly schoolId: string | null;
+  readonly sessionId: string;
 };
 
 /** The school every staff query is scoped to. */

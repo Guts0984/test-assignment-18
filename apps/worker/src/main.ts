@@ -42,7 +42,7 @@ const main = async (): Promise<void> => {
   const stop = async (): Promise<void> => {
     await app.close();
     await deps.jobs.close();
-    deps.realtime.close();
+    await deps.realtime.close();
     deps.mailer.close();
     await db.$disconnect();
     process.exit(0);

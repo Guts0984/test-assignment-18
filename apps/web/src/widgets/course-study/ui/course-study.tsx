@@ -49,8 +49,10 @@ const Homework = ({
         ) : null}
         {open ? (
           <SubmitHomework
+            key={submission?.submittedAt ?? 'new'}
             homeworkId={homework.id}
             initialBody={submission?.body ?? ''}
+            attachedFile={submission?.file?.name ?? null}
             late={late}
           />
         ) : (

@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { cancelEnrollment, refundPercentFor } from '@school/db/repo/cancel';
+import { cancelEnrollment } from '@school/db/repo/cancel';
+import { refundPercentOf } from '@school/db/repo/refund-percent';
 import { applyPromoToEnrollment, holdSeat } from '@school/db/repo/hold';
 import { spendableBalance } from '@school/db/repo/payment-confirm';
 import { transferEnrollment } from '@school/db/repo/transfer';
@@ -73,7 +74,7 @@ export class EnrollmentsService {
       const unpaid = enrollment.status === 'held' || enrollment.status === 'offered';
       if (!unpaid && enrollment.status !== 'paid') throw rejected('INVALID_TRANSITION');
       const paidMinor = await spendableBalance(unit, id);
-      const percent = await refundPercentFor(unit.tx, enrollment.cohort, unit.now);
+      const percent = await refundPercentOf(unit.tx, enrollment, enrollment.cohort, unit.now);
       return {
         percent,
         amountMinor: refundAmount({ netPaidMinor: paidMinor, percent, policy: 'rule' }),
@@ -103,7 +104,7 @@ export class EnrollmentsService {
         where: { id },
         include: { cohort: true },
       });
-      if (source.status !== 'paid') return { items: [] };
+      if (source.status !== 'paid' || source.cohort.startsAt <= unit.now) return { items: [] };
       const credit = await spendableBalance(unit, id);
       const cohorts = await unit.tx.cohort.findMany({
         where: {

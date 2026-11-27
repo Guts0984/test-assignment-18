@@ -40,6 +40,7 @@ export const DATABASE_OBJECTS = {
     enrollments_price_check: '`0 <= price <= list price`',
     enrollments_currency_check: 'UAH, EUR or USD',
     enrollments_balance_check: 'A balance is never negative: nothing leaves that did not arrive',
+    enrollments_refund_cap_check: 'The refund cap carried by a transfer is 0, 50 or 100 %',
     seat_journal_reason_check: 'Only the known reasons',
     seat_journal_actor_check: 'Only the known actors',
     seat_journal_delta_check: 'One row moves at most one seat',

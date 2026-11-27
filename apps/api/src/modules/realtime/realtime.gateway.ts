@@ -8,8 +8,9 @@ import {
 } from '@nestjs/websockets';
 import { roomName, roomSchema } from '@school/shared/realtime/events';
 import { type Server, type Socket } from 'socket.io';
+import { internalRoom } from '@school/queue/realtime';
 import { type Principal } from '../../common/auth/principal';
-import { ACCESS_COOKIE, authenticate } from '../../common/auth/session';
+import { ACCESS_COOKIE, authenticate, principalOfSession } from '../../common/auth/session';
 import { readCookie } from '../../common/http/request';
 import { DEPS, type Deps } from '../../infra/deps';
 import { mayJoin } from './access';
@@ -30,12 +31,17 @@ export class RealtimeGateway implements OnGatewayInit {
         return;
       }
       authenticate({ db: this.deps.db, secret: this.deps.env.JWT_ACCESS_SECRET }, token)
-        .then((principal) => {
+        .then(async (principal) => {
           if (!principal) {
             next(new Error('UNAUTHENTICATED'));
             return;
           }
           (socket.data as SocketData).principal = principal;
+          // So that ending the session or disabling the account can close this socket.
+          await socket.join([
+            internalRoom('session', principal.sessionId),
+            internalRoom('account', principal.id),
+          ]);
           next();
         })
         .catch(() => {
@@ -52,11 +58,13 @@ export class RealtimeGateway implements OnGatewayInit {
     const room = roomSchema.safeParse(message);
     if (!room.success) return { ok: false };
     const { principal } = socket.data as SocketData;
-    // The account is checked again: it may have been disabled since the connection opened.
-    const current =
+    // Checked again: the session may have ended, or the role changed, since the connection.
+    const known =
       principal &&
-      (await this.deps.db.user.findFirst({ where: { id: principal.id, disabledAt: null } }));
-    const known = current ? principal : undefined;
+      (await principalOfSession(this.deps.db, {
+        userId: principal.id,
+        sessionId: principal.sessionId,
+      }));
     if (!(await mayJoin(this.deps.db, known, room.data))) return { ok: false };
     await socket.join(roomName(room.data));
     return { ok: true };

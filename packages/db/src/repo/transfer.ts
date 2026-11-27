@@ -52,6 +52,9 @@ export const transferEnrollment = async (
       ? { enrollmentId: pending.id, surchargeMinor: pending.priceMinor }
       : 'TRANSFER_NOT_ALLOWED';
   }
+  // Once the student's own cohort has started, a move could be used to get back money the
+  // refund rule keeps, so only a manager decides it.
+  if (input.actor.kind === 'student' && from.startsAt <= unit.now) return 'TRANSFER_NOT_ALLOWED';
   if (to.startsAt <= unit.now) return 'ENROLLMENT_CLOSED';
   const active = await unit.tx.enrollment.findFirst({
     where: {
@@ -109,6 +112,6 @@ export const transferEnrollment = async (
       requestedById: input.actor.id,
     });
   }
-  await closeTransferSource(unit, source, input.actor);
+  await closeTransferSource(unit, source, target.id, input.actor);
   return { enrollmentId: target.id, surchargeMinor: 0 };
 };

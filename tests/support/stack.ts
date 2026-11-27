@@ -13,6 +13,7 @@ import { seal } from '@school/gateway/secret-box';
 import { addDays } from '@school/shared/schedule/zoned';
 import { client, type Client, type Reply } from '../../apps/api/test/attacker/client';
 import { signAccessToken } from '../../apps/api/src/common/auth/access-token';
+import { startSession } from '../../apps/api/src/modules/auth/repo/refresh-tokens';
 
 const required = (name: string): string => {
   const value = process.env[name];
@@ -23,7 +24,10 @@ const required = (name: string): string => {
 /** Addresses of the running compose stack. */
 export const URLS = {
   public: `http://localhost:${process.env['HTTP_PORT'] ?? '8080'}`,
-  api: [`http://127.0.0.1:3001`, `http://127.0.0.1:3002`] as const,
+  api: [
+    `http://127.0.0.1:${process.env['API1_HOST_PORT'] ?? '3001'}`,
+    `http://127.0.0.1:${process.env['API2_HOST_PORT'] ?? '3002'}`,
+  ] as const,
   mail: () => process.env['MAILPIT_API_URL'] ?? 'http://127.0.0.1:8025',
 };
 
@@ -98,6 +102,11 @@ export const workers = {
       .filter(Boolean).length,
 };
 
+export const apiCopy = {
+  stop: (service: string) => compose('stop', service),
+  start: (service: string) => compose('up', '--detach', '--no-deps', '--wait', service),
+};
+
 export const flushAll = () => compose('exec', '-T', 'redis', 'redis-cli', 'FLUSHALL');
 
 export const stubControl = async (change: Record<string, unknown>): Promise<void> => {
@@ -107,23 +116,34 @@ export const stubControl = async (change: Record<string, unknown>): Promise<void
   if (reply.status !== 200) throw new Error(`stub control failed: ${reply.status}`);
 };
 
-export const gatewayRefunds = async (orderIds: readonly string[]) => {
+type GatewayRow = { readonly order_id: string; readonly amount_minor: string };
+
+const gatewayTransactions = async () => {
   const reply = await client(URLS.public).get('/paystub/api/transactions');
-  const body = reply.body as { refunds: { order_id: string; amount_minor: string }[] };
-  return body.refunds.filter((refund) => orderIds.includes(refund.order_id));
+  return reply.body as {
+    payments: (GatewayRow & { readonly status: string })[];
+    refunds: GatewayRow[];
+  };
 };
+
+export const gatewayRefunds = async (orderIds: readonly string[]) =>
+  (await gatewayTransactions()).refunds.filter((refund) => orderIds.includes(refund.order_id));
+
+/** Payment sessions the payment system holds for these orders, paid or not. */
+export const gatewayPayments = async (orderIds: readonly string[]) =>
+  (await gatewayTransactions()).payments.filter((payment) => orderIds.includes(payment.order_id));
 
 export type Person = { readonly id: string; readonly email: string; readonly http: Client };
 
 const sessionFor = async (userId: string, url: string): Promise<Client> => {
   const http = client(url);
+  const { sessionId } = await startSession(db(), userId, { now: new Date(), ttlSec: 3_600 });
   http.cookies.set(
     'access_token',
-    await signAccessToken(userId, {
-      secret: required('JWT_ACCESS_SECRET'),
-      ttlSec: 900,
-      now: new Date(),
-    }),
+    await signAccessToken(
+      { userId, sessionId },
+      { secret: required('JWT_ACCESS_SECRET'), ttlSec: 900, now: new Date() },
+    ),
   );
   return http;
 };
@@ -199,6 +219,7 @@ export const cohort = async (
   options: {
     readonly capacity?: number;
     readonly priceMinor?: number;
+    readonly currency?: 'UAH' | 'EUR' | 'USD';
     readonly startsInDays?: number;
     readonly startDate?: string;
     readonly lessons?: number;
@@ -221,7 +242,7 @@ export const cohort = async (
         timeZone: options.timeZone ?? 'Europe/Kyiv',
         capacity: options.capacity ?? 10,
         priceMinor: options.priceMinor ?? 10_000,
-        currency: 'UAH',
+        currency: options.currency ?? 'UAH',
         lessonMinutes: 90,
         schedule: {
           weekdays: [...(options.weekdays ?? [1, 2, 3, 4, 5, 6, 7])],

@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { type Tx } from '@school/db/client';
 import { isUniqueViolation } from '@school/db/errors';
 import { hashPassword } from '@school/db/password';
+import { releaseAllReviews } from '@school/db/repo/review';
 import { inTransaction } from '@school/db/transaction';
 import {
   type CreateStaffInput,
@@ -64,7 +65,7 @@ export class StaffService {
 
   async update(schoolId: string, id: string, change: UpdateStaffInput) {
     const now = await this.deps.time.now();
-    return inTransaction(this.deps.db, async (tx) => {
+    const result = await inTransaction(this.deps.db, async (tx) => {
       await tx.$queryRaw`SELECT id FROM users WHERE id = ${id}::uuid FOR UPDATE`;
       const user = await tx.user.findFirst({ where: { id, schoolId } });
       if (!user) throw apiError('NOT_FOUND', 'No such employee');
@@ -74,6 +75,8 @@ export class StaffService {
       const leavesMentoring =
         user.role === 'mentor' && (change.disabled === true || change.role === 'manager');
       if (leavesMentoring) await this.requireNoOpenCohorts(tx, id, now);
+      // Work they were reviewing goes back to the queue instead of waiting for ever.
+      const queues = leavesMentoring ? await releaseAllReviews(tx, id) : [];
       const updated = await tx.user.update({
         where: { id },
         data: {
@@ -88,8 +91,15 @@ export class StaffService {
           data: { revokedAt: new Date() },
         });
       }
-      return toMember(updated, await this.countOpenCohorts(tx, id, now));
+      return {
+        member: toMember(updated, await this.countOpenCohorts(tx, id, now)),
+        queues,
+        accessChanged: change.disabled === true || updated.role !== user.role,
+      };
     });
+    if (result.accessChanged) this.deps.realtime.endAccount(id);
+    this.deps.realtime.queueChanged(result.queues);
+    return result.member;
   }
 
   private countOpenCohorts(tx: Tx, mentorId: string, now: Date): Promise<number> {
