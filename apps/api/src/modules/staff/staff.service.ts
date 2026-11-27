@@ -12,18 +12,22 @@ import { type StaffRole } from '@school/shared/status/actors';
 import { apiError } from '../../common/errors/api-error';
 import { DEPS, type Deps } from '../../infra/deps';
 
-const toMember = (user: {
-  id: string;
-  email: string;
-  fullName: string;
-  role: string;
-  disabledAt: Date | null;
-}): StaffMember => ({
+const toMember = (
+  user: {
+    id: string;
+    email: string;
+    fullName: string;
+    role: string;
+    disabledAt: Date | null;
+  },
+  openCohorts: number,
+): StaffMember => ({
   id: user.id,
   email: user.email,
   fullName: user.fullName,
   role: user.role as StaffRole,
   disabled: user.disabledAt !== null,
+  openCohorts,
 });
 
 @Injectable()
@@ -35,16 +39,23 @@ export class StaffService {
       where: { schoolId },
       orderBy: [{ role: 'asc' }, { fullName: 'asc' }],
     });
-    return { items: users.map(toMember) };
+    const open = await this.deps.db.cohort.groupBy({
+      by: ['mentorId'],
+      where: { schoolId, endsAt: { gt: await this.deps.time.now() } },
+      _count: true,
+    });
+    const counts = new Map(open.map((row) => [row.mentorId, row._count]));
+    return { items: users.map((user) => toMember(user, counts.get(user.id) ?? 0)) };
   }
 
   async create(schoolId: string, input: CreateStaffInput) {
     const { password, ...profile } = input;
     const passwordHash = await hashPassword(password);
     try {
-      return toMember(
-        await this.deps.db.user.create({ data: { ...profile, passwordHash, schoolId } }),
-      );
+      const user = await this.deps.db.user.create({
+        data: { ...profile, passwordHash, schoolId },
+      });
+      return toMember(user, 0);
     } catch (error) {
       if (isUniqueViolation(error)) throw apiError('EMAIL_TAKEN', 'This e-mail is already used');
       throw error;
@@ -77,13 +88,16 @@ export class StaffService {
           data: { revokedAt: new Date() },
         });
       }
-      return toMember(updated);
+      return toMember(updated, await this.countOpenCohorts(tx, id, now));
     });
   }
 
+  private countOpenCohorts(tx: Tx, mentorId: string, now: Date): Promise<number> {
+    return tx.cohort.count({ where: { mentorId, endsAt: { gt: now } } });
+  }
+
   private async requireNoOpenCohorts(tx: Tx, mentorId: string, now: Date): Promise<void> {
-    const open = await tx.cohort.count({ where: { mentorId, endsAt: { gt: now } } });
-    if (open > 0) {
+    if ((await this.countOpenCohorts(tx, mentorId, now)) > 0) {
       throw apiError('CONFLICT', 'Reassign the cohorts of this mentor first');
     }
   }

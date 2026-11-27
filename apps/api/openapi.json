@@ -9333,6 +9333,11 @@
                 },
                 "disabled": {
                   "type": "boolean"
+                },
+                "openCohorts": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
                 }
               },
               "required": [
@@ -9340,7 +9345,8 @@
                 "email",
                 "fullName",
                 "role",
-                "disabled"
+                "disabled",
+                "openCohorts"
               ],
               "additionalProperties": false
             }
@@ -9408,6 +9414,11 @@
           },
           "disabled": {
             "type": "boolean"
+          },
+          "openCohorts": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
           }
         },
         "required": [
@@ -9415,7 +9426,8 @@
           "email",
           "fullName",
           "role",
-          "disabled"
+          "disabled",
+          "openCohorts"
         ],
         "additionalProperties": false
       },

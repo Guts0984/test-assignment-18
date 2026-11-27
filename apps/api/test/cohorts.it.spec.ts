@@ -173,6 +173,13 @@ describe('staff management', () => {
       }),
       'EMAIL_TAKEN',
     );
+    const listed = (await staff.admin.http.get('/api/admin/staff')).body as {
+      items: { id: string; openCohorts: number }[];
+    };
+    const openOf = (id: string) => listed.items.find((item) => item.id === id)?.openCohorts;
+    // The page uses this to explain, before any click, why the buttons are unavailable.
+    expect(openOf(staff.mentor.user.id)).toBe(1);
+    expect(openOf(staff.manager.user.id)).toBe(0);
     const busy = `/api/admin/staff/${staff.mentor.user.id}`;
     expectError(await staff.admin.http.patch(busy, { disabled: true }), 'CONFLICT');
     expectError(await staff.admin.http.patch(busy, { role: 'manager' }), 'CONFLICT');

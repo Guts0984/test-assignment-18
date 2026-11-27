@@ -13,4 +13,9 @@ export interface StaffMemberDtoOutput {
   fullName: string;
   role: StaffMemberDtoOutputRole;
   disabled: boolean;
+  /**
+     * @minimum 0
+     * @maximum 9007199254740991
+     */
+  openCohorts: number;
 }

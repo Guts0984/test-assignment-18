@@ -26,6 +26,8 @@ export const staffMemberSchema = z.object({
   fullName: z.string(),
   role: z.enum(STAFF_ROLES),
   disabled: z.boolean(),
+  /** Cohorts not yet over that this person mentors. While above zero they must stay a mentor. */
+  openCohorts: z.number().int().min(0),
 });
 
 export const staffListSchema = z.object({ items: z.array(staffMemberSchema) });
