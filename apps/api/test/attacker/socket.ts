@@ -27,6 +27,7 @@ export const socket = async (
   });
   return {
     received,
+    connected: (): boolean => connection.connected,
     join: async (room: unknown): Promise<boolean> => {
       const reply = (await connection.timeout(5_000).emitWithAck('subscribe', room)) as {
         ok: boolean;

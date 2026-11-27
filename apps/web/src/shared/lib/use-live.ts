@@ -10,6 +10,7 @@ import { useEffect, useRef } from 'react';
 import { io, type Socket } from 'socket.io-client';
 import { env } from '@/config/env';
 import { refreshSession } from '@/shared/api';
+import { retryDelayMs } from './retry-delay';
 
 /**
  * Listens to one event of one room while the component is shown. Every connection, first or
@@ -31,15 +32,27 @@ export const useLive = <E extends RealtimeEvent>(input: {
     if (!key) return undefined;
     const room = JSON.parse(key) as Room;
     const socket: Socket = io({ path: env.NEXT_PUBLIC_SOCKET_PATH, transports: ['websocket'] });
+    let gone = false;
+    let attempt = 0;
+    let retry: ReturnType<typeof setTimeout> | undefined;
+    // Socket.IO does not come back by itself when the server closed or refused the connection,
+    // as it does when a session ends.
+    const comeBack = () => {
+      if (gone || socket.active) return;
+      clearTimeout(retry);
+      retry = setTimeout(() => socket.connect(), retryDelayMs(attempt));
+      attempt += 1;
+    };
+    socket.on('disconnect', comeBack);
     socket.on('connect', () => {
+      attempt = 0;
       socket.emit('subscribe', room);
       latest.current.onResync();
     });
     socket.on('connect_error', (error) => {
-      if (error.message !== 'UNAUTHENTICATED') return;
-      void refreshSession().then((renewed) => {
-        if (renewed) socket.connect();
-      });
+      // A refused refresh clears the cookies, so the next try connects as a visitor.
+      if (error.message === 'UNAUTHENTICATED') void refreshSession().then(comeBack);
+      else comeBack();
     });
     const event: string = latest.current.event;
     socket.on(event, (payload: unknown) => {
@@ -47,6 +60,8 @@ export const useLive = <E extends RealtimeEvent>(input: {
       if (parsed.success) latest.current.onEvent(parsed.data as RealtimePayload<E>);
     });
     return () => {
+      gone = true;
+      clearTimeout(retry);
       socket.disconnect();
     };
   }, [key]);

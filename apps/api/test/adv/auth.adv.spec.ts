@@ -156,6 +156,19 @@ describe('refresh tokens', () => {
     }
   });
 
+  it('clears the cookies of a session that cannot be renewed', async () => {
+    const { http } = await signedIn(api, 'student');
+    const stolen = http.cookies.get('refresh_token') ?? '';
+    await http.post('/api/auth/refresh');
+    for (const token of [stolen, 'unknown']) {
+      const browser = client(api.url);
+      browser.cookies.set('access_token', 'stale');
+      browser.cookies.set('refresh_token', token);
+      expect((await browser.post('/api/auth/refresh')).status).toBe(401);
+      expect([...browser.cookies.keys()]).toEqual([]);
+    }
+  });
+
   it('keeps cookies away from scripts and scoped', async () => {
     const user = await createAccount(api, 'student');
     const reply = await client(api.url).post('/api/auth/login', {

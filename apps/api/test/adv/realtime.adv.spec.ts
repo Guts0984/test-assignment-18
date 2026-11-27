@@ -113,16 +113,23 @@ describe('live updates', () => {
     visitor.close();
   });
 
-  /** Books a seat and says whether a listener heard about that cohort. */
+  /**
+   * Books a seat and counts how often a listener has heard about that cohort. A later booking
+   * elsewhere marks the end: updates arrive in the order sent, so once the listener has that
+   * one, or has been disconnected, nothing about the earlier booking is still on its way.
+   */
   const bookAndListen = async (listener: Awaited<ReturnType<typeof socket>>, cohortId: string) => {
-    const witness = await socket(urlOf(1));
-    await witness.join({ kind: 'catalog' });
+    const marker = await sellingCohort(api, { capacity: 1 });
     const buyer = await student(api);
     await buyer.http.post('/api/enrollments', { cohortId });
-    // The witness proves the update went out before silence is concluded.
-    await within(2_000, () => seen(witness.received, 'seats.changed', cohortId).length > 0);
-    await new Promise((resolve) => setTimeout(resolve, 200));
-    witness.close();
+    const other = await student(api);
+    await other.http.post('/api/enrollments', { cohortId: marker.cohort.id });
+    await within(
+      2_000,
+      () =>
+        !listener.connected() ||
+        seen(listener.received, 'seats.changed', marker.cohort.id).length > 0,
+    );
     return seen(listener.received, 'roster.changed', cohortId).length;
   };
 
@@ -131,6 +138,7 @@ describe('live updates', () => {
     const manager = await signedIn(api, 'manager', sale.school.id);
     const listener = await socket(urlOf(0), { as: manager.http });
     expect(await listener.join({ kind: 'cohort-staff', id: sale.cohort.id })).toBe(true);
+    expect(await listener.join({ kind: 'catalog' })).toBe(true);
     expect(await bookAndListen(listener, sale.cohort.id)).toBe(1);
     return { sale, manager, listener };
   };
@@ -162,6 +170,7 @@ describe('live updates', () => {
     const { sale, manager, listener } = await staffListener();
     const mentor = await socket(urlOf(1), { as: await signInAs(api, sale.mentor.id) });
     expect(await mentor.join({ kind: 'cohort-staff', id: sale.cohort.id })).toBe(true);
+    expect(await mentor.join({ kind: 'catalog' })).toBe(true);
     expect(await bookAndListen(mentor, sale.cohort.id)).toBe(1);
     const successor = await signedIn(api, 'mentor', sale.school.id);
     await manager.http.patch(`/api/manager/cohorts/${sale.cohort.id}`, {

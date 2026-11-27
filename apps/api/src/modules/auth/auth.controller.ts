@@ -1,4 +1,15 @@
-import { Body, Controller, Get, HttpCode, Inject, Patch, Post, Req, Res } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpException,
+  Inject,
+  Patch,
+  Post,
+  Req,
+  Res,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import {
   acceptedSchema,
@@ -17,6 +28,9 @@ import { RateLimit } from '../../common/rate-limit/rate-limit.guard';
 import { DEPS, type Deps } from '../../infra/deps';
 import { AuthService } from './auth.service';
 import { clearSessionCookies, setSessionCookies } from './cookies';
+
+const isRefusal = (error: unknown): boolean =>
+  error instanceof HttpException && error.getStatus() === 401;
 
 class RegisterDto extends createZodDto(registerSchema) {}
 class LoginDto extends createZodDto(loginSchema) {}
@@ -55,7 +69,12 @@ export class AuthController {
   @Post('refresh')
   @ZodResponse({ status: 200, type: AccountDto })
   async refresh(@Req() request: Request, @Res({ passthrough: true }) response: Response) {
-    const session = await this.auth.refresh(readCookie(request.headers.cookie, REFRESH_COOKIE));
+    const presented = readCookie(request.headers.cookie, REFRESH_COOKIE);
+    // A session that cannot be renewed is over: its cookies go, and the browser is a visitor.
+    const session = await this.auth.refresh(presented).catch((error: unknown) => {
+      if (isRefusal(error)) clearSessionCookies(response, this.deps.env);
+      throw error;
+    });
     setSessionCookies(response, this.deps.env, session);
     return session.account;
   }

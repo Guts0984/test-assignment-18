@@ -111,6 +111,28 @@ describe('homework', () => {
     ).toBe(0);
   });
 
+  it('takes only a form, so no other body can empty an answer', async () => {
+    const study = await studyingCohort(api);
+    const [first = ''] = study.homework;
+    const file = { name: 'work.pdf', content: Buffer.from('%PDF-work') };
+    await handIn(study.first, first, { body: 'my answer', file });
+    const path = `/api/homework/${first}/submission`;
+    const typed = (type: string, raw: string) =>
+      study.first.http.send('PUT', path, { raw, headers: { 'content-type': type } });
+    for (const reply of [
+      await study.first.http.send('PUT', path, { body: { body: '' } }),
+      await typed('text/plain', 'new text'),
+      await typed('application/x-www-form-urlencoded', 'body=new'),
+      await typed('multipart/mixed; boundary=x', '--x--'),
+      await study.first.http.send('PUT', path),
+    ]) {
+      expectError(reply, 'UNSUPPORTED_MEDIA_TYPE');
+    }
+    expect(
+      await api.db.submission.findFirstOrThrow({ where: { homeworkId: first } }),
+    ).toMatchObject({ body: 'my answer', version: 1 });
+  });
+
   it('refuses hostile uploads with a clear error and stores nothing', async () => {
     const study = await studyingCohort(api);
     const [first = ''] = study.homework;
@@ -133,7 +155,7 @@ describe('homework', () => {
       await study.first.http.send('PUT', `/api/homework/${first}/submission`, {
         body: { body: 'json', status: 'accepted' },
       }),
-      'VALIDATION_FAILED',
+      'UNSUPPORTED_MEDIA_TYPE',
     );
     expect(await api.db.submission.count({ where: { cohortId: study.cohort.id } })).toBe(0);
   });

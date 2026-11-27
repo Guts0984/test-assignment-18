@@ -18,6 +18,7 @@ import { type Response } from 'express';
 import { createZodDto, ZodResponse } from 'nestjs-zod';
 import { CurrentUser, Roles } from '../../common/auth/decorators';
 import { type Principal } from '../../common/auth/principal';
+import { MultipartOnlyInterceptor } from '../../common/http/multipart-only';
 import { HomeworkService, type ReceivedFile } from './homework.service';
 
 class IdParamDto extends createZodDto(idParamSchema) {}
@@ -32,7 +33,8 @@ export class HomeworkController {
   /** Multipart: the answer in `body`, an optional `file`, and `removeFile` to drop the old one. */
   @Roles('student')
   @Put('homework/:id/submission')
-  @UseInterceptors(FileInterceptor('file'))
+  // The form check comes first: any other body would read as an empty answer.
+  @UseInterceptors(MultipartOnlyInterceptor, FileInterceptor('file'))
   @ApiConsumes('multipart/form-data')
   @ApiBody({
     schema: {
